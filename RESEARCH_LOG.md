@@ -47,13 +47,73 @@ Next Ideas:
 
 ## Current Status
 
-Baseline v3 established (2026-07-02) after a full methodology-hardening pass. Official
-protocol: leakage-free features (v2) + registered still-enrolled risk population +
-grouped evaluation (GroupShuffleSplit, group=id_student) with repeated-split variance
-reporting. See `reports/baseline_v3.md`, `reports/evaluation_validity_audit.md`,
-`reports/methodology_review.md`. The pipeline is considered scientifically ready to freeze;
-processed-data caching is designed (`reports/caching_plan.md`) but NOT executed. Baselines
-v1 and v2 remain immutable history.
+Pipeline frozen and cached (2026-07-02): canonical v3 datasets live in `data/processed/p3/`
+(one parquet per cutoff + hash/env/schema manifests; parquet gitignored, manifests tracked).
+The cache is the mandatory input for all experiments. Experiment 001 complete: best valid
+model = baseline XGBoost + class-prior threshold adjustment (τ=0.75), macro-F1 +4–6 pp over
+Baseline v3 at every cutoff (25/25 paired seeds), Withdrawn recall 3–18× baseline; 0.70
+macro-F1 shown unrealistic under the leak-free protocol (practical ceiling ≈0.45–0.48 at
+cutoff 30). See `reports/experiment_001.md`. Baselines v1/v2/v3 immutable.
+
+---
+
+## Experiment 001 — Macro-F1 Optimization (Phase 8)
+
+Date: 2026-07-02
+
+Objective: Using the frozen v3 cache, find the strongest scientifically valid model under
+the official protocol, optimizing macro-F1, then Withdrawn recall, then accuracy.
+
+Hypothesis: Baseline v3's unweighted XGBoost is majority-biased; imbalance-aware techniques
+(class/sample weights, in-fold SMOTE, threshold adjustment) should raise macro-F1 materially.
+
+Implementation: Part A — cache freeze: `data/processed/p3/c{014..140}/mlDataV3.parquet`
+built by executing the notebook verbatim through the v3 cell; manifests with raw sha256s,
+pipeline-code sha256, env, schema, bit-exact + round-9 frame hashes; reload-verified; no
+splits/standardization/resampling/model outputs cached; .gitignore updated (parquet out,
+manifests in). Part B — experiment (code: `experiments/experiment_001_macro_f1.py`):
+official seed-42 grouped test held out untouched; all tuning via GroupKFold(3) inside the
+seed-42 train, including class-prior threshold τ (p·(1/π_c)^τ, τ∈{0,.25,.5,.75,1});
+SMOTE/SMOTETomek inside training folds only; 13 configs screened at cutoff 30; top-3
+re-selected per cutoff by inner CV; winner refit and evaluated once on the held-out test,
+then on repeated grouped splits (seeds 0–4, everything frozen) with paired baseline
+comparison on identical splits.
+
+Features Added/Removed: none (cache is canonical and unmodified).
+
+Models Evaluated: 13 configs — reference logreg/RF/XGB (baseline v3), sample-weighted XGB
+(4 hyperparameter variants), RF variants (balanced_subsample, min_samples_leaf=5),
+SMOTE/SMOTETomek in-fold (XGB, RF), all × τ grid.
+
+Validation Strategy: official v3 protocol (grouped, seed 42) + repeated grouped splits
+(seeds 0–4); paired per-seed deltas; sign test.
+
+Results (winner per cutoff; macro-F1 on held-out test, repeats mean±std, baseline-XGB repeats):
+
+| Cutoff | winner | test F1 | repeats | baseline XGB | Withdrawn recall (win/base) |
+|--:|:--|--:|:--|:--|:--|
+| 14  | xgb+τ.75 | 0.3615 | 0.3622±0.0061 | 0.3030±0.0028 | 0.193 / 0.060 |
+| 30  | rf_leaf5 | 0.4133 | 0.4241±0.0076 | 0.3804±0.0055 | 0.209 / 0.149 |
+| 60  | xgb+τ.75 | 0.4612 | 0.4645±0.0039 | 0.4233±0.0040 | 0.245 / 0.068 |
+| 90  | xgb+τ.75 | 0.4686 | 0.4787±0.0058 | 0.4392±0.0073 | 0.196 / 0.031 |
+| 140 | xgb+τ.75 | 0.5130 | 0.5130±0.0054 | 0.4743±0.0053 | 0.180 / 0.011 |
+
+All 25 paired seed-deltas positive (sign test p≈0.031 per cutoff); deltas 5–15× split noise.
+Accuracy cost 3–6 pp (declared trade-off; τ=0 recovers baseline accuracy from the same model).
+
+Observations: Simple class-prior threshold adjustment on the untouched baseline XGBoost beat
+every retraining-time imbalance technique. Negative results: XGB sample-weighting, SMOTE,
+SMOTETomek, and all hyperparameter variants ≤ baseline+τ. Dominant residual error is
+Withdrawn↔Fail↔Pass confusion; best Withdrawn F1 ≈0.26 (c30) — a data limit, not tuning.
+0.70 macro-F1 unrealistic: 13 diverse configs span 0.375–0.419 inner F1 at c30; estimated
+practical ceiling ≈0.45–0.48 (c30) / ≈0.55 (c140) with current features.
+
+Decision: Adopt xgb_base+τ=0.75 as the recommended model (τ = deployment precision/recall
+knob). Keep Baseline v3 as the protocol reference. Cache is canonical from now on.
+
+Next Ideas: temporal/trajectory features targeting early-withdrawal signal (weekly click
+deltas, submission-timing dynamics); dedicated grouped binary "withdraw-within-k-weeks"
+early-warning task; per-cutoff τ calibration as standard practice.
 
 ---
 

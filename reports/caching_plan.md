@@ -1,9 +1,9 @@
-# Caching Plan — Processed-Data Caching Architecture (design only)
+# Caching Plan — Processed-Data Caching Architecture
 
 **Date:** 2026-07-02
-**Status:** DESIGN. Nothing is cached yet; per instruction, caching is not to be executed
-until explicitly requested. This document specifies exactly what to do when that instruction
-comes.
+**Status:** **IMPLEMENTED** (Phase 8 Part A, same date) — see the addendum in §9. Sections
+1–8 are the original design; §9 records what was actually built and the one deliberate
+narrowing versus the design.
 
 ---
 
@@ -120,3 +120,29 @@ data/processed/**/*.parquet
 Caching should only be executed once the methodology is frozen (see
 `reports/methodology_review.md` §Readiness). Caching before freezing bakes a moving pipeline
 into binary artifacts and invites silent mismatch between cache and code.
+
+## 9. Implementation addendum (executed 2026-07-02, Phase 8 Part A)
+
+Built exactly per §§3–7 with **one deliberate narrowing** per the freeze instruction
+("cache one processed dataset per cutoff"): only the **L2 canonical frame `mlDataV3`** is
+cached — the L1 intermediate tables from §2 were not materialized (they can be regenerated
+from the notebook and would add cache surface without a current consumer).
+
+What exists now:
+
+```
+data/processed/p3/{manifest.json, c014..c140/{mlDataV3.parquet, manifest.json}}
+```
+
+- One dataset per cutoff (28,061 / 27,450 / 26,353 / 25,558 / 24,289 rows; 30 columns,
+  19 active features listed in each manifest). Target distributions match the official v3
+  run exactly.
+- Contents are model-independent: **no splits, no standardization, no resampling, no model
+  outputs** (split spec is recorded declaratively in the manifest for recomputation).
+- Every parquet was **reload-verified** (bit-exact `frame_sha256` match after round-trip);
+  manifests carry raw-input sha256s (all six CSVs), `pipeline_code_sha256` over all notebook
+  code cells up to and including the v3 cell, environment versions, schema (per-column
+  dtypes), `round9_sha256` for cross-platform checks, and the generating git commit.
+- `.gitignore` updated per §6 (parquet ignored, manifests tracked — verified with
+  `git check-ignore`).
+- The cache is the canonical input for experiments from Experiment 001 onward.

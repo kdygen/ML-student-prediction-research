@@ -1,0 +1,78 @@
+{
+  "pipeline_version": "p3",
+  "created_at": "2026-07-02T19:53:33.590326+00:00",
+  "git_commit": "33602fcf04f130a598146466c0adc3ae46ee8905",
+  "notebook": {
+    "file": "notebook/OULAD_early_prediction_v1 (1).ipynb",
+    "pipeline_code_sha256": "ce13b0adf8e61d6acc6664d53233e34f15cf94ea4359f0df24e1761862a9bfa4"
+  },
+  "raw_inputs": {
+    "studentInfo.csv": {
+      "bytes": 3462763,
+      "sha256": "815fbc3e2de29f79900bc63f0345a35db62c9146afaa1d86e7107b8b3beffc60"
+    },
+    "studentVle.csv": {
+      "bytes": 453836331,
+      "sha256": "52668253d876c5becbcb72185977152700cecab2942aca807fecc3dd54b937f0"
+    },
+    "studentAssessment.csv": {
+      "bytes": 5690483,
+      "sha256": "b1839e17618a5de36b6d189a242d3123f7939a56c8c9ccef0c17b9199c614a6b"
+    },
+    "assessments.csv": {
+      "bytes": 8211,
+      "sha256": "9ce92381e4a0ac457f8e251b2eb2c179ed51e023ab30d1d671a0268bd62316ba"
+    },
+    "vle.csv": {
+      "bytes": 270612,
+      "sha256": "d7a146497edd0e47ef536144b58796c07b554002d3753e848b8e4cd8a56f4c38"
+    },
+    "studentRegistration.csv": {
+      "bytes": 1132550,
+      "sha256": "bbc87a0de1fe2a9ec6decce1ca6c1a02cf17b54ad3bdcc673fc6413b41c61d47"
+    }
+  },
+  "environment": {
+    "python": "3.12.6",
+    "platform": "macOS-26.3-arm64-arm-64bit",
+    "pandas": "2.2.2",
+    "numpy": "2.0.2",
+    "scikit-learn": "1.6.1",
+    "xgboost": "3.3.0",
+    "pyarrow": "24.0.0"
+  },
+  "split_spec": {
+    "strategy": "GroupShuffleSplit",
+    "group": "id_student",
+    "test_size": 0.2,
+    "random_state": 42,
+    "note": "splits are NOT cached; recompute from spec"
+  },
+  "cutoffs": {
+    "14": {
+      "dir": "c014",
+      "rows": 28061,
+      "frame_sha256": "af692bddbe521416696b55470f6f1445646113b74618ce16fb52fa103872010f"
+    },
+    "30": {
+      "dir": "c030",
+      "rows": 27450,
+      "frame_sha256": "a653ee769f00c818b43d773f62d7528b6869ba5ac838aff7e7ad9a32d8965d72"
+    },
+    "60": {
+      "dir": "c060",
+      "rows": 26353,
+      "frame_sha256": "49e3752eefff0ff70737985693ea66ce58f8ce1fd3a857371a8f70162a295158"
+    },
+    "90": {
+      "dir": "c090",
+      "rows": 25558,
+      "frame_sha256": "8b0dd8ab5765655a25175d8f5565df221732652332612355a67e79d6ebfaa756"
+    },
+    "140": {
+      "dir": "c140",
+      "rows": 24289,
+      "frame_sha256": "57ef07023b10dbeab6d187a446a066f1882de591eb5f6b2580f2c4c38d56a103"
+    }
+  }
+}

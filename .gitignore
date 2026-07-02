@@ -15,3 +15,6 @@ data/raw/**/*.csv
 results/**/*.pkl
 results/**/*.joblib
 results/**/*.parquet
+# processed cache — artifacts out, manifests in
+data/processed/**/*.parquet
+!data/processed/**/manifest.json
