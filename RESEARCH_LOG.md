@@ -47,11 +47,89 @@ Next Ideas:
 
 ## Current Status
 
-Baseline v2 established (2026-07-02). Official reference is now the leakage-corrected
-pipeline: three assessment features were switched from due-date to submission-date filtering
-to remove confirmed future-information leakage. See `reports/baseline_v2.md`,
-`reports/baseline_v2_results.json`, and `reports/leakage_audit.md`. Baseline v1 remains as the
-immutable prior baseline (`reports/baseline_v1.md`).
+Baseline v3 established (2026-07-02) after a full methodology-hardening pass. Official
+protocol: leakage-free features (v2) + registered still-enrolled risk population +
+grouped evaluation (GroupShuffleSplit, group=id_student) with repeated-split variance
+reporting. See `reports/baseline_v3.md`, `reports/evaluation_validity_audit.md`,
+`reports/methodology_review.md`. The pipeline is considered scientifically ready to freeze;
+processed-data caching is designed (`reports/caching_plan.md`) but NOT executed. Baselines
+v1 and v2 remain immutable history.
+
+---
+
+## Baseline v3 — Methodology Hardening (Phases 1–6)
+
+Date: 2026-07-02
+
+Objective: Harden the pipeline into a scientifically defensible early-prediction benchmark:
+audit evaluation leakage, survivorship bias, target validity, temporal validity, and overall
+experimental methodology; fix only what evidence proves broken.
+
+Hypothesis: (a) the random row split leaks student identity across train/test
+(multi-enrollment); (b) mlData membership (submitted coursework due ≤ cutoff) is
+outcome-correlated survivorship; (c) fixing both changes reported metrics but yields the
+honest deployment estimate.
+
+Implementation: Evidence collected per cutoff on the v2 pipeline (notebook cells verbatim,
+pinned env). Phase 1: overlap quantified — 464–763 overlapping students, 12–17% of test rows
+share a student with train (cutoffs 30–140); overlap-conditional accuracy measured (overlap
+rows are mostly harder — multi-enrollment students struggle more, so the flaw is protocol
+mismatch + identity leakage, not naive memorization inflation). Grouped evaluation
+(GroupShuffleSplit/GroupKFold/repeated GSS, identical models) costs ≤ ~2 acc points early,
+within split noise late. Phase 2: survivorship quantified against all 32,593 registered
+pairs — missing 96.4% (c14), 40.8% (c30), 28% (c60–140); of the still-enrolled risk
+population, 31% missing at c30; exclusions are 47% Withdrawn vs 20% in the represented
+sample → CONFIRMED bias. Phase 3: 0 duplicate keys, 0 duplicate columns, 0 label mismatches
+at every cutoff; up to 4 rows/student = legitimate multi-enrollment. Phase 4: all active
+features re-audited SAFE; v3 adds only has_vle_activity / has_coursework (presence of
+≤cutoff data → SAFE) and a membership rule using registration facts observable at the
+cutoff. Phase 5: full methodology review written (imbalance-handling inconsistency, legacy
+binary section, execution-order contract, hidden assumptions made explicit; NaN-free frame
+and complete studentVle load verified). Phase 6: Baseline v3 implemented as an additive
+notebook section (single notebook, CUTOFF-driven): prediction cases = all registered pairs
+still enrolled at the cutoff (exclude date_unregistration ≤ CUTOFF and
+date_registration > CUTOFF); leakage-free v2 feature tables merged in; missing info kept as
+explicit indicators + zero fill; GroupShuffleSplit(group=id_student, 0.2, seed 42); identical
+models/hyperparameters; repeated grouped splits (seeds 0–4) for RF/XGB.
+
+Features Added (v3, 2): has_vle_activity, has_coursework (availability indicators — required
+to keep previously-dropped students). Features Redesigned: none. Features Removed: none.
+
+Models Evaluated: unchanged (LogReg balanced, Tree depth5, RF 300 balanced, XGB 300/d6/lr.05).
+
+Validation Strategy (official from v3): GroupShuffleSplit, group=id_student, test_size=0.2,
+random_state=42; no student in both train and test (asserted in-notebook); robustness =
+repeated grouped splits seeds 0–4 (mean±std).
+
+Results (v3 official; accuracy / macro-F1; pinned sklearn 1.6.1, macOS/arm64):
+
+| Cutoff | cases | LogReg | Tree | RF | XGB |
+|-------:|------:|:------|:-----|:---|:----|
+| 14  | 28,061 | 0.3512/0.3344 | 0.4782/0.2510 | 0.4626/0.2999 | 0.4810/0.3151 |
+| 30  | 27,450 | 0.3831/0.3747 | 0.4817/0.2883 | 0.5048/0.3565 | 0.5099/0.3705 |
+| 60  | 26,353 | 0.4368/0.4199 | 0.5383/0.3468 | 0.5591/0.3888 | 0.5614/0.4066 |
+| 90  | 25,558 | 0.4391/0.4175 | 0.5713/0.3737 | 0.5874/0.4049 | 0.5947/0.4244 |
+| 140 | 24,289 | 0.4995/0.4581 | 0.6238/0.4133 | 0.6530/0.4474 | 0.6627/0.4713 |
+
+Repeated grouped splits: RF/XGB acc std ≈ ±0.004–0.009 → gains < ~1–2 points on a single
+split are not evidence.
+
+Observations: v2→v3 is a population + protocol change, not a model change — numbers are not
+comparable to v1/v2. Grouping alone costs ~0–2 acc points (tested on unseen students).
+The full population raises accuracy at late cutoffs (majority share grows as decided
+withdrawals leave the risk pool) but lowers macro-F1 (remaining late-withdrawers are
+genuinely hard; c140 Withdrawn test support = 372). v2's higher macro-F1 was earned on an
+easier survivor-filtered task. Withdrawn class shrinks with cutoff by design (deployment
+semantics). Legacy v1/v2 notebook sections still reproduce committed numbers exactly
+(verified every cutoff).
+
+Decision: Adopt grouped evaluation + registered risk population as the OFFICIAL protocol
+(Baseline v3). Freeze the pipeline; caching designed in reports/caching_plan.md, execution
+deferred until explicitly instructed. v1/v2 remain immutable.
+
+Next Ideas: controlled imbalance-handling experiment (XGB sample_weight / consistent class
+weights); grouped binary tasks on the v3 population; per-class recall tracking for Withdrawn
+(early-warning core metric); optional stratified-grouped splitter (StratifiedGroupKFold).
 
 ---
 

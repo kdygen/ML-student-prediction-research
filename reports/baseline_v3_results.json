@@ -1,0 +1,637 @@
+{
+  "14": {
+    "v3": {
+      "cutoff": 14,
+      "mlDataV3_shape": [
+        28061,
+        30
+      ],
+      "features": [
+        "weighted_average",
+        "active_days",
+        "clicks_per_day",
+        "clicks_per_assessment",
+        "study_spread",
+        "burstiness",
+        "resource_ratio",
+        "oucontent_ratio",
+        "homepage_ratio",
+        "forumng_ratio",
+        "quiz_ratio",
+        "assessment_focus",
+        "recovery_slope",
+        "has_vle_activity",
+        "has_coursework",
+        "highest_education_HE Qualification",
+        "highest_education_Lower Than A Level",
+        "highest_education_No Formal quals",
+        "highest_education_Post Graduate Qualification"
+      ],
+      "split": {
+        "strategy": "GroupShuffleSplit(group=id_student)",
+        "test_size": 0.2,
+        "random_state": 42,
+        "train_rows": 22454,
+        "test_rows": 5607,
+        "train_students": 20180,
+        "test_students": 5046
+      },
+      "target_dist": {
+        "0": 5673,
+        "1": 7027,
+        "2": 12339,
+        "3": 3022
+      },
+      "test_dist": {
+        "0": 1090,
+        "1": 1415,
+        "2": 2495,
+        "3": 607
+      },
+      "models": {
+        "logreg": {
+          "accuracy": 0.3511681826288568,
+          "macro_f1": 0.33441949172235125
+        },
+        "decision_tree": {
+          "accuracy": 0.4781523096129838,
+          "macro_f1": 0.251037496543489
+        },
+        "random_forest": {
+          "accuracy": 0.46263599072587835,
+          "macro_f1": 0.29992389716466566
+        },
+        "xgboost": {
+          "accuracy": 0.4810058855002675,
+          "macro_f1": 0.3150717329062639
+        }
+      }
+    },
+    "v3_repeated_gss": {
+      "random_forest": {
+        "acc_mean": 0.4519350781311081,
+        "acc_std": 0.0037541931060950124,
+        "f1_mean": 0.2912719224338339,
+        "f1_std": 0.0010087526685051277,
+        "acc_all": [
+          0.4581,
+          0.4496,
+          0.4529,
+          0.4522,
+          0.4469
+        ]
+      },
+      "xgboost": {
+        "acc_mean": 0.4653831237369623,
+        "acc_std": 0.0035555706387323163,
+        "f1_mean": 0.30299418026914304,
+        "f1_std": 0.0027540970348439377,
+        "acc_all": [
+          0.4675,
+          0.4625,
+          0.4675,
+          0.4694,
+          0.4599
+        ]
+      }
+    },
+    "legacy_v2_reproduced": {
+      "logreg": {
+        "accuracy": 0.3403361344537815,
+        "macro_f1": 0.3135029742282813
+      },
+      "decision_tree": {
+        "accuracy": 0.5210084033613446,
+        "macro_f1": 0.3350277990433025
+      },
+      "random_forest": {
+        "accuracy": 0.4831932773109244,
+        "macro_f1": 0.3003442059842162
+      },
+      "xgboost": {
+        "accuracy": 0.48739495798319327,
+        "macro_f1": 0.36456099794514424
+      },
+      "random_forest_rerun": {
+        "accuracy": 0.4831932773109244,
+        "macro_f1": 0.3003442059842162
+      },
+      "xgboost_rerun": {
+        "accuracy": 0.48739495798319327,
+        "macro_f1": 0.36456099794514424
+      }
+    },
+    "legacy_mlData_shape": [
+      1188,
+      78
+    ]
+  },
+  "30": {
+    "v3": {
+      "cutoff": 30,
+      "mlDataV3_shape": [
+        27450,
+        30
+      ],
+      "features": [
+        "weighted_average",
+        "active_days",
+        "clicks_per_day",
+        "clicks_per_assessment",
+        "study_spread",
+        "burstiness",
+        "resource_ratio",
+        "oucontent_ratio",
+        "homepage_ratio",
+        "forumng_ratio",
+        "quiz_ratio",
+        "assessment_focus",
+        "recovery_slope",
+        "has_vle_activity",
+        "has_coursework",
+        "highest_education_HE Qualification",
+        "highest_education_Lower Than A Level",
+        "highest_education_No Formal quals",
+        "highest_education_Post Graduate Qualification"
+      ],
+      "split": {
+        "strategy": "GroupShuffleSplit(group=id_student)",
+        "test_size": 0.2,
+        "random_state": 42,
+        "train_rows": 21969,
+        "test_rows": 5481,
+        "train_students": 19824,
+        "test_students": 4956
+      },
+      "target_dist": {
+        "0": 5034,
+        "1": 7037,
+        "2": 12356,
+        "3": 3023
+      },
+      "test_dist": {
+        "0": 1013,
+        "1": 1366,
+        "2": 2497,
+        "3": 605
+      },
+      "models": {
+        "logreg": {
+          "accuracy": 0.3831417624521073,
+          "macro_f1": 0.3746618643900414
+        },
+        "decision_tree": {
+          "accuracy": 0.481663929939792,
+          "macro_f1": 0.2882619060929587
+        },
+        "random_forest": {
+          "accuracy": 0.5048348841452289,
+          "macro_f1": 0.3564594116328631
+        },
+        "xgboost": {
+          "accuracy": 0.5099434409779238,
+          "macro_f1": 0.37048705824688355
+        }
+      }
+    },
+    "v3_repeated_gss": {
+      "random_forest": {
+        "acc_mean": 0.504435673359008,
+        "acc_std": 0.005856075632141011,
+        "f1_mean": 0.3601846144027063,
+        "f1_std": 0.006304448744330843,
+        "acc_all": [
+          0.5103,
+          0.5122,
+          0.5029,
+          0.4985,
+          0.4982
+        ]
+      },
+      "xgboost": {
+        "acc_mean": 0.5140857427921656,
+        "acc_std": 0.006310683645768096,
+        "f1_mean": 0.3803667171809159,
+        "f1_std": 0.0054991440360955025,
+        "acc_all": [
+          0.52,
+          0.522,
+          0.513,
+          0.5047,
+          0.5106
+        ]
+      }
+    },
+    "legacy_v2_reproduced": {
+      "logreg": {
+        "accuracy": 0.39041450777202075,
+        "macro_f1": 0.38570350002883763
+      },
+      "decision_tree": {
+        "accuracy": 0.5044041450777202,
+        "macro_f1": 0.31666304342029744
+      },
+      "random_forest": {
+        "accuracy": 0.5121761658031088,
+        "macro_f1": 0.37308792687996567
+      },
+      "xgboost": {
+        "accuracy": 0.5189119170984456,
+        "macro_f1": 0.39478375912561264
+      },
+      "random_forest_rerun": {
+        "accuracy": 0.5121761658031088,
+        "macro_f1": 0.37308792687996567
+      },
+      "xgboost_rerun": {
+        "accuracy": 0.5189119170984456,
+        "macro_f1": 0.39478375912561264
+      }
+    },
+    "legacy_mlData_shape": [
+      19300,
+      78
+    ]
+  },
+  "60": {
+    "v3": {
+      "cutoff": 60,
+      "mlDataV3_shape": [
+        26353,
+        30
+      ],
+      "features": [
+        "weighted_average",
+        "active_days",
+        "clicks_per_day",
+        "clicks_per_assessment",
+        "study_spread",
+        "burstiness",
+        "resource_ratio",
+        "oucontent_ratio",
+        "homepage_ratio",
+        "forumng_ratio",
+        "quiz_ratio",
+        "assessment_focus",
+        "recovery_slope",
+        "has_vle_activity",
+        "has_coursework",
+        "highest_education_HE Qualification",
+        "highest_education_Lower Than A Level",
+        "highest_education_No Formal quals",
+        "highest_education_Post Graduate Qualification"
+      ],
+      "split": {
+        "strategy": "GroupShuffleSplit(group=id_student)",
+        "test_size": 0.2,
+        "random_state": 42,
+        "train_rows": 21064,
+        "test_rows": 5289,
+        "train_students": 19186,
+        "test_students": 4797
+      },
+      "target_dist": {
+        "0": 3931,
+        "1": 7040,
+        "2": 12358,
+        "3": 3024
+      },
+      "test_dist": {
+        "0": 770,
+        "1": 1441,
+        "2": 2460,
+        "3": 618
+      },
+      "models": {
+        "logreg": {
+          "accuracy": 0.4367555303460011,
+          "macro_f1": 0.4199178392043933
+        },
+        "decision_tree": {
+          "accuracy": 0.5382870107770845,
+          "macro_f1": 0.34682273863847024
+        },
+        "random_forest": {
+          "accuracy": 0.5590848931745132,
+          "macro_f1": 0.3887662373525403
+        },
+        "xgboost": {
+          "accuracy": 0.5613537530724144,
+          "macro_f1": 0.40659543161260175
+        }
+      }
+    },
+    "v3_repeated_gss": {
+      "random_forest": {
+        "acc_mean": 0.5588824688934881,
+        "acc_std": 0.004704717885919248,
+        "f1_mean": 0.39300218574843787,
+        "f1_std": 0.004085996596754725,
+        "acc_all": [
+          0.5555,
+          0.5528,
+          0.5657,
+          0.5626,
+          0.5577
+        ]
+      },
+      "xgboost": {
+        "acc_mean": 0.5679908240348743,
+        "acc_std": 0.003817679355996429,
+        "f1_mean": 0.4232573962894081,
+        "f1_std": 0.004022310431619722,
+        "acc_all": [
+          0.5691,
+          0.5623,
+          0.5692,
+          0.5737,
+          0.5657
+        ]
+      }
+    },
+    "legacy_v2_reproduced": {
+      "logreg": {
+        "accuracy": 0.42814435191116806,
+        "macro_f1": 0.42056733618358666
+      },
+      "decision_tree": {
+        "accuracy": 0.5253042921204356,
+        "macro_f1": 0.36454236968176046
+      },
+      "random_forest": {
+        "accuracy": 0.5447362801622891,
+        "macro_f1": 0.41605372437872545
+      },
+      "xgboost": {
+        "accuracy": 0.5498612000854153,
+        "macro_f1": 0.4424822492016478
+      },
+      "random_forest_rerun": {
+        "accuracy": 0.5447362801622891,
+        "macro_f1": 0.41605372437872545
+      },
+      "xgboost_rerun": {
+        "accuracy": 0.5498612000854153,
+        "macro_f1": 0.4424822492016478
+      }
+    },
+    "legacy_mlData_shape": [
+      23411,
+      78
+    ]
+  },
+  "90": {
+    "v3": {
+      "cutoff": 90,
+      "mlDataV3_shape": [
+        25558,
+        30
+      ],
+      "features": [
+        "weighted_average",
+        "active_days",
+        "clicks_per_day",
+        "clicks_per_assessment",
+        "study_spread",
+        "burstiness",
+        "resource_ratio",
+        "oucontent_ratio",
+        "homepage_ratio",
+        "forumng_ratio",
+        "quiz_ratio",
+        "assessment_focus",
+        "recovery_slope",
+        "has_vle_activity",
+        "has_coursework",
+        "highest_education_HE Qualification",
+        "highest_education_Lower Than A Level",
+        "highest_education_No Formal quals",
+        "highest_education_Post Graduate Qualification"
+      ],
+      "split": {
+        "strategy": "GroupShuffleSplit(group=id_student)",
+        "test_size": 0.2,
+        "random_state": 42,
+        "train_rows": 20429,
+        "test_rows": 5129,
+        "train_students": 18717,
+        "test_students": 4680
+      },
+      "target_dist": {
+        "0": 3132,
+        "1": 7042,
+        "2": 12360,
+        "3": 3024
+      },
+      "test_dist": {
+        "0": 637,
+        "1": 1443,
+        "2": 2431,
+        "3": 618
+      },
+      "models": {
+        "logreg": {
+          "accuracy": 0.43907194384870346,
+          "macro_f1": 0.41750263311653363
+        },
+        "decision_tree": {
+          "accuracy": 0.5712614544745565,
+          "macro_f1": 0.3737273467836711
+        },
+        "random_forest": {
+          "accuracy": 0.5874439461883408,
+          "macro_f1": 0.40486554005789377
+        },
+        "xgboost": {
+          "accuracy": 0.5946578280366543,
+          "macro_f1": 0.4244309014957763
+        }
+      }
+    },
+    "v3_repeated_gss": {
+      "random_forest": {
+        "acc_mean": 0.5977701269875453,
+        "acc_std": 0.005843107640648582,
+        "f1_mean": 0.4157724955743065,
+        "f1_std": 0.008040486380734712,
+        "acc_all": [
+          0.5967,
+          0.5934,
+          0.607,
+          0.6013,
+          0.5904
+        ]
+      },
+      "xgboost": {
+        "acc_mean": 0.6052413755892532,
+        "acc_std": 0.006342680416761833,
+        "f1_mean": 0.4391621022609904,
+        "f1_std": 0.0072630987646058924,
+        "acc_all": [
+          0.6097,
+          0.6054,
+          0.6099,
+          0.6082,
+          0.593
+        ]
+      }
+    },
+    "legacy_v2_reproduced": {
+      "logreg": {
+        "accuracy": 0.44979748454487317,
+        "macro_f1": 0.4394360985552197
+      },
+      "decision_tree": {
+        "accuracy": 0.5542528245576636,
+        "macro_f1": 0.42847343189397163
+      },
+      "random_forest": {
+        "accuracy": 0.5670432743551481,
+        "macro_f1": 0.4458186002710325
+      },
+      "xgboost": {
+        "accuracy": 0.5759965892133874,
+        "macro_f1": 0.4735374940458984
+      },
+      "random_forest_rerun": {
+        "accuracy": 0.5670432743551481,
+        "macro_f1": 0.4458186002710325
+      },
+      "xgboost_rerun": {
+        "accuracy": 0.5759965892133874,
+        "macro_f1": 0.4735374940458984
+      }
+    },
+    "legacy_mlData_shape": [
+      23452,
+      78
+    ]
+  },
+  "140": {
+    "v3": {
+      "cutoff": 140,
+      "mlDataV3_shape": [
+        24289,
+        30
+      ],
+      "features": [
+        "weighted_average",
+        "active_days",
+        "clicks_per_day",
+        "clicks_per_assessment",
+        "study_spread",
+        "burstiness",
+        "resource_ratio",
+        "oucontent_ratio",
+        "homepage_ratio",
+        "forumng_ratio",
+        "quiz_ratio",
+        "assessment_focus",
+        "recovery_slope",
+        "has_vle_activity",
+        "has_coursework",
+        "highest_education_HE Qualification",
+        "highest_education_Lower Than A Level",
+        "highest_education_No Formal quals",
+        "highest_education_Post Graduate Qualification"
+      ],
+      "split": {
+        "strategy": "GroupShuffleSplit(group=id_student)",
+        "test_size": 0.2,
+        "random_state": 42,
+        "train_rows": 19424,
+        "test_rows": 4865,
+        "train_students": 17977,
+        "test_students": 4495
+      },
+      "target_dist": {
+        "0": 1860,
+        "1": 7044,
+        "2": 12361,
+        "3": 3024
+      },
+      "test_dist": {
+        "0": 372,
+        "1": 1467,
+        "2": 2406,
+        "3": 620
+      },
+      "models": {
+        "logreg": {
+          "accuracy": 0.499486125385406,
+          "macro_f1": 0.4581496782161254
+        },
+        "decision_tree": {
+          "accuracy": 0.6238437821171634,
+          "macro_f1": 0.41327834237263184
+        },
+        "random_forest": {
+          "accuracy": 0.6530318602261048,
+          "macro_f1": 0.44743768031972336
+        },
+        "xgboost": {
+          "accuracy": 0.6626927029804728,
+          "macro_f1": 0.47127636895756064
+        }
+      }
+    },
+    "v3_repeated_gss": {
+      "random_forest": {
+        "acc_mean": 0.6581026668283603,
+        "acc_std": 0.008548963817709353,
+        "f1_mean": 0.4496654582556623,
+        "f1_std": 0.006560281554813279,
+        "acc_all": [
+          0.643,
+          0.66,
+          0.6625,
+          0.6563,
+          0.6687
+        ]
+      },
+      "xgboost": {
+        "acc_mean": 0.6712639633860104,
+        "acc_std": 0.006689507249751713,
+        "f1_mean": 0.47426124617772925,
+        "f1_std": 0.005286719044117951,
+        "acc_all": [
+          0.6611,
+          0.6685,
+          0.6765,
+          0.6699,
+          0.6804
+        ]
+      }
+    },
+    "legacy_v2_reproduced": {
+      "logreg": {
+        "accuracy": 0.49765758091993184,
+        "macro_f1": 0.48576874697860806
+      },
+      "decision_tree": {
+        "accuracy": 0.5730408858603067,
+        "macro_f1": 0.4859397588441502
+      },
+      "random_forest": {
+        "accuracy": 0.6077512776831345,
+        "macro_f1": 0.5143211835624929
+      },
+      "xgboost": {
+        "accuracy": 0.6179727427597955,
+        "macro_f1": 0.53990855582633
+      },
+      "random_forest_rerun": {
+        "accuracy": 0.6077512776831345,
+        "macro_f1": 0.5143211835624929
+      },
+      "xgboost_rerun": {
+        "accuracy": 0.6179727427597955,
+        "macro_f1": 0.53990855582633
+      }
+    },
+    "legacy_mlData_shape": [
+      23478,
+      78
+    ]
+  }
+}
