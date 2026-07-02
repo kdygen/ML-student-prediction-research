@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+.ipynb_checkpoints/
+
+# macOS
+.DS_Store
+
+# VS Code / Cursor
+.vscode/
+
+# Data
+data/raw/**/*.csv
+
+# Optional experiment outputs
+results/**/*.pkl
+results/**/*.joblib
+results/**/*.parquet
