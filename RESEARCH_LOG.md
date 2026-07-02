@@ -47,9 +47,72 @@ Next Ideas:
 
 ## Current Status
 
-Baseline v1 established (2026-07-02). The official verified baseline is the current
-notebook implementation run unchanged across all defined cutoffs. See
-`reports/baseline_v1.md` and `reports/baseline_v1_results.json`.
+Baseline v2 established (2026-07-02). Official reference is now the leakage-corrected
+pipeline: three assessment features were switched from due-date to submission-date filtering
+to remove confirmed future-information leakage. See `reports/baseline_v2.md`,
+`reports/baseline_v2_results.json`, and `reports/leakage_audit.md`. Baseline v1 remains as the
+immutable prior baseline (`reports/baseline_v1.md`).
+
+---
+
+## Baseline v2
+
+Date: 2026-07-02
+
+Objective: Create a leakage-corrected early-prediction benchmark by auditing every active
+feature and fixing any that use information not available at the cutoff.
+
+Hypothesis: The assessment-derived features use future information (scores of work not yet
+submitted at the cutoff). Removing that leakage yields a more valid benchmark without
+destroying predictive value.
+
+Implementation: Full leakage audit of all 17 active features (`reports/leakage_audit.md`).
+Root cause: `weighted_average`, `clicks_per_assessment` (via `assessment_count`), and
+`recovery_slope` filtered assessments by DUE date (`assessments.date <= CUTOFF`), which leaks
+work submitted after the cutoff and discards work submitted before it. Fix: filter by
+`date_submitted <= CUTOFF` (the day a score first exists). The ONLY change is the filter
+predicate — grouping, weighting, fillna, row membership, split, models, and environment are
+unchanged. Implemented as an additive notebook section inserted before the split (v1 cells
+preserved as history, then overwritten in `mlData`); single notebook, still driven by only the
+`CUTOFF` variable. Evidence at cutoff 30: 473 leaked late scores (2.1%), 4,962 discarded early
+submissions; `weighted_average` changed for 1,419 students (428 → 0), `clicks_per_assessment`
+for 3,098, `recovery_slope` for 2,642.
+
+Features Added: None. Features Redesigned (3): `weighted_average`, `clicks_per_assessment`,
+`recovery_slope` (due-date → submission-date filter). 14 features unchanged/SAFE (9
+VLE/behavioural, `assessment_focus`, 4 education dummies).
+
+Features Removed: None (removal would destroy real early signal; every feature justified).
+
+Models Evaluated: same as v1 (LogReg, Decision Tree, Random Forest, XGBoost multiclass; binary
+RF pairs). Environment pinned identical to v1 (sklearn 1.6.1 / pandas 2.2.2 / numpy 2.0.2).
+
+Validation Strategy: unchanged — `train_test_split(test_size=0.2, random_state=42)`, 80/20, no
+stratification (multiclass); binary pairs stratified. Membership identical to v1.
+
+Results (multiclass accuracy / macro-F1; pinned sklearn 1.6.1, macOS/arm64):
+
+| Cutoff | mlData | LogReg | Tree | RF | XGB |
+|-------:|:------|:------|:-----|:---|:----|
+| 14  | (1188, 78)  | 0.3403 / 0.3135 | 0.5210 / 0.3350 | 0.4832 / 0.3003 | 0.4874 / 0.3646 |
+| 30  | (19300, 78) | 0.3904 / 0.3857 | 0.5044 / 0.3167 | 0.5122 / 0.3731 | 0.5189 / 0.3948 |
+| 60  | (23411, 78) | 0.4281 / 0.4206 | 0.5253 / 0.3645 | 0.5447 / 0.4161 | 0.5499 / 0.4425 |
+| 90  | (23452, 78) | 0.4498 / 0.4394 | 0.5543 / 0.4285 | 0.5670 / 0.4458 | 0.5760 / 0.4735 |
+| 140 | (23478, 78) | 0.4977 / 0.4858 | 0.5730 / 0.4859 | 0.6078 / 0.5143 | 0.6180 / 0.5399 |
+
+Observations: Removing leakage was performance-neutral overall and clearly positive at the
+earliest cutoffs (cutoff 14: XGB +0.050 acc / +0.041 F1; cutoff 30: RF/XGB/LogReg up), because
+v1 was starved of early data and v2 recovers legitimately-available early submissions. Cutoffs
+60/90/140 are neutral (±0.004 acc). Binary score-driven tasks at cutoff 14 dropped (Pass-vs-Fail
+−0.034, Distinction-vs-Fail −0.051) — those were inflated by the leak. XGBoost remains strongest.
+
+Decision: Register as official Baseline v2 (leakage-corrected). Compare future experiments
+against these numbers. Baseline v1 is immutable.
+
+Next Ideas: (v3) fix sample-membership survivorship leakage — seed `mlData` from all registered
+students (studentInfo/studentRegistration) rather than only those who submitted coursework, so
+membership no longer depends on future behaviour. Also audit `study_spread`/ratio features'
+cutoff-dependence and consider student-level grouped splits.
 
 ---
 

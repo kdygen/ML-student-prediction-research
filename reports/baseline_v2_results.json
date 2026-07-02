@@ -1,0 +1,632 @@
+{
+  "14": {
+    "cutoff": 14,
+    "models": {
+      "logreg": {
+        "accuracy": 0.3403361344537815,
+        "macro_f1": 0.3135029742282813
+      },
+      "decision_tree": {
+        "accuracy": 0.5210084033613446,
+        "macro_f1": 0.3350277990433025
+      },
+      "random_forest": {
+        "accuracy": 0.4831932773109244,
+        "macro_f1": 0.3003442059842162
+      },
+      "xgboost": {
+        "accuracy": 0.48739495798319327,
+        "macro_f1": 0.36456099794514424
+      },
+      "random_forest_rerun": {
+        "accuracy": 0.4831932773109244,
+        "macro_f1": 0.3003442059842162
+      },
+      "xgboost_rerun": {
+        "accuracy": 0.48739495798319327,
+        "macro_f1": 0.36456099794514424
+      }
+    },
+    "binary": [
+      {
+        "Binary Task": "Pass vs Fail",
+        "Accuracy": 0.6228571428571429
+      },
+      {
+        "Binary Task": "Distinction vs Fail",
+        "Accuracy": 0.7216494845360825
+      },
+      {
+        "Binary Task": "Distinction vs Pass",
+        "Accuracy": 0.7793103448275862
+      },
+      {
+        "Binary Task": "Withdrawn vs Pass",
+        "Accuracy": 0.7746478873239436
+      }
+    ],
+    "mlData_shape": [
+      1188,
+      78
+    ],
+    "features": [
+      "weighted_average",
+      "active_days",
+      "clicks_per_day",
+      "clicks_per_assessment",
+      "study_spread",
+      "burstiness",
+      "resource_ratio",
+      "oucontent_ratio",
+      "homepage_ratio",
+      "forumng_ratio",
+      "quiz_ratio",
+      "assessment_focus",
+      "recovery_slope",
+      "highest_education_HE Qualification",
+      "highest_education_Lower Than A Level",
+      "highest_education_No Formal quals",
+      "highest_education_Post Graduate Qualification"
+    ],
+    "split": {
+      "X_shape": [
+        1188,
+        17
+      ],
+      "X_train_shape": [
+        950,
+        17
+      ],
+      "X_test_shape": [
+        238,
+        17
+      ],
+      "test_size": 0.2,
+      "random_state": 42,
+      "stratify": false,
+      "target": "target_multi"
+    },
+    "target_dist": {
+      "0": 148,
+      "1": 316,
+      "2": 558,
+      "3": 166
+    },
+    "feature_summary": {
+      "weighted_average": {
+        "count": 1188.0,
+        "mean": 0.654653872959787,
+        "std": 0.22928810358571253,
+        "min": 0.0,
+        "25%": 0.61,
+        "50%": 0.71,
+        "75%": 0.7999999999999999,
+        "max": 0.9800000000000001
+      },
+      "clicks_per_assessment": {
+        "count": 1188.0,
+        "mean": 64.44000144543074,
+        "std": 97.67060971728958,
+        "min": 0.0,
+        "25%": 14.5,
+        "50%": 36.0,
+        "75%": 77.5,
+        "max": 1453.0
+      },
+      "recovery_slope": {
+        "count": 1188.0,
+        "mean": 0.13761256747367856,
+        "std": 1.488515515792975,
+        "min": -14.0,
+        "25%": 0.0,
+        "50%": 0.0,
+        "75%": 0.0,
+        "max": 24.0
+      }
+    }
+  },
+  "30": {
+    "cutoff": 30,
+    "models": {
+      "logreg": {
+        "accuracy": 0.39041450777202075,
+        "macro_f1": 0.38570350002883763
+      },
+      "decision_tree": {
+        "accuracy": 0.5044041450777202,
+        "macro_f1": 0.31666304342029744
+      },
+      "random_forest": {
+        "accuracy": 0.5121761658031088,
+        "macro_f1": 0.37308792687996567
+      },
+      "xgboost": {
+        "accuracy": 0.5189119170984456,
+        "macro_f1": 0.39478375912561264
+      },
+      "random_forest_rerun": {
+        "accuracy": 0.5121761658031088,
+        "macro_f1": 0.37308792687996567
+      },
+      "xgboost_rerun": {
+        "accuracy": 0.5189119170984456,
+        "macro_f1": 0.39478375912561264
+      }
+    },
+    "binary": [
+      {
+        "Binary Task": "Pass vs Fail",
+        "Accuracy": 0.7194892977844536
+      },
+      {
+        "Binary Task": "Distinction vs Fail",
+        "Accuracy": 0.821401077752117
+      },
+      {
+        "Binary Task": "Distinction vs Pass",
+        "Accuracy": 0.8099135970895862
+      },
+      {
+        "Binary Task": "Withdrawn vs Pass",
+        "Accuracy": 0.7505854800936768
+      }
+    ],
+    "mlData_shape": [
+      19300,
+      78
+    ],
+    "features": [
+      "weighted_average",
+      "active_days",
+      "clicks_per_day",
+      "clicks_per_assessment",
+      "study_spread",
+      "burstiness",
+      "resource_ratio",
+      "oucontent_ratio",
+      "homepage_ratio",
+      "forumng_ratio",
+      "quiz_ratio",
+      "assessment_focus",
+      "recovery_slope",
+      "highest_education_HE Qualification",
+      "highest_education_Lower Than A Level",
+      "highest_education_No Formal quals",
+      "highest_education_Post Graduate Qualification"
+    ],
+    "split": {
+      "X_shape": [
+        19300,
+        17
+      ],
+      "X_train_shape": [
+        15440,
+        17
+      ],
+      "X_test_shape": [
+        3860,
+        17
+      ],
+      "test_size": 0.2,
+      "random_state": 42,
+      "stratify": false,
+      "target": "target_multi"
+    },
+    "target_dist": {
+      "0": 3900,
+      "1": 4406,
+      "2": 8906,
+      "3": 2088
+    },
+    "feature_summary": {
+      "weighted_average": {
+        "count": 19300.0,
+        "mean": 0.7213191635303097,
+        "std": 0.19938840129600421,
+        "min": 0.0,
+        "25%": 0.6430827067669174,
+        "50%": 0.76,
+        "75%": 0.86,
+        "max": 1.0
+      },
+      "clicks_per_assessment": {
+        "count": 19300.0,
+        "mean": 199.2062863459224,
+        "std": 203.76202824804332,
+        "min": 0.0,
+        "25%": 69.5,
+        "50%": 140.5,
+        "75%": 263.5,
+        "max": 2645.0
+      },
+      "recovery_slope": {
+        "count": 19300.0,
+        "mean": 0.630809839699736,
+        "std": 5.979859381209786,
+        "min": -71.0,
+        "25%": 0.0,
+        "50%": 0.0,
+        "75%": 0.0,
+        "max": 68.0
+      }
+    }
+  },
+  "60": {
+    "cutoff": 60,
+    "models": {
+      "logreg": {
+        "accuracy": 0.42814435191116806,
+        "macro_f1": 0.42056733618358666
+      },
+      "decision_tree": {
+        "accuracy": 0.5253042921204356,
+        "macro_f1": 0.36454236968176046
+      },
+      "random_forest": {
+        "accuracy": 0.5447362801622891,
+        "macro_f1": 0.41605372437872545
+      },
+      "xgboost": {
+        "accuracy": 0.5498612000854153,
+        "macro_f1": 0.4424822492016478
+      },
+      "random_forest_rerun": {
+        "accuracy": 0.5447362801622891,
+        "macro_f1": 0.41605372437872545
+      },
+      "xgboost_rerun": {
+        "accuracy": 0.5498612000854153,
+        "macro_f1": 0.4424822492016478
+      }
+    },
+    "binary": [
+      {
+        "Binary Task": "Pass vs Fail",
+        "Accuracy": 0.7488556606652426
+      },
+      {
+        "Binary Task": "Distinction vs Fail",
+        "Accuracy": 0.8576010262989096
+      },
+      {
+        "Binary Task": "Distinction vs Pass",
+        "Accuracy": 0.8256317689530686
+      },
+      {
+        "Binary Task": "Withdrawn vs Pass",
+        "Accuracy": 0.7890524967989757
+      }
+    ],
+    "mlData_shape": [
+      23411,
+      78
+    ],
+    "features": [
+      "weighted_average",
+      "active_days",
+      "clicks_per_day",
+      "clicks_per_assessment",
+      "study_spread",
+      "burstiness",
+      "resource_ratio",
+      "oucontent_ratio",
+      "homepage_ratio",
+      "forumng_ratio",
+      "quiz_ratio",
+      "assessment_focus",
+      "recovery_slope",
+      "highest_education_HE Qualification",
+      "highest_education_Lower Than A Level",
+      "highest_education_No Formal quals",
+      "highest_education_Post Graduate Qualification"
+    ],
+    "split": {
+      "X_shape": [
+        23411,
+        17
+      ],
+      "X_train_shape": [
+        18728,
+        17
+      ],
+      "X_test_shape": [
+        4683,
+        17
+      ],
+      "test_size": 0.2,
+      "random_state": 42,
+      "stratify": false,
+      "target": "target_multi"
+    },
+    "target_dist": {
+      "0": 4400,
+      "1": 5163,
+      "2": 11220,
+      "3": 2628
+    },
+    "feature_summary": {
+      "weighted_average": {
+        "count": 23411.0,
+        "mean": 0.7380416461140277,
+        "std": 0.17029039935684265,
+        "min": 0.0,
+        "25%": 0.65,
+        "50%": 0.7658333333333333,
+        "75%": 0.86,
+        "max": 1.0
+      },
+      "clicks_per_assessment": {
+        "count": 23411.0,
+        "mean": 203.86218750957013,
+        "std": 204.82418379180214,
+        "min": 0.0,
+        "25%": 72.0,
+        "50%": 145.33333333333334,
+        "75%": 269.0,
+        "max": 2957.5
+      },
+      "recovery_slope": {
+        "count": 23411.0,
+        "mean": 2.493334895542191,
+        "std": 17.48471009568466,
+        "min": -90.0,
+        "25%": -2.0,
+        "50%": 0.0,
+        "75%": 8.0,
+        "max": 99.0
+      }
+    }
+  },
+  "90": {
+    "cutoff": 90,
+    "models": {
+      "logreg": {
+        "accuracy": 0.44979748454487317,
+        "macro_f1": 0.4394360985552197
+      },
+      "decision_tree": {
+        "accuracy": 0.5542528245576636,
+        "macro_f1": 0.42847343189397163
+      },
+      "random_forest": {
+        "accuracy": 0.5670432743551481,
+        "macro_f1": 0.4458186002710325
+      },
+      "xgboost": {
+        "accuracy": 0.5759965892133874,
+        "macro_f1": 0.4735374940458984
+      },
+      "random_forest_rerun": {
+        "accuracy": 0.5670432743551481,
+        "macro_f1": 0.4458186002710325
+      },
+      "xgboost_rerun": {
+        "accuracy": 0.5759965892133874,
+        "macro_f1": 0.4735374940458984
+      }
+    },
+    "binary": [
+      {
+        "Binary Task": "Pass vs Fail",
+        "Accuracy": 0.7626447288238879
+      },
+      {
+        "Binary Task": "Distinction vs Fail",
+        "Accuracy": 0.882842509603073
+      },
+      {
+        "Binary Task": "Distinction vs Pass",
+        "Accuracy": 0.8344155844155844
+      },
+      {
+        "Binary Task": "Withdrawn vs Pass",
+        "Accuracy": 0.8277404921700223
+      }
+    ],
+    "mlData_shape": [
+      23452,
+      78
+    ],
+    "features": [
+      "weighted_average",
+      "active_days",
+      "clicks_per_day",
+      "clicks_per_assessment",
+      "study_spread",
+      "burstiness",
+      "resource_ratio",
+      "oucontent_ratio",
+      "homepage_ratio",
+      "forumng_ratio",
+      "quiz_ratio",
+      "assessment_focus",
+      "recovery_slope",
+      "highest_education_HE Qualification",
+      "highest_education_Lower Than A Level",
+      "highest_education_No Formal quals",
+      "highest_education_Post Graduate Qualification"
+    ],
+    "split": {
+      "X_shape": [
+        23452,
+        17
+      ],
+      "X_train_shape": [
+        18761,
+        17
+      ],
+      "X_test_shape": [
+        4691,
+        17
+      ],
+      "test_size": 0.2,
+      "random_state": 42,
+      "stratify": false,
+      "target": "target_multi"
+    },
+    "target_dist": {
+      "0": 4414,
+      "1": 5180,
+      "2": 11230,
+      "3": 2628
+    },
+    "feature_summary": {
+      "weighted_average": {
+        "count": 23452.0,
+        "mean": 0.736347990278691,
+        "std": 0.16298012933879086,
+        "min": 0.0,
+        "25%": 0.65,
+        "50%": 0.76,
+        "75%": 0.8558333333333333,
+        "max": 1.0
+      },
+      "clicks_per_assessment": {
+        "count": 23452.0,
+        "mean": 200.92675286945604,
+        "std": 196.77485658076932,
+        "min": 0.0,
+        "25%": 73.0,
+        "50%": 144.45,
+        "75%": 265.4,
+        "max": 2688.6666666666665
+      },
+      "recovery_slope": {
+        "count": 23452.0,
+        "mean": 1.077752995034037,
+        "std": 16.81282090643344,
+        "min": -90.0,
+        "25%": -4.0,
+        "50%": 0.0,
+        "75%": 5.5,
+        "max": 99.0
+      }
+    }
+  },
+  "140": {
+    "cutoff": 140,
+    "models": {
+      "logreg": {
+        "accuracy": 0.49765758091993184,
+        "macro_f1": 0.48576874697860806
+      },
+      "decision_tree": {
+        "accuracy": 0.5730408858603067,
+        "macro_f1": 0.4859397588441502
+      },
+      "random_forest": {
+        "accuracy": 0.6077512776831345,
+        "macro_f1": 0.5143211835624929
+      },
+      "xgboost": {
+        "accuracy": 0.6179727427597955,
+        "macro_f1": 0.53990855582633
+      },
+      "random_forest_rerun": {
+        "accuracy": 0.6077512776831345,
+        "macro_f1": 0.5143211835624929
+      },
+      "xgboost_rerun": {
+        "accuracy": 0.6179727427597955,
+        "macro_f1": 0.53990855582633
+      }
+    },
+    "binary": [
+      {
+        "Binary Task": "Pass vs Fail",
+        "Accuracy": 0.8021911138161899
+      },
+      {
+        "Binary Task": "Distinction vs Fail",
+        "Accuracy": 0.9239130434782609
+      },
+      {
+        "Binary Task": "Distinction vs Pass",
+        "Accuracy": 0.8344752975117201
+      },
+      {
+        "Binary Task": "Withdrawn vs Pass",
+        "Accuracy": 0.851213282247765
+      }
+    ],
+    "mlData_shape": [
+      23478,
+      78
+    ],
+    "features": [
+      "weighted_average",
+      "active_days",
+      "clicks_per_day",
+      "clicks_per_assessment",
+      "study_spread",
+      "burstiness",
+      "resource_ratio",
+      "oucontent_ratio",
+      "homepage_ratio",
+      "forumng_ratio",
+      "quiz_ratio",
+      "assessment_focus",
+      "recovery_slope",
+      "highest_education_HE Qualification",
+      "highest_education_Lower Than A Level",
+      "highest_education_No Formal quals",
+      "highest_education_Post Graduate Qualification"
+    ],
+    "split": {
+      "X_shape": [
+        23478,
+        17
+      ],
+      "X_train_shape": [
+        18782,
+        17
+      ],
+      "X_test_shape": [
+        4696,
+        17
+      ],
+      "test_size": 0.2,
+      "random_state": 42,
+      "stratify": false,
+      "target": "target_multi"
+    },
+    "target_dist": {
+      "0": 4423,
+      "1": 5192,
+      "2": 11235,
+      "3": 2628
+    },
+    "feature_summary": {
+      "weighted_average": {
+        "count": 23478.0,
+        "mean": 0.7186596515493351,
+        "std": 0.16442162282040745,
+        "min": 0.0,
+        "25%": 0.626774193548387,
+        "50%": 0.744630376344086,
+        "75%": 0.84,
+        "max": 1.0
+      },
+      "clicks_per_assessment": {
+        "count": 23478.0,
+        "mean": 203.32172187201255,
+        "std": 198.24770730219768,
+        "min": 0.0,
+        "25%": 72.6,
+        "50%": 148.66666666666666,
+        "75%": 270.0,
+        "max": 4507.666666666667
+      },
+      "recovery_slope": {
+        "count": 23478.0,
+        "mean": -0.7079361975541377,
+        "std": 11.178041846092906,
+        "min": -90.0,
+        "25%": -4.0,
+        "50%": 0.0,
+        "75%": 2.6666666666666665,
+        "max": 99.0
+      }
+    }
+  }
+}
