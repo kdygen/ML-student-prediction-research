@@ -1,0 +1,472 @@
+{
+  "14": {
+    "cutoff": 14,
+    "models": {
+      "logreg": {
+        "accuracy": 0.31512605042016806,
+        "macro_f1": 0.29501286896638457
+      },
+      "decision_tree": {
+        "accuracy": 0.5042016806722689,
+        "macro_f1": 0.2772989789762953
+      },
+      "random_forest": {
+        "accuracy": 0.46638655462184875,
+        "macro_f1": 0.2968756155902631
+      },
+      "xgboost": {
+        "accuracy": 0.4369747899159664,
+        "macro_f1": 0.3233911329025181
+      },
+      "random_forest_rerun": {
+        "accuracy": 0.46638655462184875,
+        "macro_f1": 0.2968756155902631
+      },
+      "xgboost_rerun": {
+        "accuracy": 0.4369747899159664,
+        "macro_f1": 0.3233911329025181
+      }
+    },
+    "binary": [
+      {
+        "Binary Task": "Pass vs Fail",
+        "Accuracy": 0.6571428571428571
+      },
+      {
+        "Binary Task": "Distinction vs Fail",
+        "Accuracy": 0.7731958762886598
+      },
+      {
+        "Binary Task": "Distinction vs Pass",
+        "Accuracy": 0.7793103448275862
+      },
+      {
+        "Binary Task": "Withdrawn vs Pass",
+        "Accuracy": 0.7676056338028169
+      }
+    ],
+    "mlData_shape": [
+      1188,
+      78
+    ],
+    "features": [
+      "weighted_average",
+      "active_days",
+      "clicks_per_day",
+      "clicks_per_assessment",
+      "study_spread",
+      "burstiness",
+      "resource_ratio",
+      "oucontent_ratio",
+      "homepage_ratio",
+      "forumng_ratio",
+      "quiz_ratio",
+      "assessment_focus",
+      "recovery_slope",
+      "highest_education_HE Qualification",
+      "highest_education_Lower Than A Level",
+      "highest_education_No Formal quals",
+      "highest_education_Post Graduate Qualification"
+    ],
+    "split": {
+      "X_shape": [
+        1188,
+        17
+      ],
+      "X_train_shape": [
+        950,
+        17
+      ],
+      "X_test_shape": [
+        238,
+        17
+      ],
+      "test_size": 0.2,
+      "random_state": 42,
+      "stratify": false,
+      "target": "target_multi"
+    },
+    "target_dist": {
+      "0": 148,
+      "1": 316,
+      "2": 558,
+      "3": 166
+    }
+  },
+  "30": {
+    "cutoff": 30,
+    "models": {
+      "logreg": {
+        "accuracy": 0.38860103626943004,
+        "macro_f1": 0.3851279437935692
+      },
+      "decision_tree": {
+        "accuracy": 0.5082901554404146,
+        "macro_f1": 0.3382864453540987
+      },
+      "random_forest": {
+        "accuracy": 0.5062176165803108,
+        "macro_f1": 0.3618913499036205
+      },
+      "xgboost": {
+        "accuracy": 0.5142487046632125,
+        "macro_f1": 0.38361258327526415
+      },
+      "random_forest_rerun": {
+        "accuracy": 0.5062176165803108,
+        "macro_f1": 0.3618913499036205
+      },
+      "xgboost_rerun": {
+        "accuracy": 0.5142487046632125,
+        "macro_f1": 0.38361258327526415
+      }
+    },
+    "binary": [
+      {
+        "Binary Task": "Pass vs Fail",
+        "Accuracy": 0.7168606834397296
+      },
+      {
+        "Binary Task": "Distinction vs Fail",
+        "Accuracy": 0.821401077752117
+      },
+      {
+        "Binary Task": "Distinction vs Pass",
+        "Accuracy": 0.8135516143701682
+      },
+      {
+        "Binary Task": "Withdrawn vs Pass",
+        "Accuracy": 0.7459016393442623
+      }
+    ],
+    "mlData_shape": [
+      19300,
+      78
+    ],
+    "features": [
+      "weighted_average",
+      "active_days",
+      "clicks_per_day",
+      "clicks_per_assessment",
+      "study_spread",
+      "burstiness",
+      "resource_ratio",
+      "oucontent_ratio",
+      "homepage_ratio",
+      "forumng_ratio",
+      "quiz_ratio",
+      "assessment_focus",
+      "recovery_slope",
+      "highest_education_HE Qualification",
+      "highest_education_Lower Than A Level",
+      "highest_education_No Formal quals",
+      "highest_education_Post Graduate Qualification"
+    ],
+    "split": {
+      "X_shape": [
+        19300,
+        17
+      ],
+      "X_train_shape": [
+        15440,
+        17
+      ],
+      "X_test_shape": [
+        3860,
+        17
+      ],
+      "test_size": 0.2,
+      "random_state": 42,
+      "stratify": false,
+      "target": "target_multi"
+    },
+    "target_dist": {
+      "0": 3900,
+      "1": 4406,
+      "2": 8906,
+      "3": 2088
+    }
+  },
+  "60": {
+    "cutoff": 60,
+    "models": {
+      "logreg": {
+        "accuracy": 0.42729019859064704,
+        "macro_f1": 0.41872121275816787
+      },
+      "decision_tree": {
+        "accuracy": 0.5274396754217382,
+        "macro_f1": 0.38093575201452207
+      },
+      "random_forest": {
+        "accuracy": 0.547085201793722,
+        "macro_f1": 0.41274508200059234
+      },
+      "xgboost": {
+        "accuracy": 0.5509288917360666,
+        "macro_f1": 0.44210441152249036
+      },
+      "random_forest_rerun": {
+        "accuracy": 0.547085201793722,
+        "macro_f1": 0.41274508200059234
+      },
+      "xgboost_rerun": {
+        "accuracy": 0.5509288917360666,
+        "macro_f1": 0.44210441152249036
+      }
+    },
+    "binary": [
+      {
+        "Binary Task": "Pass vs Fail",
+        "Accuracy": 0.7522123893805309
+      },
+      {
+        "Binary Task": "Distinction vs Fail",
+        "Accuracy": 0.8524695317511225
+      },
+      {
+        "Binary Task": "Distinction vs Pass",
+        "Accuracy": 0.8249097472924187
+      },
+      {
+        "Binary Task": "Withdrawn vs Pass",
+        "Accuracy": 0.7909731113956466
+      }
+    ],
+    "mlData_shape": [
+      23411,
+      78
+    ],
+    "features": [
+      "weighted_average",
+      "active_days",
+      "clicks_per_day",
+      "clicks_per_assessment",
+      "study_spread",
+      "burstiness",
+      "resource_ratio",
+      "oucontent_ratio",
+      "homepage_ratio",
+      "forumng_ratio",
+      "quiz_ratio",
+      "assessment_focus",
+      "recovery_slope",
+      "highest_education_HE Qualification",
+      "highest_education_Lower Than A Level",
+      "highest_education_No Formal quals",
+      "highest_education_Post Graduate Qualification"
+    ],
+    "split": {
+      "X_shape": [
+        23411,
+        17
+      ],
+      "X_train_shape": [
+        18728,
+        17
+      ],
+      "X_test_shape": [
+        4683,
+        17
+      ],
+      "test_size": 0.2,
+      "random_state": 42,
+      "stratify": false,
+      "target": "target_multi"
+    },
+    "target_dist": {
+      "0": 4400,
+      "1": 5163,
+      "2": 11220,
+      "3": 2628
+    }
+  },
+  "90": {
+    "cutoff": 90,
+    "models": {
+      "logreg": {
+        "accuracy": 0.4506501811980388,
+        "macro_f1": 0.43878821916997834
+      },
+      "decision_tree": {
+        "accuracy": 0.5508420379450011,
+        "macro_f1": 0.4434583219946353
+      },
+      "random_forest": {
+        "accuracy": 0.567469622681731,
+        "macro_f1": 0.4476298555713917
+      },
+      "xgboost": {
+        "accuracy": 0.5781283308463014,
+        "macro_f1": 0.47557653491552887
+      },
+      "random_forest_rerun": {
+        "accuracy": 0.567469622681731,
+        "macro_f1": 0.4476298555713917
+      },
+      "xgboost_rerun": {
+        "accuracy": 0.5781283308463014,
+        "macro_f1": 0.47557653491552887
+      }
+    },
+    "binary": [
+      {
+        "Binary Task": "Pass vs Fail",
+        "Accuracy": 0.7629494210847044
+      },
+      {
+        "Binary Task": "Distinction vs Fail",
+        "Accuracy": 0.8796414852752881
+      },
+      {
+        "Binary Task": "Distinction vs Pass",
+        "Accuracy": 0.8376623376623377
+      },
+      {
+        "Binary Task": "Withdrawn vs Pass",
+        "Accuracy": 0.8344519015659956
+      }
+    ],
+    "mlData_shape": [
+      23452,
+      78
+    ],
+    "features": [
+      "weighted_average",
+      "active_days",
+      "clicks_per_day",
+      "clicks_per_assessment",
+      "study_spread",
+      "burstiness",
+      "resource_ratio",
+      "oucontent_ratio",
+      "homepage_ratio",
+      "forumng_ratio",
+      "quiz_ratio",
+      "assessment_focus",
+      "recovery_slope",
+      "highest_education_HE Qualification",
+      "highest_education_Lower Than A Level",
+      "highest_education_No Formal quals",
+      "highest_education_Post Graduate Qualification"
+    ],
+    "split": {
+      "X_shape": [
+        23452,
+        17
+      ],
+      "X_train_shape": [
+        18761,
+        17
+      ],
+      "X_test_shape": [
+        4691,
+        17
+      ],
+      "test_size": 0.2,
+      "random_state": 42,
+      "stratify": false,
+      "target": "target_multi"
+    },
+    "target_dist": {
+      "0": 4414,
+      "1": 5180,
+      "2": 11230,
+      "3": 2628
+    }
+  },
+  "140": {
+    "cutoff": 140,
+    "models": {
+      "logreg": {
+        "accuracy": 0.5002129471890971,
+        "macro_f1": 0.4867668251156074
+      },
+      "decision_tree": {
+        "accuracy": 0.5770868824531517,
+        "macro_f1": 0.49143172607946123
+      },
+      "random_forest": {
+        "accuracy": 0.610519591141397,
+        "macro_f1": 0.5135282834592342
+      },
+      "xgboost": {
+        "accuracy": 0.6220187393526405,
+        "macro_f1": 0.5406519077943688
+      },
+      "random_forest_rerun": {
+        "accuracy": 0.610519591141397,
+        "macro_f1": 0.5135282834592342
+      },
+      "xgboost_rerun": {
+        "accuracy": 0.6220187393526405,
+        "macro_f1": 0.5406519077943688
+      }
+    },
+    "binary": [
+      {
+        "Binary Task": "Pass vs Fail",
+        "Accuracy": 0.8064516129032258
+      },
+      {
+        "Binary Task": "Distinction vs Fail",
+        "Accuracy": 0.9239130434782609
+      },
+      {
+        "Binary Task": "Distinction vs Pass",
+        "Accuracy": 0.8395239812477461
+      },
+      {
+        "Binary Task": "Withdrawn vs Pass",
+        "Accuracy": 0.8560025542784163
+      }
+    ],
+    "mlData_shape": [
+      23478,
+      78
+    ],
+    "features": [
+      "weighted_average",
+      "active_days",
+      "clicks_per_day",
+      "clicks_per_assessment",
+      "study_spread",
+      "burstiness",
+      "resource_ratio",
+      "oucontent_ratio",
+      "homepage_ratio",
+      "forumng_ratio",
+      "quiz_ratio",
+      "assessment_focus",
+      "recovery_slope",
+      "highest_education_HE Qualification",
+      "highest_education_Lower Than A Level",
+      "highest_education_No Formal quals",
+      "highest_education_Post Graduate Qualification"
+    ],
+    "split": {
+      "X_shape": [
+        23478,
+        17
+      ],
+      "X_train_shape": [
+        18782,
+        17
+      ],
+      "X_test_shape": [
+        4696,
+        17
+      ],
+      "test_size": 0.2,
+      "random_state": 42,
+      "stratify": false,
+      "target": "target_multi"
+    },
+    "target_dist": {
+      "0": 4423,
+      "1": 5192,
+      "2": 11235,
+      "3": 2628
+    }
+  }
+}
