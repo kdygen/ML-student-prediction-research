@@ -47,13 +47,176 @@ Next Ideas:
 
 ## Current Status
 
-Pipeline frozen and cached (2026-07-02): canonical v3 datasets live in `data/processed/p3/`
-(one parquet per cutoff + hash/env/schema manifests; parquet gitignored, manifests tracked).
-The cache is the mandatory input for all experiments. Experiment 001 complete: best valid
-model = baseline XGBoost + class-prior threshold adjustment (τ=0.75), macro-F1 +4–6 pp over
-Baseline v3 at every cutoff (25/25 paired seeds), Withdrawn recall 3–18× baseline; 0.70
-macro-F1 shown unrealistic under the leak-free protocol (practical ceiling ≈0.45–0.48 at
-cutoff 30). See `reports/experiment_001.md`. Baselines v1/v2/v3 immutable.
+Baseline v4 established (2026-07-02) — the official benchmark. The 16 Experiment-002
+features passed a full scientific promotion audit (independent recomputation to 2.3e-13,
+leakage proofs, redundancy scan, pre-registered leave-one-group-out ablations at two
+cutoffs) and were promoted into the pipeline: 35 active features, same v3 population /
+grouped protocol / models. Every model improves on both accuracy and macro-F1 at every
+cutoff (50/50 paired repeat-seeds positive); GroupKFold(5) agrees with repeated splits.
+New canonical cache `data/processed/p4/` (rebuild-deterministic, reload-verified); p3 and
+Baselines v1/v2/v3 immutable (verified by hash). See `reports/baseline_v4.md`,
+`reports/baseline_v4_feature_audit.md`. Future experiments start from p4 and compare
+within-cutoff against `baseline_v4_results.json`.
+
+---
+
+## Binary Evaluation under the v4 Protocol
+
+Date: 2026-07-02
+
+Objective: Replace the notebook's original `#Binary RF` results (pre-v2 leaky features,
+survivorship-biased population, random row split with student overlap) with the four pairwise
+tasks evaluated under the official v4 protocol. Secondary view only — no change to the
+official 4-class benchmark.
+
+Implementation: One additive markdown + code section appended to the end of the notebook
+(original binary cell preserved as history; 0 committed cells modified). Per pair: v4
+population (`mlDataV4`), `GroupShuffleSplit(group=id_student, test_size=0.2, seed=42)` with a
+zero-overlap assert, `RandomForestClassifier(random_state=42)` unchanged from the original
+binary cell. Both the v3 (19) and v4 (35) feature sets run on identical splits to isolate the
+promoted-feature effect. Validated by executing the exact cell source against the p4 cached
+frames for all cutoffs.
+
+Features Added: none. Features Removed: none. Models Evaluated: RF only (matching the
+original binary section).
+
+Results (v4 accuracy, c14→c140): Pass/Fail 0.698→0.843; Distinction/Fail 0.787→0.928;
+Distinction/Pass 0.799→0.836; Withdrawn/Pass 0.716→0.917. Promoted features improve 19/20
+task×cutoff cells (+1–3 pp; sole exception Distinction/Pass c14 −0.002, within noise).
+Caveat: Distinction/Pass and Withdrawn/Pass are imbalanced — positive-class F1 (0.08→0.47 and
+0.37→0.59 respectively) must be read alongside accuracy; default-threshold RF is
+precision-heavy on the minority class.
+
+Decision: Recorded as the official binary view of Baseline v4 (`reports/binary_v4.md`,
+`reports/binary_v4_results.json`). The 4-class task in `baseline_v4.md` remains the primary
+benchmark.
+
+Next Ideas: threshold tuning (τ-style) on the Withdrawn/Pass task for recall-oriented
+operating points; the withdraw-within-k-weeks binary experiment already proposed.
+
+---
+
+## Baseline v4 — Verified Feature Promotion
+
+Date: 2026-07-02
+
+Objective: Promote the Experiment-002 accepted features into the official baseline only
+after independent scientific verification of every feature.
+
+Hypothesis: The 16 features are implementation-correct, leakage-free, non-redundant, and
+consistently beneficial; promoting them yields a strictly better official benchmark without
+touching population, protocol, or models.
+
+Implementation: (1) Independent recomputation of all 16 features from raw OULAD tables via
+deliberately different code paths (raw-row masks vs daily aggregates, reversed merges,
+scipy rankdata vs pandas rank, sort/drop_duplicates vs groupby.min) — all matched at
+cutoffs 30 and 90, worst-case diff 2.27e-13. (2) Dependency trace + leakage proof per
+feature; hard max-date asserts (all ≤ cutoff). (3) Redundancy scan: no new feature reaches
+|r|≥0.9 vs any official feature; one within-new pair (w1_clicks~decay_clicks, r=0.948) —
+both survive leave-one-feature-out (−0.0038/−0.0010 inner F1 at c30 when removed).
+(4) Pre-registered leave-one-group-out ablations (train-only GroupKFold(3), c30+c90): every
+group's removal costs F1 at BOTH cutoffs (c30: −0.0088/−0.0096/−0.0086/−0.0023) → all 4
+groups promoted; nothing rejected. (5) Additive notebook v4 section (1 new code cell, 0
+committed cells modified; in-cell asserts: zero overlap, no dup keys, no NaN, temporal
+guards); notebook features match Experiment-002 frames to 2.3e-13. (6) Official run all
+cutoffs + repeats (seeds 0–4) + GroupKFold(5); p4 cache built with manifests, reload
+verification, and a from-scratch c030 rebuild hash match (True). p3 verified untouched.
+
+Features Added (16, verified): rank_clicks, rank_wa, rank_active_days; mean/min_submit_lead,
+late_submissions, submitted_count, first_submit_day, n_assess_types_submitted; w1–w4_clicks,
+precourse_clicks; days_since_last, decay_clicks. Features Removed: none (all candidates
+passed). Active set: 35.
+
+Models Evaluated: unchanged (LogReg balanced, Tree d5, RF 300 balanced, XGB 300/d6/lr.05).
+
+Validation Strategy: official grouped protocol; repeats seeds 0–4 + GroupKFold(5) both
+reported; all overlap asserts pass in every split.
+
+Results (GSS-42 test acc/macro-F1; XGB repeats F1 mean±std; GKF5 in report):
+
+| Cutoff | LogReg | Tree | RF | XGB | XGB rep F1 (v3 → v4) |
+|--:|:--|:--|:--|:--|:--|
+| 14  | .3478/.3468 | .4890/.3028 | .4799/.3093 | .4914/.3428 | .3030 → .3325±.006 |
+| 30  | .4014/.3972 | .5161/.3392 | .5244/.3719 | .5265/.3955 | .3804 → .4081±.005 |
+| 60  | .4621/.4451 | .5555/.3932 | .5697/.4024 | .5752/.4387 | .4233 → .4502±.005 |
+| 90  | .4866/.4624 | .5896/.4180 | .6081/.4328 | .6165/.4637 | .4392 → .4701±.008 |
+| 140 | .5570/.5040 | .6699/.4831 | .6783/.4765 | .6933/.5144 | .4743 → .5083±.003 |
+
+Observations: Every model improves on both metrics at every cutoff (only exception: LogReg
+c14 accuracy −0.003 with F1 +0.012); all 50/50 paired repeat-seed accuracy deltas positive
+(RF+XGB × 5 cutoffs × 5 seeds); GKF5 agrees with repeats within ~1σ. All four classes'
+F1 improve (c140 XGB: W .021→.090, F .650→.690, P .748→.776, D .467→.502). Plain-argmax
+Withdrawn recall remains low by construction — the Experiment-001 τ knob stays the
+deployment tool for recall-oriented operating points.
+
+Decision: Baseline v4 is the official benchmark; p4 the canonical cache. v1/v2/v3 + p3
+immutable history.
+
+Next Ideas: recall-first grouped binary "withdraw-within-k-weeks" experiment (picking up
+the rejected gaps/first_activity lead); consistent class-weighting sub-experiment; per-
+cutoff τ calibration as standard reporting.
+
+---
+
+## Experiment 002 — AutoResearch Feature Loop
+
+Date: 2026-07-02
+
+Objective: Improve the official v3 benchmark (macro-F1 first, Withdrawn recall second,
+accuracy third; 70% accuracy stretch) via an iterative propose→verify→implement→evaluate→
+accept/reject feature loop, with zero methodology compromise.
+
+Hypothesis: Temporal engagement dynamics (recency, windows), submission-timing behaviour,
+and cohort-normalized peer context carry withdrawal/failure signal the 19 aggregate v3
+features miss.
+
+Implementation: Reusable leakage-safe generator (`experiments/feature_generation_002.py`) —
+11 candidate groups / 37 columns, every column hard-filtered to date ≤ CUTOFF or
+date_submitted ≤ CUTOFF with asserts; deadlines/registration = known-in-advance facts;
+cohort ranks use peers' ≤cutoff behaviour only (never labels). Augmented frames built from
+the frozen p3 cache + raw tables (official cache untouched). Greedy loop at cutoff 30:
+GroupKFold(3) inside the seed-42 train only, τ tuned on inner folds, model fixed (baseline
+XGBoost hyperparameters), pre-registered acceptance rule (ΔF1 ≥ +0.002, or ΔF1 ≥ −0.001 with
+ΔWrec ≥ +0.02), max 5 rounds. Final: accepted set at all cutoffs — τ per cutoff by inner CV,
+one held-out-test evaluation per arm, repeats seeds 0–4 frozen, paired per-seed comparison vs
+Baseline v3 and the Exp001 winner on identical splits.
+
+Features Added (accepted, 16): module_norm (rank_clicks, rank_wa, rank_active_days),
+submission_timing (mean/min_submit_lead, late_submissions, submitted_count,
+first_submit_day, n_assess_types_submitted), recent_windows (w1–w4_clicks,
+precourse_clicks), recency_decay (days_since_last, decay_clicks).
+
+Features Rejected (documented with deltas in the report): trend, gaps, first_activity,
+diversity, score_trajectory, registration, interactions. Note: gaps/first_activity raised
+Withdrawn recall (+0.044/+0.048) at too high an F1 cost — recall-first lead for later.
+
+Models Evaluated: fixed baseline XGBoost + τ ∈ {0,…,1} only (no hyperparameter search).
+
+Validation Strategy: official v3 protocol; loop plateaued at round 5 (inner F1
+0.4129 → 0.4424 at c30).
+
+Results (repeats seeds 0–4, macro-F1; v3 / Exp001 / Exp002):
+
+| Cutoff | Baseline v3 | Exp001 | Exp002 | Wrec v3→e2 | acc@τ0 e2 (v3) |
+|--:|:--|:--|:--|:--|:--|
+| 14  | 0.3030±.003 | 0.3622±.006 | 0.3943±.005 | 0.063→0.310 | 0.480 (0.465) |
+| 30  | 0.3804±.006 | 0.4161±.008 | 0.4429±.010 | 0.146→0.275 | 0.533 (0.514) |
+| 60  | 0.4233±.004 | 0.4645±.004 | 0.4909±.005 | 0.079→0.226 | 0.587 (0.568) |
+| 90  | 0.4392±.007 | 0.4787±.006 | 0.5087±.004 | 0.041→0.286 | 0.624 (0.605) |
+| 140 | 0.4743±.005 | 0.5130±.005 | 0.5547±.005 | 0.011→0.301 | 0.698 (0.671) |
+
+All 25/25 paired deltas positive vs both references (sign test p=2⁻⁵ per cutoff); at c30
+also verified vs Exp001's actual winner rf_leaf5: 5/5 seeds, +0.019 mean. 70% accuracy not
+reached: best 69.8% at c140 (τ=0). Importance: rank_wa top at c30 (beats raw
+weighted_average); decay_clicks + days_since_last dominate at c140 — the hypothesized
+recency mechanism.
+
+Decision: Accept the 16-feature augmentation as the new best-known configuration under the
+official protocol. Cache p3 remains canonical/unmodified; promotion of accepted features to
+Baseline v4 / cache p4 deferred to a dedicated verification pass.
+
+Next Ideas: recall-first sub-experiment on the gaps/first_activity lead as a grouped binary
+"withdraw-within-k-weeks" task; Baseline v4 promotion; per-cutoff τ calibration standard.
 
 ---
 

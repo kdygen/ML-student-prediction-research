@@ -1,0 +1,79 @@
+{
+  "pipeline_version": "p4",
+  "created_at": "2026-07-02T22:47:01.583947+00:00",
+  "git_commit": "e9efb71b2c480506c0c1a77f9ef11b51f8e87d16",
+  "notebook": {
+    "file": "notebook/OULAD_early_prediction_v1 (1).ipynb",
+    "pipeline_code_sha256": "a930e45f728e28d08cc27a4acda3dc1c70748d750665f03c5d1793a17ea25578"
+  },
+  "raw_inputs": {
+    "studentInfo.csv": {
+      "bytes": 3462763,
+      "sha256": "815fbc3e2de29f79900bc63f0345a35db62c9146afaa1d86e7107b8b3beffc60"
+    },
+    "studentVle.csv": {
+      "bytes": 453836331,
+      "sha256": "52668253d876c5becbcb72185977152700cecab2942aca807fecc3dd54b937f0"
+    },
+    "studentAssessment.csv": {
+      "bytes": 5690483,
+      "sha256": "b1839e17618a5de36b6d189a242d3123f7939a56c8c9ccef0c17b9199c614a6b"
+    },
+    "assessments.csv": {
+      "bytes": 8211,
+      "sha256": "9ce92381e4a0ac457f8e251b2eb2c179ed51e023ab30d1d671a0268bd62316ba"
+    },
+    "vle.csv": {
+      "bytes": 270612,
+      "sha256": "d7a146497edd0e47ef536144b58796c07b554002d3753e848b8e4cd8a56f4c38"
+    },
+    "studentRegistration.csv": {
+      "bytes": 1132550,
+      "sha256": "bbc87a0de1fe2a9ec6decce1ca6c1a02cf17b54ad3bdcc673fc6413b41c61d47"
+    }
+  },
+  "environment": {
+    "python": "3.12.6",
+    "platform": "macOS-26.3-arm64-arm-64bit",
+    "pandas": "2.2.2",
+    "numpy": "2.0.2",
+    "scikit-learn": "1.6.1",
+    "xgboost": "3.3.0",
+    "pyarrow": "24.0.0"
+  },
+  "split_spec": {
+    "strategy": "GroupShuffleSplit",
+    "group": "id_student",
+    "test_size": 0.2,
+    "random_state": 42,
+    "note": "splits not cached; recompute from spec"
+  },
+  "cutoffs": {
+    "14": {
+      "dir": "c014",
+      "rows": 28061,
+      "frame_sha256": "4a5f3f25b3335609fe147963b32cd91122908c31564bd43c0f158bc51bd858f8"
+    },
+    "30": {
+      "dir": "c030",
+      "rows": 27450,
+      "frame_sha256": "d5b08d52215b8592f211801bf4f14fe48af202e28a587b825802a04d88d5396f"
+    },
+    "60": {
+      "dir": "c060",
+      "rows": 26353,
+      "frame_sha256": "daa819d5ecb89897e26c9906482e6b3ce697d602a7fb134fb2b2c9f851c76f98"
+    },
+    "90": {
+      "dir": "c090",
+      "rows": 25558,
+      "frame_sha256": "9b74273a8434ce3723403208b15b74b50c22a9268d0fd90cc09d901b42663f00"
+    },
+    "140": {
+      "dir": "c140",
+      "rows": 24289,
+      "frame_sha256": "2af3616d9b4664af966bcc9cce781270398b7d8ecf8e4903dd134b9a67f882e4"
+    }
+  },
+  "c030_rebuild_hash_match": true
+}

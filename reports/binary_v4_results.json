@@ -1,0 +1,422 @@
+{
+ "c014": {
+  "cutoff": 14,
+  "population": "mlDataV4 (v3 risk population + verified v4 features)",
+  "split": {
+   "strategy": "GroupShuffleSplit(group=id_student)",
+   "test_size": 0.2,
+   "random_state": 42
+  },
+  "model": "RandomForestClassifier(random_state=42)",
+  "feature_sets": {
+   "v3": 19,
+   "v4": 35
+  },
+  "tasks": {
+   "Pass vs Fail": {
+    "n_train": 15484,
+    "n_test": 3882,
+    "pos_rate_test": 0.6463163317877383,
+    "v3": {
+     "accuracy": 0.6743946419371458,
+     "f1_pos": 0.7691745799853908,
+     "precision_pos": 0.7098078867542973,
+     "recall_pos": 0.8393782383419689
+    },
+    "v4": {
+     "accuracy": 0.6983513652756311,
+     "f1_pos": 0.788054298642534,
+     "precision_pos": 0.721816976127321,
+     "recall_pos": 0.8676763650856915
+    }
+   },
+   "Distinction vs Fail": {
+    "n_train": 8044,
+    "n_test": 2005,
+    "pos_rate_test": 0.3012468827930175,
+    "v3": {
+     "accuracy": 0.7745635910224439,
+     "f1_pos": 0.5735849056603773,
+     "precision_pos": 0.6666666666666666,
+     "recall_pos": 0.5033112582781457
+    },
+    "v4": {
+     "accuracy": 0.7870324189526184,
+     "f1_pos": 0.6071757129714811,
+     "precision_pos": 0.6832298136645962,
+     "recall_pos": 0.5463576158940397
+    }
+   },
+   "Distinction vs Pass": {
+    "n_train": 12275,
+    "n_test": 3086,
+    "pos_rate_test": 0.19928710304601427,
+    "v3": {
+     "accuracy": 0.8013609850939728,
+     "f1_pos": 0.11030478955007257,
+     "precision_pos": 0.5135135135135135,
+     "recall_pos": 0.061788617886178863
+    },
+    "v4": {
+     "accuracy": 0.7994167206740117,
+     "f1_pos": 0.08023774145616643,
+     "precision_pos": 0.46551724137931033,
+     "recall_pos": 0.04390243902439024
+    }
+   },
+   "Withdrawn vs Pass": {
+    "n_train": 14412,
+    "n_test": 3600,
+    "pos_rate_test": 0.31027777777777776,
+    "v3": {
+     "accuracy": 0.6955555555555556,
+     "f1_pos": 0.31925465838509315,
+     "precision_pos": 0.5212981744421906,
+     "recall_pos": 0.23008057296329454
+    },
+    "v4": {
+     "accuracy": 0.7158333333333333,
+     "f1_pos": 0.3743119266055046,
+     "precision_pos": 0.5907335907335908,
+     "recall_pos": 0.2739480752014324
+    }
+   }
+  }
+ },
+ "c030": {
+  "cutoff": 30,
+  "population": "mlDataV4 (v3 risk population + verified v4 features)",
+  "split": {
+   "strategy": "GroupShuffleSplit(group=id_student)",
+   "test_size": 0.2,
+   "random_state": 42
+  },
+  "model": "RandomForestClassifier(random_state=42)",
+  "feature_sets": {
+   "v3": 19,
+   "v4": 35
+  },
+  "tasks": {
+   "Pass vs Fail": {
+    "n_train": 15497,
+    "n_test": 3896,
+    "pos_rate_test": 0.6285934291581109,
+    "v3": {
+     "accuracy": 0.6984086242299795,
+     "f1_pos": 0.7817202303548207,
+     "precision_pos": 0.7171097477845945,
+     "recall_pos": 0.8591261739485504
+    },
+    "v4": {
+     "accuracy": 0.7297227926078029,
+     "f1_pos": 0.8047468941220101,
+     "precision_pos": 0.7370923913043478,
+     "recall_pos": 0.8860759493670886
+    }
+   },
+   "Distinction vs Fail": {
+    "n_train": 8056,
+    "n_test": 2004,
+    "pos_rate_test": 0.3023952095808383,
+    "v3": {
+     "accuracy": 0.8183632734530938,
+     "f1_pos": 0.6578947368421053,
+     "precision_pos": 0.7641921397379913,
+     "recall_pos": 0.5775577557755776
+    },
+    "v4": {
+     "accuracy": 0.8323353293413174,
+     "f1_pos": 0.697841726618705,
+     "precision_pos": 0.766798418972332,
+     "recall_pos": 0.6402640264026402
+    }
+   },
+   "Distinction vs Pass": {
+    "n_train": 12293,
+    "n_test": 3086,
+    "pos_rate_test": 0.1966947504860661,
+    "v3": {
+     "accuracy": 0.8088139987038238,
+     "f1_pos": 0.19618528610354224,
+     "precision_pos": 0.5669291338582677,
+     "recall_pos": 0.1186161449752883
+    },
+    "v4": {
+     "accuracy": 0.8091380427738173,
+     "f1_pos": 0.19425444596443228,
+     "precision_pos": 0.5725806451612904,
+     "recall_pos": 0.11696869851729819
+    }
+   },
+   "Withdrawn vs Pass": {
+    "n_train": 13922,
+    "n_test": 3468,
+    "pos_rate_test": 0.2889273356401384,
+    "v3": {
+     "accuracy": 0.7476931949250288,
+     "f1_pos": 0.4075829383886256,
+     "precision_pos": 0.6336842105263157,
+     "recall_pos": 0.3003992015968064
+    },
+    "v4": {
+     "accuracy": 0.7797001153402537,
+     "f1_pos": 0.47956403269754766,
+     "precision_pos": 0.7553648068669528,
+     "recall_pos": 0.35129740518962077
+    }
+   }
+  }
+ },
+ "c060": {
+  "cutoff": 60,
+  "population": "mlDataV4 (v3 risk population + verified v4 features)",
+  "split": {
+   "strategy": "GroupShuffleSplit(group=id_student)",
+   "test_size": 0.2,
+   "random_state": 42
+  },
+  "model": "RandomForestClassifier(random_state=42)",
+  "feature_sets": {
+   "v3": 19,
+   "v4": 35
+  },
+  "tasks": {
+   "Pass vs Fail": {
+    "n_train": 15516,
+    "n_test": 3882,
+    "pos_rate_test": 0.645801133436373,
+    "v3": {
+     "accuracy": 0.7581143740340031,
+     "f1_pos": 0.8234630569655951,
+     "precision_pos": 0.7788051209103841,
+     "recall_pos": 0.8735540486637415
+    },
+    "v4": {
+     "accuracy": 0.7769191138588356,
+     "f1_pos": 0.8386134923592993,
+     "precision_pos": 0.7869884575026233,
+     "recall_pos": 0.8974870362983646
+    }
+   },
+   "Distinction vs Fail": {
+    "n_train": 8032,
+    "n_test": 2032,
+    "pos_rate_test": 0.2952755905511811,
+    "v3": {
+     "accuracy": 0.8730314960629921,
+     "f1_pos": 0.7752613240418118,
+     "precision_pos": 0.8120437956204379,
+     "recall_pos": 0.7416666666666667
+    },
+    "v4": {
+     "accuracy": 0.8848425196850394,
+     "f1_pos": 0.8036912751677853,
+     "precision_pos": 0.8091216216216216,
+     "recall_pos": 0.7983333333333333
+    }
+   },
+   "Distinction vs Pass": {
+    "n_train": 12295,
+    "n_test": 3087,
+    "pos_rate_test": 0.19825072886297376,
+    "v3": {
+     "accuracy": 0.8182701652089407,
+     "f1_pos": 0.3082614056720099,
+     "precision_pos": 0.628140703517588,
+     "recall_pos": 0.2042483660130719
+    },
+    "v4": {
+     "accuracy": 0.8218334953028831,
+     "f1_pos": 0.3276283618581907,
+     "precision_pos": 0.6504854368932039,
+     "recall_pos": 0.21895424836601307
+    }
+   },
+   "Withdrawn vs Pass": {
+    "n_train": 13047,
+    "n_test": 3242,
+    "pos_rate_test": 0.23473164713140038,
+    "v3": {
+     "accuracy": 0.811844540407156,
+     "f1_pos": 0.42990654205607476,
+     "precision_pos": 0.7443365695792881,
+     "recall_pos": 0.30223390275952694
+    },
+    "v4": {
+     "accuracy": 0.8306600863664405,
+     "f1_pos": 0.5154457193292145,
+     "precision_pos": 0.7849462365591398,
+     "recall_pos": 0.38370565045992117
+    }
+   }
+  }
+ },
+ "c090": {
+  "cutoff": 90,
+  "population": "mlDataV4 (v3 risk population + verified v4 features)",
+  "split": {
+   "strategy": "GroupShuffleSplit(group=id_student)",
+   "test_size": 0.2,
+   "random_state": 42
+  },
+  "model": "RandomForestClassifier(random_state=42)",
+  "feature_sets": {
+   "v3": 19,
+   "v4": 35
+  },
+  "tasks": {
+   "Pass vs Fail": {
+    "n_train": 15521,
+    "n_test": 3881,
+    "pos_rate_test": 0.6333419221850038,
+    "v3": {
+     "accuracy": 0.7678433393455295,
+     "f1_pos": 0.8296464359992437,
+     "precision_pos": 0.7749911691981632,
+     "recall_pos": 0.8925956061838893
+    },
+    "v4": {
+     "accuracy": 0.7876835867044576,
+     "f1_pos": 0.8454613653413353,
+     "precision_pos": 0.7842727905358385,
+     "recall_pos": 0.9170056956875509
+    }
+   },
+   "Distinction vs Fail": {
+    "n_train": 8046,
+    "n_test": 2020,
+    "pos_rate_test": 0.30247524752475247,
+    "v3": {
+     "accuracy": 0.8915841584158416,
+     "f1_pos": 0.8148774302620456,
+     "precision_pos": 0.8426573426573427,
+     "recall_pos": 0.7888707037643208
+    },
+    "v4": {
+     "accuracy": 0.9044554455445545,
+     "f1_pos": 0.8403639371381307,
+     "precision_pos": 0.8494983277591973,
+     "recall_pos": 0.8314238952536824
+    }
+   },
+   "Distinction vs Pass": {
+    "n_train": 12312,
+    "n_test": 3072,
+    "pos_rate_test": 0.19401041666666666,
+    "v3": {
+     "accuracy": 0.8225911458333334,
+     "f1_pos": 0.3595769682726204,
+     "precision_pos": 0.6,
+     "recall_pos": 0.25671140939597314
+    },
+    "v4": {
+     "accuracy": 0.8304036458333334,
+     "f1_pos": 0.38488783943329397,
+     "precision_pos": 0.649402390438247,
+     "recall_pos": 0.27348993288590606
+    }
+   },
+   "Withdrawn vs Pass": {
+    "n_train": 12396,
+    "n_test": 3096,
+    "pos_rate_test": 0.19864341085271317,
+    "v3": {
+     "accuracy": 0.837532299741602,
+     "f1_pos": 0.40047675804529204,
+     "precision_pos": 0.75,
+     "recall_pos": 0.2731707317073171
+    },
+    "v4": {
+     "accuracy": 0.8552971576227391,
+     "f1_pos": 0.5076923076923077,
+     "precision_pos": 0.7830508474576271,
+     "recall_pos": 0.375609756097561
+    }
+   }
+  }
+ },
+ "c140": {
+  "cutoff": 140,
+  "population": "mlDataV4 (v3 risk population + verified v4 features)",
+  "split": {
+   "strategy": "GroupShuffleSplit(group=id_student)",
+   "test_size": 0.2,
+   "random_state": 42
+  },
+  "model": "RandomForestClassifier(random_state=42)",
+  "feature_sets": {
+   "v3": 19,
+   "v4": 35
+  },
+  "tasks": {
+   "Pass vs Fail": {
+    "n_train": 15529,
+    "n_test": 3876,
+    "pos_rate_test": 0.6320949432404541,
+    "v3": {
+     "accuracy": 0.8134674922600619,
+     "f1_pos": 0.8602358399381403,
+     "precision_pos": 0.8171134777818583,
+     "recall_pos": 0.9081632653061225
+    },
+    "v4": {
+     "accuracy": 0.8431372549019608,
+     "f1_pos": 0.8830319353597538,
+     "precision_pos": 0.8351528384279476,
+     "recall_pos": 0.936734693877551
+    }
+   },
+   "Distinction vs Fail": {
+    "n_train": 8061,
+    "n_test": 2007,
+    "pos_rate_test": 0.28550074738415543,
+    "v3": {
+     "accuracy": 0.916791230692576,
+     "f1_pos": 0.852863436123348,
+     "precision_pos": 0.8612099644128114,
+     "recall_pos": 0.8446771378708552
+    },
+    "v4": {
+     "accuracy": 0.9277528649725959,
+     "f1_pos": 0.8733624454148472,
+     "precision_pos": 0.8741258741258742,
+     "recall_pos": 0.8726003490401396
+    }
+   },
+   "Distinction vs Pass": {
+    "n_train": 12306,
+    "n_test": 3079,
+    "pos_rate_test": 0.1938941214680091,
+    "v3": {
+     "accuracy": 0.8294900941864242,
+     "f1_pos": 0.44561774023231254,
+     "precision_pos": 0.6028571428571429,
+     "recall_pos": 0.35343383584589616
+    },
+    "v4": {
+     "accuracy": 0.835985709645989,
+     "f1_pos": 0.46673706441393875,
+     "precision_pos": 0.6314285714285715,
+     "recall_pos": 0.37018425460636517
+    }
+   },
+   "Withdrawn vs Pass": {
+    "n_train": 11371,
+    "n_test": 2850,
+    "pos_rate_test": 0.13157894736842105,
+    "v3": {
+     "accuracy": 0.8982456140350877,
+     "f1_pos": 0.44015444015444016,
+     "precision_pos": 0.7972027972027972,
+     "recall_pos": 0.304
+    },
+    "v4": {
+     "accuracy": 0.9171929824561403,
+     "f1_pos": 0.5902777777777778,
+     "precision_pos": 0.845771144278607,
+     "recall_pos": 0.4533333333333333
+    }
+   }
+  }
+ }
+}
