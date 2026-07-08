@@ -58,6 +58,116 @@ Baselines v1/v2/v3 immutable (verified by hash). See `reports/baseline_v4.md`,
 `reports/baseline_v4_feature_audit.md`. Future experiments start from p4 and compare
 within-cutoff against `baseline_v4_results.json`.
 
+Experiment 003 (2026-07-05) recommends the deployment output: **ASI = P(Fail)+P(Withdrawn)**
+from the official v4 XGB (+ train-only isotonic calibration), evaluated as an intervention
+ranking (AUC 0.73→0.90, top-5% list 97-100% truly at-risk from c30). Evaluation-layer only —
+the v4 benchmark itself is unchanged. See `reports/experiment_003_intervention_index.md`.
+
+Experiment 004 (2026-07-05) adds the official intervention methodology: ERIP = day 30 first
+pass (pre-stated reliability criterion met: red-band precision 0.978, ECE 0.018) with staged
+capacity top-ups at day 60/90 — staged 10%+10% doubles withdrawal reach vs a late one-shot
+at equal budget and precision. Decision rules (immediate / monitor closely / continue
+monitoring / low risk) each carry measured outcome rates. Evaluation/decision layer only.
+See `reports/experiment_004_intervention_framework.md`.
+
+---
+
+## Experiment 004 — Early Intervention Decision Framework
+
+Date: 2026-07-05
+
+Objective: Move beyond scores to an evidence-based intervention methodology: when to
+intervene, whom to prioritize, how confidence evolves, and how to use progressively
+available information — Baseline v4 and the Experiment-003 ASI unchanged.
+
+Hypothesis: Combining progressive prediction quality, calibrated probabilities, individual
+risk trajectories, and capacity constraints yields defensible decision rules and an
+earliest-reliable-intervention-point methodology.
+
+Implementation: Evaluation/decision layer only. Fixed student panel (global grouped 80/20
+split of the union of student IDs, seed 42; out-of-sample at every cutoff; sanity-matched
+official GSS-42 within ±0.014). Phase 2: per-cutoff acc/F1/AUC/AP/ECE/entropy/top-K for
+ASI+WRI. Phase 3: band trajectories (red top-5% / amber 5-20% / green) across cutoffs,
+categories, transition matrices, lead times to unregistration. Phase 5: reachability decay +
+one-shot vs staged capacity policies at equal budget. Timing-literature review (weekly OU
+Analyse, OAAI 25/50/75% checkpoints, NTU event triggers, RTI escalation, Howard 2018
+"optimal time", survival/hazard work, acknowledged gaps).
+
+Features Added: none. Features Removed: none. Models Evaluated: official v4 XGB (verbatim).
+
+Results: ASI AUC 0.721→0.914, ECE ≤ 0.021 everywhere (c14→c140); marginal AUC gain after c30
+(+0.010-0.014/10d) is 5x slower than withdrawal-reachability loss (-0.070/10d). Earliest
+reliable point = day 30 by pre-stated criterion (red-band precision ≥ 0.95 & ECE ≤ 0.02: c14
+fails at 0.858, c30 passes at 0.978). Trajectories: escalating students 99.3% adverse (above
+persistent-high 97.3%); rapid risers (ΔASI ≥ +0.15) 68-80% adverse vs 31-38% others; red
+band's imminent-withdrawal rate 7.6x green's; median first-flag→unregistration lead 58 days.
+Policies at equal 20% budget: staged 10%@c30+10%@c90 matches one-shot-c140 precision (0.928
+vs 0.933) and adverse recall (40.7% vs 40.8%) while doubling withdrawal reach (34.0% vs
+16.3%, lead 50d vs 38d) — staged dominates. Decision framework: immediate (red or rapid
+riser) / monitor closely (amber) / continue monitoring (persistent amber, recovering,
+high-entropy manual check) / low risk (stable green), every rule with measured outcome
+rates; green explicitly framed as capacity allocation, not safety certification.
+
+Decision: Recommended official methodology = ERIP (pre-stated reliability criterion +
+earliest satisfying checkpoint + remaining-opportunity weighing + staged capacity): first
+pass day 30 (~half capacity), top-ups day 60/90, day-14 for provisional triage only;
+calibrated P ≥ ~0.92 = immediate band; top-quartile entropy ⇒ manual verification.
+Literature gap analysis supports novelty of the integration (components exist separately).
+Intervention treatment effects not claimed (not measurable in OULAD). Deliverables:
+reports/experiment_004_intervention_framework.md, reports/experiment_004_results.json,
+reports/figures/experiment_004/ (5 figures incl. decision-flow diagram),
+experiments/experiment_004_*.py.
+
+Next Ideas: per-module ERIP (assessment calendars differ); weekly-cadence scoring between
+checkpoints (needs new cache cutoffs — requires explicit instruction); subgroup fairness
+audit of red/amber composition; urgency score (predicted time-to-withdrawal) alongside ASI.
+
+---
+
+## Experiment 003 — Early Intervention Index
+
+Date: 2026-07-05
+
+Objective: Pivot from outcome prediction toward early-intervention support — determine
+whether Baseline v4 model outputs can be transformed into a useful intervention ranking for
+educators, and whether one index should become the official deployment output.
+
+Hypothesis: Some transformation of the v4 class posteriors (additive, severity-weighted,
+confidence-adjusted, calibrated, cohort-normalized, or ensemble) prioritizes truly at-risk
+students well enough for capacity-limited intervention.
+
+Implementation: Evaluation-layer only — official v4 models/features/cache verbatim.
+Literature review of deployed EWS (Course Signals, OU Analyse, Wisconsin DEWS, Chicago
+On-Track, Balfanz, Lakkaraju KDD'15) and ranking/calibration methodology. Ten candidate
+indices from official posteriors; truths = at-risk {W,F}, withdrawn-only, fail-only; grouped
+splits (headline seed 42, repeats 0-4), tunables (combination weight, isotonic) fitted on
+inner GroupKFold(3) train OOF only. Metrics: ROC-AUC, AP, precision/recall/lift/hits at
+5/10/20%, Brier, ECE, reliability; permutation importance per index; 5 comparison figures.
+
+Features Added: none. Features Removed: none. Models Evaluated: official 4 (index layer).
+
+Results: ASI = P(Fail)+P(Withdrawn) (XGB) wins at-risk ranking at every cutoff — AUC
+0.733/0.782/0.829/0.857/0.903, AP 0.701→0.883 (c14→c140); repeats ±0.003-0.006. The tuned
+weighted combination independently converged to w=0.5 (≡ ASI) at all five cutoffs; entropy
+adjustment, severity weights, ensembles, disagreement penalties, and course-percentile all
+ranked at-or-below plain ASI (documented negative results). Top-5% list purity: 96.7% at c30,
+100% at c90+; lift at 5% near theoretical max. WRI best for withdrawn-only truth (AUC
+0.656→0.766); FRI for fail-only. Raw ASI already calibrated (ECE ≤ 0.02 everywhere; isotonic
+layer tightens slightly). Permutation importance: rank_wa dominates every index; promoted v4
+features hold most top slots (submission timing drives WRI; recency grows by c90).
+Literature: ASI is exactly the field-standard merged "at-risk" P(adverse) recovered from the
+4-class posterior; precision@K under capacity is the canonical evaluation.
+
+Decision: Recommend ASI (official v4 XGB + train-only isotonic layer) as the official
+deployment output, with WRI as the scoped variant for withdrawal-specific campaigns. Baseline
+v4 unchanged. Deliverables: reports/experiment_003_intervention_index.md,
+reports/experiment_003_results.json, reports/figures/experiment_003/ (5 figures),
+experiments/experiment_003_*.py.
+
+Next Ideas: subgroup fairness audit of top-K composition (ABROCA/Aequitas-style) before any
+rollout; per-presentation recalibration test (train earlier presentations → score later);
+weekly-cadence score smoothing (He et al. 2015) between cutoffs.
+
 ---
 
 ## Binary Evaluation under the v4 Protocol
