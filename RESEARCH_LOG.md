@@ -72,6 +72,51 @@ See `reports/experiment_004_intervention_framework.md`.
 
 ---
 
+## Experiment 005 — Enrollment-Time Demographic Features (v5 candidate)
+
+Date: 2026-07-08
+
+Objective: Test whether enrollment-time demographics (gender, age_band, region, imd_band,
+disability, studied_credits, num_of_prev_attempts) add significant value beyond the official
+v4 features. Additive only — every arm = full v4 set + demographics; v4 unmodified.
+
+Hypothesis: Enrollment-time variables carry signal when behavioral data is scarce (early
+cutoffs) and are leakage-free by construction.
+
+Implementation: Official protocol, all comparisons paired (splits depend only on groups):
+GSS-42 headline (per-class + confusions), seeds 0-4 repeats, GroupKFold(5), official XGB
+across all arms + RF cross-model robustness. Pre-registered arms: A1 all-demo (20 cols),
+A2 academic (credits+prev_attempts), A3 socioeconomic (imd+region), A4 personal
+(gender+age+disability); post-hoc arms (documented): A5 academic+personal, A6 top-3
+(prev_attempts, credits, disability). Paired t + Wilcoxon + sign counts, pooled 25 obs.
+Environment note: pinned venv rebuilt after tmp cleanup; verified to reproduce official v4
+XGB bit-exactly (diff 0.0 at all cutoffs) before running.
+
+Features Added (experimentally): 20 demographic columns. Features Removed: none.
+
+Results: All-demographics improves XGB strongly (pooled F1 +0.0094, 23/25, p<1e-4; Wrec
++0.023) but DEGRADES RF (F1 -0.0028, 8/25, p=0.045) — fails cross-model consistency. Gains
+decay with cutoff (XGB F1 +0.021 at c14 -> +0.002 at c140): demographics matter only while
+behavior is scarce. Socioeconomic block (region+IMD, 14 cols) has no significant primary-
+metric gain; gender+age fail GKF/cross-model checks. The academic pair (A2) and top-3 (A6)
+pass EVERY rule on BOTH models: A2 F1 +0.0041 XGB (p=0.001) / +0.0036 RF (p=6e-4), Wrec
++0.0136/+0.0050; A6 slightly stronger early Wrec (+0.019 XGB) via disability. Importance:
+disability/prev_attempts/credits rank 5th/7th/9th of 55 at c14; region/age never top-20.
+
+Decision: Recommend promoting studied_credits + num_of_prev_attempts into a proposed
+Baseline v5 (only pre-registered arm passing all rules on both models). Hold disability as
+evidence-positive but contingent on a subgroup-fairness audit (protected attribute feeding
+the Exp-004 intervention ranking) — not included in the v5 recommendation. Reject region,
+IMD, gender, age. v4 remains official; formal v5 promotion (v4-style audit + notebook +
+p5 cache) awaits explicit instruction. Deliverables:
+reports/experiment_demographic_features.md, reports/experiment_demographic_results.json.
+
+Next Ideas: fairness audit (top-K composition by gender/disability/IMD) to settle the
+disability question; if v5 is approved, run the full v4-style promotion protocol; test
+whether demographic gains survive per-module cohort normalization.
+
+---
+
 ## Experiment 004 — Early Intervention Decision Framework
 
 Date: 2026-07-05
