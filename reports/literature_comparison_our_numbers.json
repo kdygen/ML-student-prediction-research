@@ -1,0 +1,42 @@
+{
+ "full_population_32593": {
+  "n": 32593,
+  "acc": 0.8505859907933442,
+  "acc_std": 0.004755606403589289,
+  "macro_f1": 0.7976392915084417,
+  "macro_f1_std": 0.008277438897731451,
+  "weighted_f1": 0.8473043869368436,
+  "per_class_f1": {
+   "Withdrawn": 0.9589095219280916,
+   "Fail": 0.8078931203931204,
+   "Pass": 0.8433099917174911,
+   "Distinction": 0.5807174887892377
+  }
+ },
+ "engaged_population_29496": {
+  "n": 29496,
+  "acc": 0.8362063094068029,
+  "acc_std": 0.003791112566376648,
+  "macro_f1": 0.7949246406674564,
+  "macro_f1_std": 0.004802343231596663,
+  "weighted_f1": 0.8330235708438545,
+  "per_class_f1": {
+   "Withdrawn": 0.9430543572044866,
+   "Fail": 0.8129120254603319,
+   "Pass": 0.8432872376502506,
+   "Distinction": 0.5807778608825729
+  }
+ },
+ "date_unregistration_leak_check": {
+  "rule": "date_unregistration is not null -> predict Withdrawn (no model)",
+  "TP": 10063,
+  "FP": 9,
+  "FN": 93,
+  "TN": 22428,
+  "precision": 0.9991,
+  "recall": 0.9908,
+  "f1": 0.995,
+  "accuracy": 0.9969,
+  "note": "verified against data/raw; our 36 features contain zero unregistration-derived features"
+ }
+}

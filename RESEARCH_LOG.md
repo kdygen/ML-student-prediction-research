@@ -72,6 +72,56 @@ See `reports/experiment_004_intervention_framework.md`.
 
 ---
 
+## Literature Comparison — Final Methodology vs Published OULAD Research
+
+Date: 2026-07-20
+
+Objective: Position the FINAL notebook methodology against published OULAD work; determine
+what is genuinely novel vs incremental. ~25 papers located across six literature sweeps,
+most read in full text. No experiments changed.
+
+Comparability run: our final pipeline re-run on the FULL 32,593 population every paper uses
+(our published population is the 29,496 engaged subset) — acc 0.8506±0.0048, macro-F1
+0.7976±0.0083, weighted-F1 0.8473 (per-class W .959 / F .808 / P .843 / D .581). Both
+populations reported so comparisons are like-for-like.
+
+KEY FINDING: date_unregistration is a near-perfect Withdrawn-label proxy. Verified against
+data/raw — rule "not null -> Withdrawn" with NO model gives TP 10,063 / FP 9 / FN 93 /
+TN 22,428, precision 0.9991, recall 0.9908, F1 0.9950. Junejo et al. 2025 (Scientific
+Reports, acc 0.98 / macro-F1 0.98) uses total_reg_days derived from that field as its
+top-ranked feature; their own table shows Withdrawn F1 0.95 at 5% of course elapsed. Our
+pipeline uses the field only as censor/horizon — zero of our 36 features derive from it
+(verified). Controlled contrast: Al-azazi & Ghurab 2023 do the same 4-class task WITHOUT it
+and get 0.72 acc / 0.66 macro-F1 — a 26-point gap that IS the leak.
+
+Ranked comparators: (1) Al-azazi & Ghurab 2023 Heliyon — fairest (4-class, full pop, day 270,
+also excludes scores, no grouping): 0.72/0.66 vs our 0.851/0.798, and Distinction is
+statistically identical (.59 vs .581) so our gain is Fail (.808 vs .65) and Withdrawn;
+(2) Althibyani 2024 PeerJ CS: weighted-F1 .742, macro-F1 .706 derived from their confusion
+matrices, Fail collapses to .519; (3) Shou et al. 2024 Applied Sciences: macro-F1 .67;
+(4) Adnan et al. 2021 IEEE Access: genuine 4-class acc .72 (widely mis-cited 0.91 is BINARY);
+(5) Junejo 2025: rebut, don't beat. Not metric-comparable: Ouroboros/Hlosta (different
+target = A1 submission, PR-AUC .78->.35), LEAP 2026 (binary, weekly cutoffs, AUC .8602 @wk8),
+Qiu 2022 (silently merges Withdrawn into Fail), EL Habti 2025 (uses Score_exam), survival
+papers (da Silva 2026, Martinez-Carrascal 2023).
+
+NOVELTY VERDICT: zero of ~25 papers group by student, despite 32,593 enrolments covering only
+28,785 unique students. LEAP (the field's best leakage protocol) still uses a row-level
+split — "LEAP controls WHEN you look; grouping controls WHO you look at". Claim confidently:
+best defensible 4-class macro-F1, first student-grouped OULAD evaluation, the
+date_unregistration leak, Fail/Withdrawn gains. Avoid claiming: unqualified SOTA, first to
+address leakage (Ouroboros 2017 precedes), Withdrawn as early-warning skill, superiority over
+deep learning (untested under our protocol), any causal/intervention benefit.
+
+Also audited: is_banked touches 522 enrolments (1.8%, spread across all classes) — not
+leakage (score predates the presentation) but a disclosed data-quality note. Coverage gaps:
+no OULAD papers found in IC2IT proceedings (reported as honest negative); Waheed et al. 2020
+(CHB, 544 citations) and Adnan et al. 2021 full text not retrievable — obtain before
+submission. Deliverables: reports/literature_comparison.md,
+reports/literature_comparison_our_numbers.json.
+
+---
+
 ## Consolidation — Final Methodology Integrated into the Notebook
 
 Date: 2026-07-20
