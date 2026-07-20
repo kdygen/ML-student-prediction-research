@@ -72,6 +72,248 @@ See `reports/experiment_004_intervention_framework.md`.
 
 ---
 
+## Consolidation — Final Methodology Integrated into the Notebook
+
+Date: 2026-07-20
+
+Objective: Make the notebook the single reproducible artifact for the FINAL full-course
+methodology, without disturbing the early-prediction work or importing development history.
+
+Change: exactly 2 cells appended (markdown + code); all 150 previously committed cells
+byte-identical (verified against HEAD: 0 modified/removed). The new section is
+self-contained, independent of CUTOFF, reads the raw tables loaded at the top of the
+notebook, and never mutates them (raw frames are copied). Development experiments
+(006/006b/006c/007/008) are NOT in the notebook — verified 0 occurrences of every
+dev-history token; they remain archived in experiments/ and reports/.
+
+Final section implements only the consolidated choices: engaged population (excl.
+unregistered on/before day 0, n=29,496); per-student horizon h=min(unreg, course end) with
+ALL temporal features anchored to h; exams excluded entirely; fair completion denominator
+(deadline <= h via searchsorted); constant 999 sentinel (the last course_end+30 sentinel is
+gone); final 36-feature set with in-cell assertions (count==36, no NaN, no duplicate keys,
+no forbidden column); StratifiedGroupKFold(5) with a per-fold zero-overlap assert; OOF
+classification report, confusion matrix and feature-importance figure.
+
+Verification: executed the notebook cell standalone against the raw data (notebook's own
+read_csv settings confirmed identical to the scripts', 10,655,280 rows both ways).
+Result acc 0.836373±0.0033 / macro-F1 0.794635±0.0038 vs Experiment 008 published
+0.8360±0.0029 / 0.7947±0.0048 — delta +0.0004 acc, -0.0001 F1 (attributable to the sentinel
+change and rank_wa fill order; far inside fold noise). Residual _course_end appears only in
+the horizon definition (a completer's horizon IS the course end) and the negative assertion;
+one unused carry was removed and the re-run was bit-identical (0.836373/0.794635).
+
+Decision: The notebook is now the single reproducible artifact — running it start to finish
+reproduces Baselines v1-v4 AND the final published headline. Deliverable:
+reports/final_methodology_notebook_verification.json.
+
+Addendum (same day): the score-prediction regression, previously living only in
+experiments/experiment_006{,b}_run.py, was added back as a clearly-labelled SUPPLEMENTARY
+section (2 further cells; notebook 150 -> 154, still 0 committed cells modified). It reuses
+mlDataFinal so it inherits every final design choice, but deliberately differs in two ways:
+features = the 36 minus all 3 score-derived (rank_wa, score_slope_cw, score_std_cw) = 33, to
+avoid circularity since the target IS a score; and GroupKFold(5) rather than
+StratifiedGroupKFold since stratification does not apply to a continuous target. Target =
+final weighted coursework score (weight>0, exam-free, censored), n=23,241 — identical
+population to the Experiment-006 regression. Results (GroupKFold-5): XGB R2 0.3339±0.0094
+MAE 10.296, RF R2 0.3288, Linear R2 0.2399 — consistent with 006b's single-split R2 0.3329
+and 006's 0.3403. Reported separately from the classification headline.
+
+---
+
+## Experiment 008 — Feature Redundancy Elimination (parsimony of V3)
+
+Date: 2026-07-20
+
+Objective: Simplify the V3 feature set by removing redundancy without sacrificing
+performance. Elimination only — no new features, no pipeline redesign.
+
+Method: greedy backward elimination over pairs with |r|>=0.85, recomputed after every
+removal. Each round tests dropping BOTH members and accepts the better iff it costs <0.002
+in macro-F1 and accuracy. Comparisons PAIRED across identical grouped splits (seeds 0-4) so
+per-seed deltas resolve sub-0.002 effects. Model/hyperparameters/population unchanged.
+
+Removed 6 of 42: recovery_slope (dup of score_slope_cw r=.986, removal IMPROVED F1 +.0004),
+has_coursework (implied by first_submit_day sentinel, r=.985), rank_active_days (dup of
+rank_clicks r=.949, removal IMPROVED +.0019), days_since_last (r=.946 with
+has_vle_activity), weighted_average (kept ranked rank_wa instead, r=.896), w1_clicks
+(subsumed by decay_clicks r=.868). Kept 2 pairs at the tolerance boundary: rank_clicks ~
+active_weeks (.879) and active_days ~ active_weeks (.876) — best drop costs -.0020 F1;
+volume vs breadth are not interchangeable. No pairs >=0.85 remain.
+
+Results: repeated grouped splits 0.8392/0.8000 (42 feats) -> 0.8365/0.7975 (36), paired
+cumulative -0.0027 acc / -0.0025 F1. SGKF5: 0.8384±0.0037 / 0.7973±0.0046 (42) ->
+0.8360±0.0029 / 0.7947±0.0048 (36); the 37-feature intermediate is identical to 36
+(0.7947) so the last removal is free. Per-class essentially unchanged (W .950->.945,
+F .824->.820, P .841->.841, D .580->.585). Honest note: each step met the <0.002 rule but
+greedy re-baselining accumulates to -0.0025 F1 total — about half the CV fold SD (±0.0048),
+so it qualifies under "within cross-validation noise" but is not literally zero.
+
+Decision: Recommend the 36-feature set for publication — headline acc 0.836±0.003 /
+macro-F1 0.795±0.005 (SGKF5). 14% fewer features for 0.0026 macro-F1, inside fold noise;
+the 42-feature set remains valid and is reported alongside for reviewers preferring zero
+measured cost. Deliverables: reports/experiment_008_parsimony.md,
+reports/experiment_008_parsimony/parsimony_metrics.json,
+experiments/experiment_008_parsimony.py.
+
+---
+
+## Experiment 007 — Final Publication Audit of V3
+
+Date: 2026-07-20
+
+Objective: Publication-quality verification that the V3 headline configuration (per-student
+anchoring + fair completion denominator + engaged population; n=29,496, 42 features) is
+leakage-free, robust, and reproducible. Mandate: change nothing unless a genuine issue is
+found. OUTCOME: no methodological change required.
+
+Leakage: no forbidden columns in the feature set; no exam-derived information; no single
+feature separates any class at AUC>0.95; max |corr| of any feature with any class = 0.559
+(active_weeks). Decisive test — recomputed active_days from raw VLE with and without the
+withdrawal censor: on the 951 withdrawn students where censoring changed the value, stored
+features match the CENSORED recompute 100% and the uncensored 0%. (An automated check
+reporting "20,075 rows after unreg" queried RAW data — it counts rows the censor removed,
+not leakage.) All 42 features classified Safe across 5 provenance groups.
+
+Robustness: ablating the top-1/2/3 features costs -0.0004 / -0.0021 / -0.0016 macro-F1
+individually and only -0.0037 when all three are removed together — inside split noise
+(±0.0043). No shortcut. Trivial predictors far below: majority class F1 0.146,
+submitted_count alone 0.361, decay_clicks alone 0.420 vs full model 0.800. Per-module F1
+0.699 (GGG) to 0.846 (FFF) — GGG weakest with a data explanation (coursework carries zero
+assessment weight there). Class balance 4.1:1 max; Distinction weakest (F1 0.585) because
+its determinant (the exam) is deliberately excluded.
+
+Overlap: 8 pairs |r|>=0.85. Only recovery_slope ~ score_slope_cw (0.986) is true
+duplication; two pairs are sentinel artifacts; the rest are raw/ranked encodings. No removal
+required (optional parsimony drop of one trajectory feature).
+
+Cross-validation: StratifiedGroupKFold(5), zero student overlap asserted per fold —
+acc 0.8384±0.0037, macro-F1 0.7973±0.0046, agreeing with repeated grouped splits
+(0.8392/0.8000) within 0.003. The headline is not a favourable split.
+
+Decision: V3 confirmed sound. Recommended headline = acc 0.838±0.004 / macro-F1
+0.797±0.005 (SGKF-5). Three documented weaknesses to disclose (description-vs-prediction for
+Withdrawn; no causal/intervention claim; single-institution external validity).
+Deliverables: reports/experiment_007_publication_audit.md,
+reports/experiment_007_publication_audit/audit_metrics.json,
+experiments/experiment_007_publication_audit.py.
+
+---
+
+## Experiment 006c — Proxy-Feature Leakage & Robustness Audit (addendum to 006b)
+
+Date: 2026-07-20
+
+Objective: Reviewer challenge to 006b's top-2 features — completion_ratio_cw (suspected
+"fraction of whole course completed" label proxy) and has_vle_activity (suspected
+withdrew-early proxy). Diagnosis + robustness only; 006/006b unmodified.
+
+Diagnosis: challenge CONFIRMED for completion_ratio_cw — denominator is ALL non-exam
+assessments in the presentation, not those available before the student's horizon. For
+withdrawers the denominator averages 8.9 while only 2.0 were available: mean ratio 0.148
+(whole-course) vs 0.348 (fair). Single-feature AUC vs Withdrawn 0.916 -> 0.795 under the
+fair denominator; non-withdrawers unaffected (identical denominators). Not temporal leakage
+(observable at course end) but mis-specified: conflates "didn't do available work" with
+"wasn't present to do it". has_vle_activity: partial — where 0 (n=3,554) 89.3% Withdrawn and
+2,536 never started, BUT 6,981 withdrawers have activity and standalone AUC only 0.648; it
+isolates never-starters rather than proxying withdrawal generally.
+
+Robustness (XGB, identical grouped splits): V0 published 006b acc .8452/F1 .7894 | V1 fair
+denominator .8478/.7928 | V2 V1 minus never-starter flags .8476/.7921 | V3 V1 on engaged
+population only (drop 3,097 unreg<=day0) n=29,496 .8295/.7901, Withdrawn F1 .936.
+Conclusion: the flagged proxy was NOT propping up the result (fixing it slightly HELPS,
++0.003 F1; removing flags -0.001). Dropping never-starters costs accuracy (-1.8pp) not
+macro-F1. Signal is redundantly encoded — remove the flags and submitted_count (0.28) /
+decay_clicks (0.10) absorb the role, because at course end the Withdrawn class IS defined by
+ceasing participation. No feature set removes that; the description-not-forecasting caveat
+stands.
+
+Decision: Adopt V1 fair denominator (completion_ratio_avail = submitted_count / coursework
+with deadline <= own horizon) as the corrected spec for future full-course work. Report V3
+(.830/.790, engaged population) as the conservative headline ceiling; V1 (.848/.793) for the
+full registered cohort. Deliverables: reports/experiment_006c_proxy_audit.md,
+reports/experiment_006b_per_student_anchor/robustness_proxy_audit.json,
+experiments/experiment_006c_robustness.py.
+
+---
+
+## Experiment 006b — Per-Student Timeline Anchoring (sensitivity of 006)
+
+Date: 2026-07-20
+
+Objective: Test how much of Experiment 006's performance came from global-timeline
+information (position of activity within the official course span) vs behavioral patterns,
+by re-anchoring all temporal/recency features to each student's own final observed week
+(withdrawers: their unregistration date; completers: course end). Original 006 untouched;
+006b scripts generated from 006 scripts by programmatic patches asserted to apply exactly
+once — pipeline/models/splits/metrics otherwise identical.
+
+Changed features only: days_since_last, decay_clicks, first/last-third clicks (->
+engagement_decay_ratio), study_spread; w1-w4 were already per-student; never-active
+days_since_last sentinel = constant 999.
+
+Results (XGB): accuracy 0.823 -> 0.845, macro-F1 0.770 -> 0.789 (repeats confirm,
+0.850±0.004 / 0.799±0.004) — performance IMPROVED, refuting the 006 gray-area hypothesis
+that global-timeline encoding inflated the ceiling. Withdrawn F1 0.913 -> 0.958; Fail F1
++0.055 with PR-AUC +0.119 (biggest gain: span-normalized engagement exposes failers as
+present-but-not-completing). Pass/Distinction ~unchanged (-0.008/-0.015 F1). Regression
+unchanged (R2 0.33). Importance shifted from shape-of-ending (engagement_decay_ratio,
+days_since_last) to anchor-free participation footprint: has_vle_activity 0.229,
+completion_ratio_cw 0.216, submitted_count 0.100 (completion ladder by class: 0.15 W /
+0.45 F / 0.96 P / 0.97 D). Verified mechanism: withdrawers' study_spread 0.06 -> 0.26
+(position-in-course signature removed, overlaps completers).
+
+Decision: The honest full-course ceiling is 006b's 0.845 acc / 0.789 macro-F1. Caveat
+recorded: for withdrawers the per-student horizon IS the unregistration date, so both
+variants describe rather than forecast the Withdrawn class at course end; the model's
+preference for anchor-free completion features strengthens the behavioral reading.
+Deliverables: reports/experiment_006b_per_student_anchor.md + folder (metrics,
+dataset_meta, comparison figure), experiments/experiment_006b_{build,run,compare}.py.
+
+---
+
+## Experiment 006 — Full-Course Leakage-Free Prediction (ceiling)
+
+Date: 2026-07-20
+
+Objective: Measure the maximum leakage-free predictive performance using ALL behavioral
+information collected during the course (no cutoffs), predicting at end of teaching before
+any exam information exists. New experiment alongside the pipeline; v1-v4, p3/p4, notebook
+untouched.
+
+Implementation: Population = all 32,593 registered pairs. Censoring: per-student data
+truncated at date_unregistration (removed 29,440 post-withdrawal VLE rows + 600
+submissions — the filter is real). Exams excluded entirely (scores, submissions,
+attendance; sitting an exam is a near-perfect outcome encoder: 1/10,156 Withdrawn).
+date_unregistration used only as censor, never as feature. 42 classification features
+(v4 lineage re-anchored to per-student horizons + 6 new: engagement_decay_ratio, max_gap,
+active_weeks, completion_ratio_cw, score_slope_cw, score_std_cw), full Safe/Modified/
+Excluded audit in the report. Grouped splits throughout (headline seed 42 + seeds 0-4 +
+GKF5); official model hyperparameters; regression = behavior-only features (5 score-derived
+excluded to avoid circularity) predicting final weighted coursework score (n=23,241, GGG
+excluded: exam-only weight). Env rebuilt + verified bit-exact vs official v4 before running.
+
+Results: Multiclass XGB 0.823 acc / 0.770 macro-F1 (repeats ±0.002; GKF5 agrees) vs
+0.693/0.514 at c140 — +13pp acc, +26pp F1. Per-class F1: W 0.913 (0.090 at c140!), F 0.749,
+P 0.848, D 0.572. Binary (XGB AUC): Withdrawn 0.987, at-risk 0.984, Pass 0.944, Distinction
+0.952 (F1 0.56 at default threshold), Fail 0.930. Regression: R2 0.34, MAE 10.2 — behavior
+alone explains ~1/3 of coursework-score variance. Importance: engagement_decay_ratio (new)
+#1 and days_since_last #2 for classification (trajectory shape > graded performance);
+active_weeks dominates regression (study consistency). Residual confusion concentrated at
+Fail-Pass and Distinction-Pass — exactly where the excluded exam decides.
+
+Decision: Recorded as the information ceiling of leakage-free behavioral data. Key
+interpretation: the 0.77-vs-0.51 F1 gap vs c140 quantifies information that does not exist
+yet during the intervention window (population caveat documented: full registered cohort vs
+still-enrolled risk populations; no intervention value at course end). Deliverables:
+reports/experiment_006_full_course.md, reports/experiment_006_full_course/ (metrics.json,
+dataset_meta.json, 5 figures), experiments/experiment_006_{build,run,figures}.py.
+
+Next Ideas: use the ceiling frame for a survival/hazard model (time-to-withdrawal) feeding
+the reachability-coupled scheduling formulation; threshold-tuned Distinction detection;
+per-module ceilings.
+
+---
+
 ## Experiment 005 — Enrollment-Time Demographic Features (v5 candidate)
 
 Date: 2026-07-08

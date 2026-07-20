@@ -1,0 +1,414 @@
+{
+ "start": {
+  "n_features": 42,
+  "acc": 0.8392215395088399,
+  "f1": 0.7999515444149349,
+  "acc_std": 0.004831046886163201,
+  "f1_std": 0.004344796731311434
+ },
+ "rounds": [
+  {
+   "round": 1,
+   "pair": [
+    "recovery_slope",
+    "score_slope_cw"
+   ],
+   "r": 0.9858845870902407,
+   "candidates": {
+    "recovery_slope": {
+     "acc": 0.8393906034256124,
+     "f1": 0.8003719614862588,
+     "d_acc": 0.0001690639167725827,
+     "d_f1": 0.0004204170713238531,
+     "d_f1_std": 0.0015687990869122466
+    },
+    "score_slope_cw": {
+     "acc": 0.8382402499202115,
+     "f1": 0.7985722328230704,
+     "d_acc": -0.00098128958862842,
+     "d_f1": -0.0013793115918644405,
+     "d_f1_std": 0.0023491696238006946
+    }
+   },
+   "chosen": "recovery_slope",
+   "accepted": true
+  },
+  {
+   "round": 2,
+   "pair": [
+    "has_coursework",
+    "first_submit_day"
+   ],
+   "r": 0.9854398647260477,
+   "candidates": {
+    "has_coursework": {
+     "acc": 0.8388832828607482,
+     "f1": 0.7996239368184349,
+     "d_acc": -0.0005073205648642443,
+     "d_f1": -0.0007480246678238878,
+     "d_f1_std": 0.0021638078131814347
+    },
+    "first_submit_day": {
+     "acc": 0.8376286610110611,
+     "f1": 0.7982475882648552,
+     "d_acc": -0.0017619424145514095,
+     "d_f1": -0.0021243732214036638,
+     "d_f1_std": 0.0026985431695443884
+    }
+   },
+   "chosen": "has_coursework",
+   "accepted": true
+  },
+  {
+   "round": 3,
+   "pair": [
+    "rank_clicks",
+    "rank_active_days"
+   ],
+   "r": 0.9488105529292444,
+   "candidates": {
+    "rank_clicks": {
+     "acc": 0.8394577553677248,
+     "f1": 0.800205113665146,
+     "d_acc": 0.0005744725069765533,
+     "d_f1": 0.0005811768467111067,
+     "d_f1_std": 0.0017769137427800826
+    },
+    "rank_active_days": {
+     "acc": 0.8403395351006326,
+     "f1": 0.801526898000984,
+     "d_acc": 0.0014562522398843258,
+     "d_f1": 0.0019029611825490233,
+     "d_f1_std": 0.002209852218315031
+    }
+   },
+   "chosen": "rank_active_days",
+   "accepted": true
+  },
+  {
+   "round": 4,
+   "pair": [
+    "has_vle_activity",
+    "days_since_last"
+   ],
+   "r": 0.9456425584631649,
+   "candidates": {
+    "has_vle_activity": {
+     "acc": 0.8393929658595845,
+     "f1": 0.7997004971390901,
+     "d_acc": -0.0009465692410479898,
+     "d_f1": -0.0018264008618938733,
+     "d_f1_std": 0.0032829968245712254
+    },
+    "days_since_last": {
+     "acc": 0.8392537304242396,
+     "f1": 0.8002825320676829,
+     "d_acc": -0.0010858046763930096,
+     "d_f1": -0.001244365933301128,
+     "d_f1_std": 0.0016303872613730819
+    }
+   },
+   "chosen": "days_since_last",
+   "accepted": true
+  },
+  {
+   "round": 5,
+   "pair": [
+    "weighted_average",
+    "rank_wa"
+   ],
+   "r": 0.8963474218095192,
+   "candidates": {
+    "weighted_average": {
+     "acc": 0.8381694782986026,
+     "f1": 0.7992588232424384,
+     "d_acc": -0.0010842521256370086,
+     "d_f1": -0.0010237088252444515,
+     "d_f1_std": 0.0012390320018161886
+    },
+    "rank_wa": {
+     "acc": 0.8387790980516302,
+     "f1": 0.7973298130055907,
+     "d_acc": -0.00047463237260940704,
+     "d_f1": -0.0029527190620920905,
+     "d_f1_std": 0.0020656734089629894
+    }
+   },
+   "chosen": "weighted_average",
+   "accepted": true
+  },
+  {
+   "round": 6,
+   "pair": [
+    "rank_clicks",
+    "active_weeks"
+   ],
+   "r": 0.879083702651686,
+   "candidates": {
+    "rank_clicks": {
+     "acc": 0.8366089391994811,
+     "f1": 0.7970558477077164,
+     "d_acc": -0.0015605390991215052,
+     "d_f1": -0.0022029755347218404,
+     "d_f1_std": 0.0024086088418013582
+    },
+    "active_weeks": {
+     "acc": 0.8364707484290724,
+     "f1": 0.7972495355478445,
+     "d_acc": -0.0016987298695302355,
+     "d_f1": -0.00200928769459392,
+     "d_f1_std": 0.0022446530940324356
+    }
+   },
+   "chosen": "active_weeks",
+   "accepted": false
+  },
+  {
+   "round": 7,
+   "pair": [
+    "active_days",
+    "active_weeks"
+   ],
+   "r": 0.8762423120143538,
+   "candidates": {
+    "active_days": {
+     "acc": 0.8345373202749989,
+     "f1": 0.795311489349068,
+     "d_acc": -0.0036321580236036155,
+     "d_f1": -0.003947333893370342,
+     "d_f1_std": 0.002492178340155974
+    },
+    "active_weeks": {
+     "acc": 0.8364707484290724,
+     "f1": 0.7972495355478445,
+     "d_acc": -0.0016987298695302355,
+     "d_f1": -0.00200928769459392,
+     "d_f1_std": 0.0022446530940324356
+    }
+   },
+   "chosen": "active_weeks",
+   "accepted": false
+  },
+  {
+   "round": 8,
+   "pair": [
+    "w1_clicks",
+    "decay_clicks"
+   ],
+   "r": 0.8677884904849067,
+   "candidates": {
+    "w1_clicks": {
+     "acc": 0.8365052185783766,
+     "f1": 0.7974717417610366,
+     "d_acc": -0.0016642597202260133,
+     "d_f1": -0.00178708148140172,
+     "d_f1_std": 0.0027576537442591488
+    },
+    "decay_clicks": {
+     "acc": 0.834810842032956,
+     "f1": 0.7956648234554429,
+     "d_acc": -0.003358636265646564,
+     "d_f1": -0.003593999786995483,
+     "d_f1_std": 0.0018437625214535768
+    }
+   },
+   "chosen": "w1_clicks",
+   "accepted": true
+  }
+ ],
+ "removed": [
+  {
+   "feature": "recovery_slope",
+   "pair_with": "score_slope_cw",
+   "r": 0.9858845870902407,
+   "d_f1_at_removal": 0.0004204170713238531,
+   "d_acc_at_removal": 0.0001690639167725827
+  },
+  {
+   "feature": "has_coursework",
+   "pair_with": "first_submit_day",
+   "r": 0.9854398647260477,
+   "d_f1_at_removal": -0.0007480246678238878,
+   "d_acc_at_removal": -0.0005073205648642443
+  },
+  {
+   "feature": "rank_active_days",
+   "pair_with": "rank_clicks",
+   "r": 0.9488105529292444,
+   "d_f1_at_removal": 0.0019029611825490233,
+   "d_acc_at_removal": 0.0014562522398843258
+  },
+  {
+   "feature": "days_since_last",
+   "pair_with": "has_vle_activity",
+   "r": 0.9456425584631649,
+   "d_f1_at_removal": -0.001244365933301128,
+   "d_acc_at_removal": -0.0010858046763930096
+  },
+  {
+   "feature": "weighted_average",
+   "pair_with": "rank_wa",
+   "r": 0.8963474218095192,
+   "d_f1_at_removal": -0.0010237088252444515,
+   "d_acc_at_removal": -0.0010842521256370086
+  },
+  {
+   "feature": "w1_clicks",
+   "pair_with": "decay_clicks",
+   "r": 0.8677884904849067,
+   "d_f1_at_removal": -0.00178708148140172,
+   "d_acc_at_removal": -0.0016642597202260133
+  }
+ ],
+ "kept_pairs": [
+  {
+   "pair": [
+    "rank_clicks",
+    "active_weeks"
+   ],
+   "r": 0.879083702651686,
+   "best_drop_cost_f1": -0.00200928769459392
+  },
+  {
+   "pair": [
+    "active_days",
+    "active_weeks"
+   ],
+   "r": 0.8762423120143538,
+   "best_drop_cost_f1": -0.00200928769459392
+  }
+ ],
+ "final": {
+  "n_features": 36,
+  "features": [
+   "active_days",
+   "clicks_per_day",
+   "clicks_per_assessment",
+   "study_spread",
+   "burstiness",
+   "resource_ratio",
+   "oucontent_ratio",
+   "homepage_ratio",
+   "forumng_ratio",
+   "quiz_ratio",
+   "assessment_focus",
+   "has_vle_activity",
+   "registration_lead",
+   "highest_education_HE Qualification",
+   "highest_education_Lower Than A Level",
+   "highest_education_No Formal quals",
+   "highest_education_Post Graduate Qualification",
+   "w2_clicks",
+   "w3_clicks",
+   "w4_clicks",
+   "precourse_clicks",
+   "decay_clicks",
+   "mean_submit_lead",
+   "min_submit_lead",
+   "late_submissions",
+   "submitted_count",
+   "first_submit_day",
+   "n_assess_types_submitted",
+   "rank_clicks",
+   "rank_wa",
+   "completion_ratio_avail",
+   "engagement_decay_ratio",
+   "max_gap",
+   "active_weeks",
+   "score_slope_cw",
+   "score_std_cw"
+  ],
+  "acc": 0.8365052185783766,
+  "f1": 0.7974717417610366,
+  "paired_d_acc_vs_start": -0.0027163209304633673,
+  "paired_d_f1_vs_start": -0.002479802653898311,
+  "per_class_f1_reduced": {
+   "Withdrawn": 0.9452513966480447,
+   "Fail": 0.8198570891312523,
+   "Pass": 0.8409176382098533,
+   "Distinction": 0.5852372583479789
+  },
+  "per_class_f1_full": {
+   "Withdrawn": 0.9503335804299481,
+   "Fail": 0.8236632536973834,
+   "Pass": 0.8412966085816002,
+   "Distinction": 0.5797872340425532
+  }
+ },
+ "stratified_group_cv": [
+  {
+   "set": "full_42",
+   "n_features": 42,
+   "acc": 0.8384438720160418,
+   "acc_std": 0.0036669280611571764,
+   "f1": 0.7973288908199637,
+   "f1_std": 0.004590772741156278
+  },
+  {
+   "set": "reduced",
+   "n_features": 36,
+   "acc": 0.8360401602988932,
+   "acc_std": 0.0029354572181438036,
+   "f1": 0.794699367589583,
+   "f1_std": 0.00480334300721851
+  }
+ ],
+ "remaining_pairs_ge_0.85": [
+  [
+   "rank_clicks",
+   "active_weeks",
+   0.879
+  ],
+  [
+   "active_days",
+   "active_weeks",
+   0.876
+  ]
+ ],
+ "sgkf_37": {
+  "n": 37,
+  "acc": 0.8359286384199436,
+  "acc_std": 0.0038919954538810314,
+  "f1": 0.794745793341072,
+  "f1_std": 0.005387868726154452
+ },
+ "features_37": [
+  "active_days",
+  "clicks_per_day",
+  "clicks_per_assessment",
+  "study_spread",
+  "burstiness",
+  "resource_ratio",
+  "oucontent_ratio",
+  "homepage_ratio",
+  "forumng_ratio",
+  "quiz_ratio",
+  "assessment_focus",
+  "has_vle_activity",
+  "registration_lead",
+  "highest_education_HE Qualification",
+  "highest_education_Lower Than A Level",
+  "highest_education_No Formal quals",
+  "highest_education_Post Graduate Qualification",
+  "w1_clicks",
+  "w2_clicks",
+  "w3_clicks",
+  "w4_clicks",
+  "precourse_clicks",
+  "decay_clicks",
+  "mean_submit_lead",
+  "min_submit_lead",
+  "late_submissions",
+  "submitted_count",
+  "first_submit_day",
+  "n_assess_types_submitted",
+  "rank_clicks",
+  "rank_wa",
+  "completion_ratio_avail",
+  "engagement_decay_ratio",
+  "max_gap",
+  "active_weeks",
+  "score_slope_cw",
+  "score_std_cw"
+ ]
+}

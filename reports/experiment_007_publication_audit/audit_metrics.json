@@ -1,0 +1,362 @@
+{
+ "config": {
+  "n_rows": 29496,
+  "n_features": 42,
+  "features": [
+   "weighted_average",
+   "active_days",
+   "clicks_per_day",
+   "clicks_per_assessment",
+   "study_spread",
+   "burstiness",
+   "resource_ratio",
+   "oucontent_ratio",
+   "homepage_ratio",
+   "forumng_ratio",
+   "quiz_ratio",
+   "assessment_focus",
+   "recovery_slope",
+   "has_vle_activity",
+   "has_coursework",
+   "registration_lead",
+   "highest_education_HE Qualification",
+   "highest_education_Lower Than A Level",
+   "highest_education_No Formal quals",
+   "highest_education_Post Graduate Qualification",
+   "w1_clicks",
+   "w2_clicks",
+   "w3_clicks",
+   "w4_clicks",
+   "precourse_clicks",
+   "days_since_last",
+   "decay_clicks",
+   "mean_submit_lead",
+   "min_submit_lead",
+   "late_submissions",
+   "submitted_count",
+   "first_submit_day",
+   "n_assess_types_submitted",
+   "rank_clicks",
+   "rank_wa",
+   "rank_active_days",
+   "completion_ratio_avail",
+   "engagement_decay_ratio",
+   "max_gap",
+   "active_weeks",
+   "score_slope_cw",
+   "score_std_cw"
+  ],
+  "population": "engaged (excludes unregistration on/before day 0)"
+ },
+ "leakage_checks": {
+  "forbidden_cols_in_features": [],
+  "vle_rows_after_unreg_in_population": 20075,
+  "exam_ids_reachable_from_features": 0,
+  "single_feature_auc_gt_0.95": {}
+ },
+ "baseline": {
+  "acc": 0.8295281582952816,
+  "f1": 0.7900853183265582,
+  "acc_rep_mean": 0.8392215395088399,
+  "acc_rep_std": 0.004831046886163201,
+  "f1_rep_mean": 0.7999515444149349,
+  "f1_rep_std": 0.004344796731311434,
+  "per_class_f1": {
+   "Withdrawn": 0.9362880886426593,
+   "Fail": 0.8029197080291971,
+   "Pass": 0.8358552001532273,
+   "Distinction": 0.585278276481149
+  }
+ },
+ "importance_top10": [
+  [
+   "submitted_count",
+   0.22970499098300934
+  ],
+  [
+   "decay_clicks",
+   0.108910471200943
+  ],
+  [
+   "days_since_last",
+   0.05835878103971481
+  ],
+  [
+   "rank_wa",
+   0.05609298497438431
+  ],
+  [
+   "active_weeks",
+   0.0538974367082119
+  ],
+  [
+   "completion_ratio_avail",
+   0.051428020000457764
+  ],
+  [
+   "weighted_average",
+   0.04805833101272583
+  ],
+  [
+   "n_assess_types_submitted",
+   0.039441946893930435
+  ],
+  [
+   "study_spread",
+   0.03679577633738518
+  ],
+  [
+   "max_gap",
+   0.02309236116707325
+  ]
+ ],
+ "trivial_predictors": {
+  "majority_class": {
+   "acc": 0.4119736174530695,
+   "f1": 0.14588573481854114
+  },
+  "only_submitted_count": {
+   "acc": 0.6062045290491628,
+   "f1": 0.3607689505254313
+  },
+  "only_decay_clicks": {
+   "acc": 0.5809686955421486,
+   "f1": 0.41981897753220304
+  }
+ },
+ "ablations": {
+  "drop_submitted_count": {
+   "acc": 0.8389845350043229,
+   "f1": 0.7996400591117672,
+   "d_acc": -0.00023700450451702437,
+   "d_f1": -0.0003114853031677134,
+   "per_class_f1": {
+    "Withdrawn": 0.9404019404019404,
+    "Fail": 0.8056726715216558,
+    "Pass": 0.8336520076481836,
+    "Distinction": 0.5740236148955495
+   }
+  },
+  "drop_decay_clicks": {
+   "acc": 0.8378633335380317,
+   "f1": 0.7979228056598651,
+   "d_acc": -0.0013582059708082683,
+   "d_f1": -0.0020287387550698144,
+   "per_class_f1": {
+    "Withdrawn": 0.9388888888888889,
+    "Fail": 0.8022944550669217,
+    "Pass": 0.8334926400305869,
+    "Distinction": 0.5763636363636364
+   }
+  },
+  "drop_days_since_last": {
+   "acc": 0.8376622652327104,
+   "f1": 0.7983626291469639,
+   "d_acc": -0.001559274276129563,
+   "d_f1": -0.0015889152679710028,
+   "per_class_f1": {
+    "Withdrawn": 0.9371309482459187,
+    "Fail": 0.8015296367112811,
+    "Pass": 0.8346396482508125,
+    "Distinction": 0.5740236148955495
+   }
+  },
+  "drop_top3": {
+   "acc": 0.8361687977686684,
+   "f1": 0.7962504461809772,
+   "d_acc": -0.0030527417401715606,
+   "d_f1": -0.0037010982339577003,
+   "per_class_f1": {
+    "Withdrawn": 0.9364968597348221,
+    "Fail": 0.8029029793735676,
+    "Pass": 0.8365788468881252,
+    "Distinction": 0.5851449275362319
+   }
+  }
+ },
+ "subgroup_by_module": {
+  "AAA": {
+   "n": 131,
+   "acc": 0.8854961832061069,
+   "f1": 0.7959097028062545
+  },
+  "BBB": {
+   "n": 1422,
+   "acc": 0.8234880450070323,
+   "f1": 0.7740965685791775
+  },
+  "CCC": {
+   "n": 804,
+   "acc": 0.8519900497512438,
+   "f1": 0.8280624725383083
+  },
+  "DDD": {
+   "n": 1129,
+   "acc": 0.8228520814880426,
+   "f1": 0.7451890071138834
+  },
+  "EEE": {
+   "n": 546,
+   "acc": 0.7967032967032966,
+   "f1": 0.7524084852443063
+  },
+  "FFF": {
+   "n": 1377,
+   "acc": 0.869281045751634,
+   "f1": 0.8463141251254007
+  },
+  "GGG": {
+   "n": 504,
+   "acc": 0.7380952380952381,
+   "f1": 0.6990762902902387
+  }
+ },
+ "class_balance": {
+  "Withdrawn": 7067,
+  "Fail": 7044,
+  "Pass": 12361,
+  "Distinction": 3024
+ },
+ "headline_confusion": [
+  [
+   1352,
+   95,
+   31,
+   2
+  ],
+  [
+   49,
+   1045,
+   288,
+   0
+  ],
+  [
+   4,
+   79,
+   2182,
+   171
+  ],
+  [
+   3,
+   2,
+   284,
+   326
+  ]
+ ],
+ "headline_per_class": {
+  "Withdrawn": {
+   "precision": 0.9602272727272727,
+   "recall": 0.9135135135135135,
+   "f1-score": 0.9362880886426593,
+   "support": 1480.0
+  },
+  "Fail": {
+   "precision": 0.8558558558558559,
+   "recall": 0.756150506512301,
+   "f1-score": 0.8029197080291971,
+   "support": 1382.0
+  },
+  "Pass": {
+   "precision": 0.7834829443447038,
+   "recall": 0.8957307060755336,
+   "f1-score": 0.8358552001532273,
+   "support": 2436.0
+  },
+  "Distinction": {
+   "precision": 0.6533066132264529,
+   "recall": 0.5300813008130081,
+   "f1-score": 0.585278276481149,
+   "support": 615.0
+  }
+ },
+ "high_correlation_pairs_ge_0.85": [
+  [
+   "recovery_slope",
+   "score_slope_cw",
+   0.9858845870902407
+  ],
+  [
+   "has_coursework",
+   "first_submit_day",
+   0.9854398647260477
+  ],
+  [
+   "rank_clicks",
+   "rank_active_days",
+   0.9488105529292444
+  ],
+  [
+   "has_vle_activity",
+   "days_since_last",
+   0.9456425584631649
+  ],
+  [
+   "rank_active_days",
+   "active_weeks",
+   0.9293909481266819
+  ],
+  [
+   "weighted_average",
+   "rank_wa",
+   0.8963474218095192
+  ],
+  [
+   "active_days",
+   "rank_active_days",
+   0.8792534739659909
+  ],
+  [
+   "rank_clicks",
+   "active_weeks",
+   0.879083702651686
+  ],
+  [
+   "active_days",
+   "active_weeks",
+   0.8762423120143538
+  ],
+  [
+   "w1_clicks",
+   "decay_clicks",
+   0.8677884904849067
+  ]
+ ],
+ "stratified_group_cv": {
+  "folds": [
+   {
+    "fold": 0,
+    "n_test": 5889,
+    "acc": 0.8349465104431992,
+    "f1": 0.7899771865502556
+   },
+   {
+    "fold": 1,
+    "n_test": 5884,
+    "acc": 0.8346363018354861,
+    "f1": 0.7969657375352805
+   },
+   {
+    "fold": 2,
+    "n_test": 5858,
+    "acc": 0.8385114373506316,
+    "f1": 0.7956866161131452
+   },
+   {
+    "fold": 3,
+    "n_test": 5946,
+    "acc": 0.8393878237470569,
+    "f1": 0.8004709824897082
+   },
+   {
+    "fold": 4,
+    "n_test": 5919,
+    "acc": 0.8447372867038351,
+    "f1": 0.8035439314114292
+   }
+  ],
+  "mean_acc": 0.8384438720160418,
+  "std_acc": 0.0036669280611571764,
+  "mean_f1": 0.7973288908199637,
+  "std_f1": 0.004590772741156278
+ }
+}
