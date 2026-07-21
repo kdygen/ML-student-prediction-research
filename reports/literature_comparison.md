@@ -1,24 +1,43 @@
 # Literature Comparison — Final Methodology vs Published OULAD Research
 
 **Date:** 2026-07-20
-**Basis:** the **final notebook methodology** (per-student horizon, fair denominator, constant
-sentinel, 36 features, exams excluded, StratifiedGroupKFold-5 grouped by `id_student`), not
-the earlier baseline experiments.
+**Basis:** the notebook methodology (per-student horizon, fair denominator, constant sentinel,
+StratifiedGroupKFold-5 grouped by `id_student`).
+
+> **BASELINE UPDATE (2026-07-21).** The project's official baseline is now the
+> **assessment-free** pipeline — 36 features, **no data from `studentAssessment.csv` or
+> `assessments.csv`** — at **accuracy 0.739, macro-F1 0.715, per-class F1 W 0.940 / F 0.779 /
+> P 0.709 / D 0.430** (`reports/official_baseline_results.json`). The with-scores model
+> (0.836 / 0.795) referenced throughout this document is now a **documented comparison arm**,
+> retained because it is what most cited papers are comparable to. Where a paper is
+> assessment-free, compare against the official baseline; where a paper uses assessment
+> scores, compare against the with-scores arm.
 **Evidence:** ~25 papers located across six literature sweeps; every paper cited below was
 read in full text unless explicitly marked otherwise. Two papers could not be retrieved
 (noted in §7).
 
 ## 0. Our reference numbers
 
-| Result | Engaged pop. (29,496 — published) | **Full pop. (32,593 — matches the literature)** |
+**⭐ OFFICIAL BASELINE — assessment-free** (29,496; no assessment-table data):
+
+| Metric | Value |
+|---|--:|
+| Accuracy | **0.7392 ± 0.0042** |
+| Macro-F1 | **0.7147 ± 0.0053** |
+| Weighted-F1 | 0.7528 |
+| Per-class F1 (W/F/P/D) | .940 / .779 / .709 / .430 |
+
+**Comparison arm — with coursework scores** (the arm most cited papers are comparable to):
+
+| Result | Engaged pop. (29,496) | Full pop. (32,593 — matches the literature) |
 |---|--:|--:|
-| Accuracy | 0.8362 ± 0.0038 | **0.8506 ± 0.0048** |
-| Macro-F1 | 0.7949 ± 0.0048 | **0.7976 ± 0.0083** |
-| Weighted-F1 | 0.8330 | **0.8473** |
+| Accuracy | 0.8362 ± 0.0038 | 0.8506 ± 0.0048 |
+| Macro-F1 | 0.7949 ± 0.0048 | 0.7976 ± 0.0083 |
+| Weighted-F1 | 0.8330 | 0.8473 |
 | Per-class F1 (W/F/P/D) | .943 / .813 / .843 / .581 | .959 / .808 / .843 / .581 |
 
-Both are reported because **no published paper uses our engaged population**; the 32,593 run
-exists solely to make comparisons like-for-like. Supplementary regression (33 behaviour-only
+Both populations are reported for the arm because **no published paper uses our engaged
+population**; the 32,593 run exists solely to make comparisons like-for-like. Supplementary regression (33 behaviour-only
 features, GroupKFold-5, n=23,241): **R² 0.334 ± 0.009, MAE 10.30, RMSE 13.38**. Archived
 binary results (Exp 006b): Withdrawn-vs-rest AUC 0.9958; at-risk AUC 0.9824.
 
@@ -56,7 +75,15 @@ OULAD without that field and get 72% accuracy / 0.66 macro-F1.** Same data, same
 
 ## 2. Tier 1 — directly comparable (4-class, full OULAD, full-course)
 
-### 2.1 Al-azazi & Ghurab (2023) — **the fairest comparator**
+### 2.1 Al-azazi & Ghurab (2023) — **the assessment-free comparator**
+
+> **⚠️ CORRECTION (2026-07-21).** An earlier version of this document described this paper as
+> "the fairest comparator" under a "same no-scores constraint" and claimed a +0.14 macro-F1
+> advantage. **That was wrong and is withdrawn.** Our headline model uses coursework scores
+> *and* assessment submission behaviour; Al-azazi use demographics + clickstream only, with no
+> access to the assessment tables at all. They are **more constrained than our headline model**,
+> so the headline numbers are not comparable to theirs. The like-for-like comparison, run in
+> Experiment 009 and extended in the Distinction investigation, is given below.
 *ANN-LSTM: A deep learning model for early student performance prediction in MOOC.*
 *Heliyon* 9(4):e15382. DOI 10.1016/j.heliyon.2023.e15382
 
@@ -72,27 +99,48 @@ OULAD without that field and get 72% accuracy / 0.66 macro-F1.** Same data, same
 | Metrics @ day 270 | acc **0.72**; **macro-F1 0.66**; micro-F1 0.63; weighted-F1 0.68. Per-class F1: D 0.59, F 0.65, P 0.70, W 0.70. No AUC |
 | Limitations | Class imbalance unaddressed; 43% accuracy at day 1 |
 
-**Metric-by-metric:**
+**Metric-by-metric — the LIKE-FOR-LIKE comparison.** Our matched arm is the assessment-free
+replication (24 base features = demographics + clickstream only, all 9 assessment-derived and
+3 score-derived features removed; same 32,593 population; verified programmatically to touch
+neither `studentAssessment.csv` nor `assessments.csv`):
 
-| Metric | Theirs | Ours (32,593) | Directly valid? |
-|---|--:|--:|---|
-| Accuracy | 0.72 | **0.8506** | **Yes** — same task, population, cutoff, and both exclude scores |
-| Macro-F1 | 0.66 | **0.7976** | **Yes** |
-| F1 Distinction | 0.59 | 0.581 | Yes — **statistically identical** |
-| F1 Fail | 0.65 | 0.808 | Yes |
-| F1 Pass | 0.70 | 0.843 | Yes |
-| F1 Withdrawn | 0.70 | 0.959 | Yes, **but** see caveat below |
-| AUC | not reported | — | n/a |
+| Metric | Theirs | ⭐ **OFFICIAL baseline (assessment-free)** | arm: with scores | Directly valid? |
+|---|--:|--:|--:|---|
+| Accuracy | 0.72 | **0.739** | 0.836 | ✅ vs the official column only |
+| Macro-F1 | 0.66 | **0.715** | 0.795 | ✅ — **+0.055** |
+| F1 Distinction | **0.59** | 0.430 | 0.579 | ✅ — **they win** |
+| F1 Fail | 0.65 | **0.779** | 0.814 | ✅ |
+| F1 Pass | 0.70 | 0.709 | 0.844 | ✅ |
+| F1 Withdrawn | 0.70 | **0.940** | 0.942 | ✅, but see caveat below |
+| AUC | not reported | — | — | n/a |
+
+**Only the assessment-free column may be compared to theirs.** The headline column is shown
+solely to quantify what assessment data is worth (+0.123 Distinction F1 from scores; +0.025
+from submission behaviour).
+
+**Distinction, after operating-point correction.** The Distinction investigation showed the
+0.166 above is largely an argmax artefact under 4.09:1 imbalance. With inverse-frequency class
+weights, depth/revisit features and an inner-tuned threshold, the assessment-free arm reaches
+**Distinction F1 0.430** (precision 0.33 / recall 0.60) and **macro-F1 0.715** — the
+configuration now adopted as the official baseline. Al-azazi still lead on Distinction (0.59), with the opposite profile —
+**precision 0.82 / recall 0.47**, i.e. a small confidently-separable subset. Whether their
+advantage is representational (day-wise LSTM sequences vs our aggregates) or an artefact of
+their single ungrouped split cannot be determined from published information.
+Full detail: `reports/distinction_investigation/assessment_free_comparison.md`.
 
 **Caveat on the one metric where we look strongest:** our Withdrawn advantage (0.959 vs 0.70)
 is partly structural. At a course-end prediction point the Withdrawn class is *defined* by
 ceasing participation, and our per-student horizon makes that signature crisp. This is an
 honest modelling choice, not a leak (we never touch `date_unregistration` as a feature) — but
-it should not be sold as forecasting skill. **The defensible headline is Fail (0.808 vs 0.65)
-and the macro-F1 gap**, not Withdrawn.
+it should not be sold as forecasting skill. On matched assessment-free access the Withdrawn
+gap is 0.956 vs 0.70 and Fail 0.768 vs 0.65 — **Fail is the defensible headline**, not
+Withdrawn and not macro-F1 (which is a near-tie at +0.016).
 
-**Verdict: genuine improvement.** Same constraints, better result, plus grouped validation
-they lack.
+**Verdict: mixed, but favourable on balance.** On matched assessment-free access we lead on accuracy
+(+0.09), Fail (+0.12), Pass (+0.11) and Withdrawn (+0.26), lead on macro-F1 (+0.055), and
+**lose on Distinction** (0.430 vs their 0.59) — under stricter validation
+throughout. Not "same constraints, better result": we lead on three classes and lose the
+fourth.
 
 ### 2.2 Althibyani (2024)
 *Predicting student success in MOOCs.* *PeerJ Computer Science* 10:e2221. DOI 10.7717/peerj-cs.2221
@@ -198,7 +246,7 @@ demographics only → 63% +clickstream → 71% +assessment → 72% all).
 | Paper | Dataset | Task | Models | Validation | Reported | Ours | Strengths | Weaknesses |
 |---|---|---|---|---|---|---|---|---|
 | **Ours** | OULAD 32,593 / 29,496 | 4-class + regression | LR/DT/RF/**XGB** | **StratifiedGroupKFold-5, grouped by student** | **acc .851, macro-F1 .798** | — | Only grouped eval; exams excluded; censored at withdrawal; leakage quantified | Withdrawn partly structural; single institution; no intervention arm |
-| Al-azazi & Ghurab 2023 | OULAD 32,593 | 4-class | ANN-LSTM | 70/30, no grouping | acc .72, macro-F1 .66 | .851 / .798 | Also excludes scores; keeps Withdrawn; day-wise curve | No grouping; imbalance unaddressed; no post-filter N |
+| Al-azazi & Ghurab 2023 | OULAD 32,593 | 4-class | ANN-LSTM | 70/30, no grouping | acc .72, macro-F1 .66, **D F1 .59** | **.812 / .676** (assessment-free arm; headline .851/.798 uses scores) | Genuinely assessment-free; keeps Withdrawn; day-wise sequences; **beats us on Distinction** | No grouping; single split; imbalance unaddressed; features never enumerated |
 | Althibyani 2024 | OULAD 32,593 | 4-class + binary | LR, RF | random 75/25 | acc .746, weighted-F1 .742 (macro .706 derived) | .851 / .847 wtd | Publishes confusion matrices (reusable) | Uses scores; no grouping; reports weighted F1 unlabelled |
 | Shou et al. 2024 | OULAD 32,593 | 4-class | MTAPSP, RF, DFFNN | random 80/20 | acc .74, macro-F1 .67 | .851 / .798 | Reports macro **and** weighted; time-series design | Uses scores; no grouping |
 | Junejo et al. 2025 | OULAD 32,593 | 4-class | 1D-CNN | stratified 80/20 | acc .98, macro-F1 .98 | — (rebut) | Early-cutoff curve published | **Target leakage** via `total_reg_days`; implausible baseline gap |
@@ -220,8 +268,10 @@ demographics only → 63% +clickstream → 71% +assessment → 72% all).
    enrolments over 28,785 unique students, ~3,800 repeat enrolments are scattered across
    train and test by every other paper's random split. None mentions the issue.
 2. **Feature discipline.** Exams excluded entirely; `date_unregistration` never a feature.
-   Against the papers that also exclude scores (Al-azazi, Jha) we win on metrics; against
-   those that don't, our result is achieved under a strictly harder constraint.
+   Note our headline model **does** use coursework scores and submission behaviour — it is
+   *score-free of exams*, not assessment-free. Against the genuinely assessment-free
+   comparator (Al-azazi) the valid contrast is our assessment-free arm: we lead on macro-F1
+   (0.715 vs 0.66) and accuracy (0.739 vs 0.72) but **lose on Distinction** (0.430 vs 0.59).
 3. **The hard classes.** Fail F1 0.808 vs 0.519–0.65 across Tier 1 — the boundary where
    prior confusion matrices collapse, as two of those papers concede themselves.
 4. **Quantified corrections.** Survivorship (31% of the at-risk population at day 30),
@@ -234,9 +284,11 @@ demographics only → 63% +clickstream → 71% +assessment → 72% all).
 1. **Withdrawn is partly structural, not skill.** At course end the class is defined by
    ceasing participation. Al-azazi gets 0.70 without our per-student anchoring; we get 0.959.
    Some of that gap is anchoring design, not better learning.
-2. **Distinction is no better than the field** (0.581 vs Al-azazi's 0.59), and papers using
-   assessment scores beat us there (Althibyani 0.672). Without scores, excellence is not
-   separable — an honest information limit.
+2. **Distinction is our weakest class and we lose it outright when matched.** Our headline
+   0.581 uses coursework scores; Al-azazi reach 0.59 with **no assessment data at all**. On
+   matched access the official baseline gets 0.430 vs their 0.59.
+   Papers using assessment scores also beat us (Althibyani 0.672). Excellence is the one
+   boundary where we do not lead.
 3. **No deep-learning comparison at equal footing.** We use XGBoost; MTAPSP, ANN-LSTM and
    1D-CNN are untested under our protocol. A reviewer may ask whether our gain is protocol
    or model.
@@ -245,9 +297,11 @@ demographics only → 63% +clickstream → 71% +assessment → 72% all).
    (the score predates the presentation and is knowable), but a disclosed data-quality note.
 
 **Improvement or merely different design?** — **Both, and the distinction matters per
-comparator.** Against Al-azazi & Ghurab (same task, same population, same no-scores
-constraint, same cutoff) it is a **genuine improvement**: +0.13 accuracy, +0.14 macro-F1,
-with stricter validation. Against Althibyani/Shou/Adnan it is **partly a different
+comparator.** Against Al-azazi & Ghurab, on matched assessment-free access, it is a
+**modest improvement on aggregate metrics** (+0.09 accuracy, **+0.016 macro-F1 — essentially
+a tie**) under stricter validation, but a **loss on Distinction** (.433 vs .59). The
+previously claimed "+0.14 macro-F1 under equal constraints" compared our score-using model
+against their score-free one and is withdrawn. Against Althibyani/Shou/Adnan it is **partly a different
 experimental design** — they buy performance with assessment scores, we buy validity with
 grouped CV and exam exclusion; the comparison has two opposing biases and should be
 presented that way rather than as a clean win. Against Junejo it is **not a comparison at
@@ -275,12 +329,15 @@ all** but a refutation.
 - The regression (R² 0.334) is squarely mid-range for behaviour-only grade prediction.
 
 **Claim confidently**
-1. Highest *defensible* 4-class macro-F1 on OULAD (0.798 vs best credible published 0.706),
-   achieved under stricter feature and validation constraints.
+1. Highest *defensible* 4-class macro-F1 on OULAD (0.798 vs best credible published 0.706 —
+   Althibyani, who like us uses assessment scores), achieved under stricter **validation**.
+   Do not add "stricter feature constraints" to this claim: our headline uses coursework
+   scores. Against genuinely assessment-free work our official baseline is macro-F1 0.715 vs their 0.66.
 2. First student-grouped evaluation of OULAD; quantified identity-leakage exposure.
 3. `date_unregistration` as a label proxy, and that at least one published headline depends
    on it.
-4. Substantial gains on the Fail/Withdrawn boundary specifically.
+4. Substantial gains on the Fail/Withdrawn boundary specifically — and on matched
+   assessment-free access too (Fail 0.779 vs 0.65, Withdrawn 0.940 vs 0.70).
 5. Full-course leakage-free performance as an *information ceiling*, contrasted against the
    early-prediction curve (day 30: 0.527/0.396 → day 140: 0.693/0.514).
 
@@ -291,6 +348,12 @@ all** but a refutation.
 4. ❌ Beating Ouroboros/Herrmannova/LEAP — different targets and horizons.
 5. ❌ Any intervention or causal benefit — no intervention arm exists in OULAD.
 6. ❌ Superiority over deep learning — we did not run MTAPSP/ANN-LSTM under our protocol.
+7. ❌ **That our headline model is "score-free" or "assessment-free"** — it uses coursework
+   scores *and* submission behaviour. Use three distinct terms with their own numbers:
+   with-scores arm **macro-F1 0.795**, assessment-behaviour arm **D-F1 0.457**, official
+   assessment-free baseline **macro-F1 0.715 / D-F1 0.430**.
+8. ❌ **That we beat Al-azazi on Distinction** — we do not (0.430 vs 0.59 on matched access).
+   State it plainly; it is the one class where the field leads us.
 
 **The paper to write:** not "we got a higher number," but **"most published OULAD performance
 is not comparable to itself, and here is a protocol under which it becomes so."** The rigour

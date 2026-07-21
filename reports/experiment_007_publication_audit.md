@@ -1,5 +1,13 @@
 # Experiment 007 — Final Publication Audit of the V3 Configuration
 
+> **📌 These figures describe the WITH-SCORES comparison arm, not the official baseline.**
+> As of 2026-07-21 the official baseline is the **assessment-free** pipeline: accuracy 0.739,
+> macro-F1 0.715, per-class F1 W 0.940 / F 0.779 / P 0.709 / D 0.430
+> (`reports/official_baseline_results.json`). The numbers below remain the correct record
+> for the with-scores configuration and for comparison against papers that use assessment
+> scores.
+
+
 **Date:** 2026-07-20
 **Subject:** V3 = per-student timeline anchoring (006b) + fair completion denominator (006c V1)
 + engaged population (excludes enrolments unregistered on/before day 0).
@@ -189,5 +197,5 @@ grouped CV) within 0.003; and insensitivity to removing the top-3 features (−0
 
 **Overall audit verdict: the V3 configuration is scientifically sound, leakage-free, robust
 to feature ablation and subgroup variation, and reproducible. No methodological change was
-made or is required.** The recommended headline is
+made or is required.** For this (with-scores) arm the headline is
 **accuracy 0.838 ± 0.004, macro-F1 0.797 ± 0.005** (stratified grouped 5-fold CV).

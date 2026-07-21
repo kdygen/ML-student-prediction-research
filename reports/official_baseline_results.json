@@ -1,0 +1,178 @@
+{
+ "baseline": "OFFICIAL \u2014 assessment-free pipeline (AF3)",
+ "date": "2026-07-21",
+ "supersedes": "with-scores model (0.836/0.795), now a documented comparison arm",
+ "population": {
+  "n": 29496,
+  "description": "engaged: registered pairs excluding unregistration on/before day 0"
+ },
+ "features": {
+  "n": 36,
+  "composition": "24 assessment-free base + 6 clickstream depth + 6 module dummies",
+  "list": [
+   "active_days",
+   "clicks_per_day",
+   "study_spread",
+   "burstiness",
+   "resource_ratio",
+   "oucontent_ratio",
+   "homepage_ratio",
+   "forumng_ratio",
+   "quiz_ratio",
+   "has_vle_activity",
+   "registration_lead",
+   "highest_education_HE Qualification",
+   "highest_education_Lower Than A Level",
+   "highest_education_No Formal quals",
+   "highest_education_Post Graduate Qualification",
+   "w2_clicks",
+   "w3_clicks",
+   "w4_clicks",
+   "precourse_clicks",
+   "decay_clicks",
+   "rank_clicks",
+   "engagement_decay_ratio",
+   "max_gap",
+   "active_weeks",
+   "unique_sites",
+   "revisit_ratio",
+   "top3_site_share",
+   "content_admin_ratio",
+   "enrichment_share",
+   "n_activity_types",
+   "mod_BBB",
+   "mod_CCC",
+   "mod_DDD",
+   "mod_EEE",
+   "mod_FFF",
+   "mod_GGG"
+  ],
+  "guarantee": "zero features from studentAssessment.csv or assessments.csv"
+ },
+ "protocol": {
+  "cv": "StratifiedGroupKFold(5, shuffle=True, random_state=42) grouped by id_student",
+  "model": "XGBClassifier(n_estimators=300, max_depth=6, learning_rate=0.05, subsample=0.8, colsample_bytree=0.8, random_state=42)",
+  "class_weights": {
+   "0": 1.0434413471062687,
+   "1": 1.046848381601363,
+   "2": 0.5965536768869832,
+   "3": 2.4384920634920637
+  },
+  "threshold": "Distinction tau tuned on inner GroupKFold(3), guarded by macro-F1 >= argmax-0.005",
+  "taus_per_fold": [
+   0.44,
+   0.44,
+   0.44,
+   0.46,
+   0.44
+  ]
+ },
+ "metrics": {
+  "accuracy": 0.7392061143229681,
+  "accuracy_std": 0.004235962465537574,
+  "macro_f1": 0.7146521341566355,
+  "macro_f1_std": 0.005306115301606238,
+  "weighted_f1": 0.7527960324025429,
+  "per_class_f1": {
+   "Withdrawn": 0.9401844912078409,
+   "Fail": 0.7794173287930383,
+   "Pass": 0.7093743326927183,
+   "Distinction": 0.43035588027339144
+  },
+  "per_class_precision": {
+   "Withdrawn": 0.9579967689822294,
+   "Fail": 0.8345486955112623,
+   "Pass": 0.7513117423557083,
+   "Distinction": 0.3343097766385939
+  },
+  "per_class_recall": {
+   "Withdrawn": 0.9230224989387293,
+   "Fail": 0.7311186825667234,
+   "Pass": 0.6718712078310817,
+   "Distinction": 0.6038359788359788
+  },
+  "distinction_f1_mean_of_folds": 0.42987737306914137,
+  "distinction_f1_std": 0.020778736341409334
+ },
+ "folds": [
+  {
+   "fold": 0,
+   "tau": 0.44,
+   "accuracy": 0.7350993377483444,
+   "macro_f1": 0.7118289483708398,
+   "distinction_f1": 0.43089430894308944
+  },
+  {
+   "fold": 1,
+   "tau": 0.44,
+   "accuracy": 0.7408225696804894,
+   "macro_f1": 0.7226372900929627,
+   "distinction_f1": 0.4649321266968326
+  },
+  {
+   "fold": 2,
+   "tau": 0.44,
+   "accuracy": 0.7374530556503927,
+   "macro_f1": 0.7158174041068397,
+   "distinction_f1": 0.4283226929773651
+  },
+  {
+   "fold": 3,
+   "tau": 0.46,
+   "accuracy": 0.7467204843592331,
+   "macro_f1": 0.7163704382637132,
+   "distinction_f1": 0.42547928262213974
+  },
+  {
+   "fold": 4,
+   "tau": 0.44,
+   "accuracy": 0.7359351241763812,
+   "macro_f1": 0.7066065899488227,
+   "distinction_f1": 0.3997584541062802
+  }
+ ],
+ "top_importance": {
+  "active_weeks": 0.1337243616580963,
+  "decay_clicks": 0.09029826521873474,
+  "rank_clicks": 0.09027069807052612,
+  "study_spread": 0.06969010084867477,
+  "engagement_decay_ratio": 0.06814225018024445,
+  "mod_GGG": 0.040975261479616165,
+  "max_gap": 0.0369059182703495,
+  "active_days": 0.03661148622632027,
+  "highest_education_Lower Than A Level": 0.036585818976163864,
+  "mod_FFF": 0.028442755341529846,
+  "mod_DDD": 0.027730125933885574,
+  "mod_CCC": 0.022654278203845024,
+  "unique_sites": 0.019945651292800903,
+  "highest_education_Post Graduate Qualification": 0.01921122334897518,
+  "quiz_ratio": 0.018509957939386368
+ },
+ "comparison_arms": {
+  "assessment_behaviour_enhanced": {
+   "n_features": 45,
+   "accuracy": 0.753152969894223,
+   "macro_f1": 0.728993886855228,
+   "per_class_f1": {
+    "Withdrawn": 0.9426934097421203,
+    "Fail": 0.7926441652792493,
+    "Pass": 0.7236455091862398,
+    "Distinction": 0.456992463213303
+   },
+   "note": "adds 9 assessment-derived behavioural features (no scores); NOT the baseline"
+  },
+  "with_coursework_scores": {
+   "n_features": 36,
+   "accuracy": 0.8364,
+   "macro_f1": 0.7946,
+   "per_class_f1": {
+    "Withdrawn": 0.942,
+    "Fail": 0.814,
+    "Pass": 0.844,
+    "Distinction": 0.579
+   },
+   "note": "previous headline; argmax decision rule; NOT the baseline"
+  }
+ },
+ "convention_note": "Cohort percentile features (rank_clicks) are computed within the ENGAGED population, matching the notebook artifact. The research-run pipeline ranked within all 32,593 registered; that convention gives 0.7388/0.7156/D 0.433 (<=0.003 difference, within fold noise)."
+}

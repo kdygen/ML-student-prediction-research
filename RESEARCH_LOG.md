@@ -72,6 +72,107 @@ See `reports/experiment_004_intervention_framework.md`.
 
 ---
 
+## OFFICIAL BASELINE PROMOTED — Assessment-Free Pipeline
+
+Date: 2026-07-21
+
+Change: the project's official baseline is now the ASSESSMENT-FREE pipeline (AF3), replacing
+the with-scores model. Documentation/consolidation only — no new experiments, no change to
+experiment history.
+
+Official baseline: 36 features = 24 assessment-free base + 6 clickstream depth (revisit/
+breadth) + 6 module dummies. Uses NO data from studentAssessment.csv or assessments.csv (no
+scores, no submission timing, no completion counts, no deadlines) — asserted in-cell.
+Engaged population 29,496; StratifiedGroupKFold(5) by id_student; inverse-frequency class
+weights (W 1.0434 / F 1.0468 / P 0.5966 / D 2.4385); Distinction threshold tuned on inner
+GroupKFold(3) with a macro-F1 guard (tau per fold 0.44/0.44/0.44/0.46/0.44).
+
+METRICS: accuracy 0.7392+-0.0042, macro-F1 0.7147+-0.0053, weighted-F1 0.7528;
+per-class F1 Withdrawn 0.940 / Fail 0.779 / Pass 0.709 / Distinction 0.430.
+
+Convention decision (user-approved, Option A): cohort percentile features (rank_clicks) are
+computed within the ENGAGED population — the population the model actually predicts for —
+rather than within all 32,593 registered. This differs from the research-run pipeline used in
+the Distinction investigation, which ranked within the full registered cohort and reported
+0.7388 / 0.7156 / D 0.433 / W 0.941 / F 0.781. The delta is <=0.003 on every metric, well
+inside fold noise (Distinction fold SD 0.019). Diagnosis: rank_clicks differed on 29,474 of
+29,496 rows (never-starters have ~0 clicks and inflate everyone else's percentile); all 23
+other base features and all 6 depth features were verified BIT-IDENTICAL. This also corrects
+an earlier mis-attribution — the 0.836373 vs 0.8360 headline gap was blamed on "sentinel and
+fill-order" but is in fact this same rank convention.
+
+Comparison arms retained (same folds, same population, NOT the baseline):
+  + assessment BEHAVIOUR (45 feats, no scores): acc 0.7532, macro-F1 0.7290, D 0.457
+  + coursework SCORES (36 feats, argmax): acc 0.8364, macro-F1 0.7946, D 0.579
+Assessment behaviour is worth ~+0.014 macro-F1; scores a further ~+0.066.
+
+Notebook: 2 cells appended (154 -> 156); 0 committed cells modified. The official cell reuses
+mlDataFinal from the full-course section, strips the 9 assessment-derived and 3 score-derived
+features, adds the depth features and module dummies, and runs the weighted + threshold-tuned
+CV. It also computes the assessment-behaviour arm so all three tiers share one convention.
+
+Artifacts: reports/official_baseline_results.json (new). Updated: README.md, RESULTS.md,
+reports/literature_comparison.md (18 edits; Al-azazi now compared against the official
+baseline: macro-F1 0.715 vs 0.66, W +0.24, F +0.13, but they lead Distinction 0.59 vs 0.430).
+Distinction-investigation reports carry a pointer note to the official numbers while
+preserving their research-run figures as the experimental record.
+
+---
+
+## Distinction Investigation — Score-Free Pass-vs-Distinction (Experiments dx01-dx05)
+
+Date: 2026-07-21
+
+Objective: After Experiment 009 showed score-free Distinction F1 collapses to 0.227,
+determine whether Distinction can be separated from Pass using only leakage-free
+demographics + behaviour, via a full research loop (diagnosis -> literature -> features ->
+representations -> models), or establish a genuine information ceiling.
+
+Protocol: engaged population 29,496; per-student horizon + censoring; StratifiedGroupKFold(5)
+by id_student; baseline reproduced to delta=0.000000; all tuning inner-fold; full leakage
+audit of every new feature (reports/distinction_investigation/leakage_audit.md).
+
+Diagnosis (dx01): 85.3% of true D predicted Pass, only 13.3% get p(D)>0.5 — yet P-vs-D
+ranking AUC = 0.746: the collapse is an OPERATING-POINT problem stacked on an information
+limit. Missed Ds are behaviourally Pass-like (max |d|=0.47); model catches only hyper-engaged
+Ds. Per-module D F1 0.00-0.40.
+
+Iteration 1 (models): inverse-frequency weighting DOUBLES D F1 0.227->0.452 and RAISES
+macro-F1 0.695->0.729; W/F untouched; cost = accuracy -4.8pp, Pass F1 -0.089. Threshold
+rescue equivalent (0.447); hierarchical 0.439; ordinal 0.412 (damages W/F). Dedicated P-vs-D
+binary ceiling: AUC 0.737, best-threshold F1 0.449 — converging on ~0.45.
+
+Iteration 2 (22 new features, 6 hypothesis groups): real effect sizes (share_topq_weeks
+d=0.48, revisit_ratio 0.31) but only H2 depth/revisits clears the pre-stated +0.002 AUC rule
+(0.737->0.749, matching Kizilcec SRL-revisiting). Regularity/proactivity/spacing/cohort-
+trajectory/enrolment all redundant with the volume axis. ALL-22 no better than H2 alone.
+
+Iteration 3: module dummies +0.0003 AUC (nothing); HistGradientBoosting BELOW XGB (ceiling
+not model-specific); LightGBM/CatBoost skipped (pinned env). FINAL STACK (weights + H2 +
+module + inner-tuned tau): D F1 0.458 (P 0.36/R 0.63), per-fold 0.439-0.491, macro-F1
+0.731+-0.007, W 0.943 F 0.795, acc 0.755.
+
+Literature (background agent): best published score-free D F1 = 0.59 (Al-azazi ANN-LSTM,
+ungrouped single split, P 0.82/R 0.47 — high-precision subset only); independent replication
+of the collapse in Borna 2024 (Frontiers Educ, click-only D F1 0.15, explicit ceiling
+statement); field norm is merging D into P; Junejo's 0.94 claim invalid (unregistration
+leak). No published result under student-grouped validation — ours (0.458) is the strongest
+rigorously validated score-free number.
+
+Decision: BOTH pre-registered outcomes achieved — reproducible improvement (D F1 x2, all
+folds, W/F preserved, macro-F1 up) AND strong ceiling evidence (AUC stuck ~0.75 across 22
+features, module identity, 2 GBDT families, 4 decision architectures; missing information =
+quality of work, not measurable in clickstream). Official headline pipeline unchanged;
+weighted operating point recommended for any score-free deployment. One untested lever
+flagged honestly: daily-sequence models (expectation: high-precision low-recall subset).
+
+Artifacts: reports/distinction_investigation/ — FINAL_REPORT.md, DISTINCTION_RESEARCH_LOG.md,
+literature_pass_vs_distinction.md, feature_hypotheses.md, leakage_audit.md,
+experiment_results.{json,csv}, phase1_diagnosis.json, iteration{1,2,3} JSONs, figures/,
+code/ (6 scripts).
+
+---
+
 ## Literature Comparison — Final Methodology vs Published OULAD Research
 
 Date: 2026-07-20

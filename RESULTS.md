@@ -4,30 +4,56 @@
 Validation: StratifiedGroupKFold(5) grouped by `id_student` unless stated otherwise.
 Last updated 2026-07-21.*
 
-**Contents:** [Full-course](#1-full-course-multiclass--headline) · [Early cutoffs](#2-early-prediction-by-cutoff) ·
+**Contents:** [⭐ OFFICIAL BASELINE](#1--official-baseline--assessment-free-full-course-pipeline) · [Early cutoffs](#2-early-prediction-by-cutoff) ·
 [Binary](#3-binary-tasks) · [Regression](#4-regression) · [Intervention & capacity](#5-intervention-timing--capacity) ·
 [Features](#6-feature-importance) · [Methodology facts](#7-methodology-quick-facts)
 
 ---
 
-## 1. Full-course multiclass — HEADLINE
+## 1. ⭐ OFFICIAL BASELINE — assessment-free full-course pipeline
 
-| Population | Accuracy | Macro-F1 | Weighted-F1 |
-|---|--:|--:|--:|
-| **Engaged (29,496) — published headline** | **0.8362 ± 0.0038** | **0.7946 ± 0.0038** | 0.8330 |
-| Full registered (32,593) — for literature comparison | 0.8506 ± 0.0048 | 0.7976 ± 0.0083 | 0.8473 |
+**Uses no data from `studentAssessment.csv` or `assessments.csv`.** 36 features
+(24 assessment-free base + 6 clickstream depth + 6 module dummies), engaged population
+(29,496), StratifiedGroupKFold-5 by student, inverse-frequency class weights + inner-tuned
+Distinction threshold.
 
-### Per-class (out-of-fold, engaged population)
+| Metric | Value |
+|---|--:|
+| **Accuracy** | **0.7392 ± 0.0042** |
+| **Macro-F1** | **0.7147 ± 0.0053** |
+| Weighted-F1 | 0.7528 |
+
+### Per-class (out-of-fold)
 
 | Class | Precision | Recall | F1 | Support |
 |---|--:|--:|--:|--:|
-| Withdrawn | 0.959 | 0.928 | **0.943** | 7,067 |
-| Fail | 0.872 | 0.761 | **0.813** | 7,044 |
-| Pass | 0.789 | 0.905 | **0.843** | 12,361 |
-| Distinction | 0.668 | 0.514 | **0.581** | 3,024 |
-| **Macro average** | **0.822** | **0.777** | **0.795** | 29,496 |
+| Withdrawn | 0.960 | 0.921 | **0.940** | 7,067 |
+| Fail | 0.837 | 0.729 | **0.779** | 7,044 |
+| Pass | 0.751 | 0.672 | **0.709** | 12,361 |
+| Distinction | 0.334 | 0.604 | **0.430** | 3,024 |
+| **Macro average** | **0.720** | **0.732** | **0.715** | 29,496 |
 
-### Confusion matrix (row % — what each true class is predicted as)
+Per-fold Distinction thresholds τ: 0.44, 0.44, 0.44, 0.46, 0.44.
+Artifact: `reports/official_baseline_results.json`.
+
+### The three tiers (identical folds and population)
+
+| Tier | Features | Accuracy | Macro-F1 | W | F | P | D |
+|---|--:|--:|--:|--:|--:|--:|--:|
+| ⭐ **OFFICIAL — assessment-free** | 36 | **0.739** | **0.715** | 0.940 | 0.779 | 0.709 | **0.430** |
+| arm — + assessment *behaviour* | 45 | 0.753 | 0.729 | — | — | — | 0.457 |
+| arm — + coursework *scores* (argmax) | 36 | 0.836 | 0.795 | 0.942 | 0.814 | 0.844 | 0.579 |
+
+Assessment behaviour ≈ +0.014 macro-F1; coursework scores a further ≈ +0.066.
+
+### With-scores arm, both populations (retained for literature comparison)
+
+| Population | Accuracy | Macro-F1 | Weighted-F1 |
+|---|--:|--:|--:|
+| Engaged (29,496) | 0.8362 ± 0.0038 | 0.7946 ± 0.0038 | 0.8330 |
+| Full registered (32,593) | 0.8506 ± 0.0048 | 0.7976 ± 0.0083 | 0.8473 |
+
+### Confusion matrix — with-scores arm (row % — what each true class is predicted as)
 
 | True ↓ / Predicted → | Withdrawn | Fail | Pass | Distinction |
 |---|--:|--:|--:|--:|
@@ -55,13 +81,15 @@ Accuracy / Macro-F1, all four models (Baseline v4, grouped split):
 
 **XGBoost summary (the numbers to quote):**
 
-| | Day 14 | Day 30 | Day 60 | Day 90 | Day 140 | Full course |
-|---|--:|--:|--:|--:|--:|--:|
-| Accuracy | 0.491 | 0.527 | 0.575 | 0.616 | 0.693 | **0.836** |
-| Macro-F1 | 0.343 | 0.396 | 0.439 | 0.464 | 0.514 | **0.795** |
+| | Day 14 | Day 30 | Day 60 | Day 90 | Day 140 | Full course (with scores) | ⭐ OFFICIAL (assessment-free) |
+|---|--:|--:|--:|--:|--:|--:|--:|
+| Accuracy | 0.491 | 0.527 | 0.575 | 0.616 | 0.693 | 0.836 | **0.739** |
+| Macro-F1 | 0.343 | 0.396 | 0.439 | 0.464 | 0.514 | 0.795 | **0.715** |
 
-> The 0.514 → 0.795 macro-F1 gap between day 140 and full course quantifies how much
-> outcome information does not yet exist during the intervention window.
+> The 0.514 → 0.795 macro-F1 gap between day 140 and the full-course with-scores arm
+> quantifies how much outcome information does not yet exist during the intervention window.
+> Note the early-cutoff models use the v4 feature set (which includes assessment data), so
+> they are comparable to the with-scores column, not to the official assessment-free baseline.
 
 ---
 
@@ -208,7 +236,8 @@ Final model (XGBoost, 36 features), top 15 by gain:
 **Regression top predictor:** `active_weeks` (0.162) — study consistency, leading by 3×.
 
 **Robustness:** removing the top 3 features *simultaneously* costs only 0.004 macro-F1 (inside
-split noise). The best single feature alone reaches macro-F1 0.36 vs 0.795 for the full model.
+split noise). The best single feature alone reaches macro-F1 0.36 vs 0.795 for the full with-scores arm.
+(Robustness figures in this block were measured on the with-scores configuration.)
 
 ---
 
@@ -219,8 +248,8 @@ split noise). The best single feature alone reaches macro-F1 0.36 vs 0.795 for t
 | **Populations** | 32,593 registered → **29,496 engaged (headline)** → 23,241 regression subset |
 | **Unique students** | 28,785 (why grouping matters) |
 | **Classes** | Pass 12,361 (41.9%) · Withdrawn 7,067 (24.0%) · Fail 7,044 (23.9%) · Distinction 3,024 (10.3%) |
-| **Features** | 36 final (42 → 36, cost 0.0026 macro-F1); regression uses 33 |
-| **Feature mix** | 11 behavioural · 10 coursework · 10 temporal · 5 demographic |
+| **Features** | ⭐ official 36 = 24 assessment-free base + 6 depth + 6 module; with-scores arm 36; regression 33 |
+| **Feature mix (official)** | clickstream + demographics + module only — **zero assessment-table features** |
 | **Models** | LogReg · Decision Tree (depth 5) · Random Forest (300) · **XGBoost (300, depth 6, lr 0.05)** |
 | **Validation** | StratifiedGroupKFold(5) grouped by student; zero-overlap asserted per fold |
 | **Environment** | Python 3.12.6 · sklearn 1.6.1 · pandas 2.2.2 · numpy 2.0.2 · xgboost 3.3.0 |
@@ -234,7 +263,8 @@ split noise). The best single feature alone reaches macro-F1 0.36 vs 0.795 for t
 | Survivorship: at-risk population excluded at day 30 | **31%** |
 | Withdrawn students with any exam record | **1 of 10,156** |
 | Censoring removed | 29,440 VLE rows + 600 submissions |
-| Literature best *defensible* macro-F1 (vs our 0.798) | 0.706 |
+| Literature best *defensible* macro-F1, with-scores arm (ours 0.798) | 0.706 |
+| Closest assessment-free comparator macro-F1 (our official 0.715) | 0.66 |
 
 **Stability:** three independent evaluation schemes agree within 0.003 —
 headline split 0.8364/0.7946 · repeated grouped splits 0.8392/0.8000 · SGKF-5 0.8384/0.7973.
@@ -245,6 +275,9 @@ headline split 0.8364/0.7946 · repeated grouped splits 0.8392/0.8000 · SGKF-5 
 
 | Topic | File |
 |---|---|
+| ⭐ **Official baseline artifact (JSON)** | `reports/official_baseline_results.json` |
+| ⭐ Official baseline derivation | `reports/experiment_009_feature_access.md`, `reports/distinction_investigation/assessment_free_comparison.md` |
+| Distinction research loop | `reports/distinction_investigation/FINAL_REPORT.md`, `TECHNICAL_APPENDIX.md` |
 | Business-facing at-risk briefing | `AT_RISK_MODEL_BRIEFING.md` |
 | Full-course methodology + audit | `reports/experiment_006_full_course.md`, `reports/experiment_007_publication_audit.md` |
 | Early-prediction baselines | `reports/baseline_v4.md` |

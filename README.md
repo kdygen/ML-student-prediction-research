@@ -15,23 +15,45 @@ The project spans two questions:
 
 ## Headline results
 
-**Final full-course methodology** (StratifiedGroupKFold-5, grouped by student, exams excluded,
-29,496 enrolments, 36 features):
+**⭐ OFFICIAL BASELINE — assessment-free pipeline** (StratifiedGroupKFold-5 grouped by
+student, 29,496 enrolments, 36 features, **no data from `studentAssessment.csv` or
+`assessments.csv`**):
 
 | Metric | Value |
 |---|--:|
-| Accuracy | **0.836 ± 0.004** |
-| Macro-F1 | **0.795 ± 0.004** |
-| Weighted-F1 | 0.833 |
-| Per-class F1 | Withdrawn 0.943 · **Fail 0.813** · Pass 0.843 · Distinction 0.581 |
-| Regression (final coursework score, behaviour-only) | R² 0.334 · MAE 10.30 |
+| Accuracy | **0.739 ± 0.004** |
+| Macro-F1 | **0.715 ± 0.005** |
+| Weighted-F1 | 0.753 |
+| Per-class F1 | Withdrawn **0.940** · Fail **0.779** · Pass 0.709 · Distinction **0.430** |
+
+**Documented comparison arms** (same folds and population, not the baseline):
+
+| Arm | Features | Accuracy | Macro-F1 | Distinction F1 |
+|---|--:|--:|--:|--:|
+| ⭐ **OFFICIAL — assessment-free** | 36 | **0.739** | **0.715** | **0.430** |
+| + assessment *behaviour* (no scores) | 45 | 0.753 | 0.729 | 0.457 |
+| + coursework *scores* (argmax) | 36 | 0.836 | 0.795 | 0.579 |
+| Regression (coursework score, behaviour-only) | 33 | R² 0.334 | MAE 10.30 | — |
+
+Assessment behaviour is worth ≈ +0.014 macro-F1; coursework scores a further ≈ +0.066.
 
 **Early prediction** (XGBoost, accuracy / macro-F1): day 30 → 0.527 / 0.396; day 140 → 0.693 /
-0.514. The gap between the day-140 forecast (0.51) and the full-course ceiling (0.795)
-quantifies how much outcome information does not yet exist during the intervention window.
+0.514. The gap between the day-140 forecast (macro-F1 0.51) and the full-course with-scores
+ceiling (0.795) quantifies how much outcome information does not yet exist during the
+intervention window.
 
-Against the fairest published comparator (Al-azazi & Ghurab 2023 — same task, same population,
-also exclude scores): **0.836 / 0.795 vs their 0.72 / 0.66**, with stricter validation.
+Note the *with-scores arm* uses coursework performance (no exam data); its feature access is
+closest to Althibyani (2024) and Shou et al. (2024), who also use assessment scores — it
+exceeds their macro-F1 by 0.09 and 0.12 under stricter student-grouped validation. **That arm
+is no longer the baseline**, because it depends on assessment records a deploying institution
+may not have.
+
+Against the closest published **assessment-free** work (Al-azazi & Ghurab 2023 —
+demographics + clickstream only), our official baseline leads on **macro-F1 (0.715 vs 0.66)**,
+**Withdrawn (0.940 vs 0.70)** and **Fail (0.779 vs 0.65)** under stricter student-grouped
+validation, but **they lead on Distinction (0.59 vs 0.430)**. See
+`reports/experiment_009_feature_access.md` and
+`reports/distinction_investigation/assessment_free_comparison.md`.
 
 ---
 
@@ -55,21 +77,25 @@ Full leakage audit and per-feature classification: [`reports/experiment_007_publ
 
 ```
 notebook/    OULAD_early_prediction_v1 (1).ipynb   ← the single reproducible artifact
-experiments/ Archived Python drivers (experiment_001 … 008)   research history
+experiments/ Archived Python drivers (experiment_001 … 009)   research history
 reports/     Markdown reports + JSON metrics + figures for every experiment
+             official_baseline_results.json  ← ⭐ the official baseline artifact
+             distinction_investigation/      Pass-vs-Distinction research loop
 data/raw/    OULAD CSVs (gitignored — see "Data" below)
 data/processed/  p3/, p4/  cached datasets (parquet gitignored; manifests tracked)
 RESEARCH_LOG.md   Chronological log of every experiment (newest first)
 OBJECTIVE.md      Research goals and optimisation priorities
 AGENTS.md         Working conventions for this repository
-MEETING_PREP_GUIDE.md   Complete cheat sheet: methodology, results, features, Q&A
+RESULTS.md        All headline numbers in one reference
+AT_RISK_MODEL_BRIEFING.md   Business-facing briefing (intervention targeting)
 ```
 
 ### The notebook is the single reproducible artifact
 Running `notebook/OULAD_early_prediction_v1 (1).ipynb` from start to finish reproduces:
 1. **Baselines v1–v4** — the early-prediction pipeline across all cutoffs (immutable history);
-2. **Final methodology** — the full-course leakage-free classification headline (36 features);
-3. **Supplementary regression** — final coursework score from behaviour only (33 features).
+2. **Full-course methodology** — the with-scores comparison arm (36 features);
+3. **Supplementary regression** — final coursework score from behaviour only (33 features);
+4. **⭐ OFFICIAL BASELINE** — the assessment-free pipeline plus the assessment-behaviour arm.
 
 Development experiments (006–008) are **not** in the notebook — they remain archived under
 `experiments/` and `reports/` as research history.
@@ -89,6 +115,8 @@ Development experiments (006–008) are **not** in the notebook — they remain 
 | Exp 006c | `reports/experiment_006c_proxy_audit.md` | Proxy-feature leakage audit + fair denominator |
 | Exp 007 | `reports/experiment_007_publication_audit.md` | Publication audit (leakage, robustness, CV) |
 | Exp 008 | `reports/experiment_008_parsimony.md` | Feature redundancy → final 36-feature set |
+| **Exp 009** | `reports/experiment_009_feature_access.md` | **Feature-access ablation → the assessment-free baseline** |
+| Distinction | `reports/distinction_investigation/` | Pass-vs-Distinction research loop; operating-point fix; information ceiling |
 | Literature | `reports/literature_comparison.md` | Comparison vs ~25 published OULAD papers |
 
 Every report ships with a JSON metrics file; figures are under `reports/*/figures/`.

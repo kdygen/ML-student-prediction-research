@@ -1,5 +1,13 @@
 # Experiment 008 — Feature Redundancy Elimination (parsimony study of V3)
 
+> **📌 These figures describe the WITH-SCORES comparison arm, not the official baseline.**
+> As of 2026-07-21 the official baseline is the **assessment-free** pipeline: accuracy 0.739,
+> macro-F1 0.715, per-class F1 W 0.940 / F 0.779 / P 0.709 / D 0.430
+> (`reports/official_baseline_results.json`). The numbers below remain the correct record
+> for the with-scores configuration and for comparison against papers that use assessment
+> scores.
+
+
 **Date:** 2026-07-20
 **Objective:** remove redundant features from the V3 configuration without sacrificing
 performance. No new features, no pipeline redesign — elimination only.
@@ -100,7 +108,7 @@ it for the extra parsimony.
 **Cohort-normalised (2):** `rank_clicks`, `rank_wa`
 **Enrolment/static (5):** `registration_lead`, 4 × `highest_education_*`
 
-**Headline for publication: accuracy 0.836 ± 0.003, macro-F1 0.795 ± 0.005**
+**This arm (with coursework scores): accuracy 0.836 ± 0.003, macro-F1 0.795 ± 0.005**
 (stratified grouped 5-fold CV, 36 features) — a 14% reduction in feature count for a
 macro-F1 cost of 0.0026, well inside fold noise. If a reviewer prefers zero measured cost,
 the 42-feature set (0.8384/0.7973) remains valid and both are reported here; the reduced set

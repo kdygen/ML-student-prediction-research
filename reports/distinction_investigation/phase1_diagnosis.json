@@ -1,0 +1,504 @@
+{
+ "baseline": {
+  "fold_hash": "908b2745e57e1265",
+  "accuracy": 0.8052639132570327,
+  "accuracy_std": 0.0027933766129886236,
+  "macro_f1": 0.6951096579023927,
+  "macro_f1_std": 0.004050091851089283,
+  "per_class_f1": {
+   "Withdrawn": 0.9408216029876473,
+   "Fail": 0.7911397376482602,
+   "Pass": 0.8221778571678751,
+   "Distinction": 0.2266244057052298
+  }
+ },
+ "population": {
+  "pass": 12361,
+  "distinction": 3024,
+  "imbalance_P_to_D": 4.087632275132275
+ },
+ "true_distinction_predicted_as": {
+  "Pass": 0.8525132275132276,
+  "Distinction": 0.14186507936507936,
+  "Fail": 0.004629629629629629,
+  "Withdrawn": 0.000992063492063492
+ },
+ "prob_D": {
+  "true_D_mean": 0.28949970407867265,
+  "true_D_median": 0.2625686526298523,
+  "true_P_mean": 0.15244902369053445,
+  "true_D_share_above_0.5": 0.13326719576719576,
+  "auc_P_vs_D_from_multiclass_pD": 0.7463018126647687,
+  "prauc_P_vs_D": 0.4231672506920734
+ },
+ "effect_sizes_D_minus_P": [
+  {
+   "feature": "rank_clicks",
+   "cohens_d": 0.5762729754134523,
+   "mean_D": 0.7939165805740505,
+   "mean_P": 0.6924319525397405
+  },
+  {
+   "feature": "active_days",
+   "cohens_d": 0.42086577556960275,
+   "mean_D": 110.04265873015873,
+   "mean_P": 87.04449478197557
+  },
+  {
+   "feature": "study_spread",
+   "cohens_d": 0.4177716626380738,
+   "mean_D": 0.428318093309278,
+   "mean_P": 0.3395577491584629
+  },
+  {
+   "feature": "active_weeks",
+   "cohens_d": 0.3906183859829905,
+   "mean_D": 32.44708994708995,
+   "mean_P": 29.508211309764583
+  },
+  {
+   "feature": "clicks_per_assessment",
+   "cohens_d": 0.3551714269760705,
+   "mean_D": 302.87466338041736,
+   "mean_P": 216.45848264379333
+  },
+  {
+   "feature": "max_gap",
+   "cohens_d": -0.33542771652782,
+   "mean_D": 19.50165343915344,
+   "mean_P": 24.171102661596958
+  },
+  {
+   "feature": "assessment_focus",
+   "cohens_d": -0.3201710088186174,
+   "mean_D": 0.2672782204336588,
+   "mean_P": 0.319201693581008
+  },
+  {
+   "feature": "min_submit_lead",
+   "cohens_d": 0.260204451300742,
+   "mean_D": -2.509589947089947,
+   "mean_P": -4.373513469783998
+  },
+  {
+   "feature": "precourse_clicks",
+   "cohens_d": 0.2571577967876516,
+   "mean_D": 131.4295634920635,
+   "mean_P": 85.35158967721058
+  },
+  {
+   "feature": "highest_education_Lower Than A Level",
+   "cohens_d": -0.25203401001700093,
+   "mean_D": 0.2404100529100529,
+   "mean_P": 0.35474476175066744
+  },
+  {
+   "feature": "mean_submit_lead",
+   "cohens_d": 0.19711796625649844,
+   "mean_D": 17.847691469318452,
+   "mean_P": 12.941755739294369
+  },
+  {
+   "feature": "forumng_ratio",
+   "cohens_d": 0.19537809900870368,
+   "mean_D": 0.21664439771415442,
+   "mean_P": 0.18275093045944266
+  },
+  {
+   "feature": "w2_clicks",
+   "cohens_d": 0.18312658154706693,
+   "mean_D": 11.431547619047619,
+   "mean_P": 6.533856484103228
+  },
+  {
+   "feature": "highest_education_HE Qualification",
+   "cohens_d": 0.18244146310701662,
+   "mean_D": 0.230489417989418,
+   "mean_P": 0.1585632230402071
+  },
+  {
+   "feature": "highest_education_Post Graduate Qualification",
+   "cohens_d": 0.14312988731676074,
+   "mean_D": 0.0291005291005291,
+   "mean_P": 0.00946525362025726
+  },
+  {
+   "feature": "clicks_per_day",
+   "cohens_d": 0.1421013561089367,
+   "mean_D": 21.680550170456502,
+   "mean_P": 20.129514276780895
+  },
+  {
+   "feature": "decay_clicks",
+   "cohens_d": 0.12252529856211777,
+   "mean_D": 12.169275241848636,
+   "mean_P": 9.303435415154683
+  },
+  {
+   "feature": "resource_ratio",
+   "cohens_d": -0.11427745840718707,
+   "mean_D": 0.0354301256400968,
+   "mean_P": 0.03994121487668505
+  },
+  {
+   "feature": "completion_ratio_avail",
+   "cohens_d": 0.10977535232096348,
+   "mean_D": 0.9675166011971569,
+   "mean_P": 0.9561948101427108
+  },
+  {
+   "feature": "n_assess_types_submitted",
+   "cohens_d": 0.10243282080822722,
+   "mean_D": 1.6669973544973544,
+   "mean_P": 1.6179111722352562
+  },
+  {
+   "feature": "late_submissions",
+   "cohens_d": -0.10046028193573658,
+   "mean_D": 1.9692460317460319,
+   "mean_P": 2.216082841194078
+  },
+  {
+   "feature": "burstiness",
+   "cohens_d": -0.0912196884108977,
+   "mean_D": 1.1542124575252337,
+   "mean_P": 1.1880693733307492
+  },
+  {
+   "feature": "oucontent_ratio",
+   "cohens_d": -0.08849778212511168,
+   "mean_D": 0.24514674243498935,
+   "mean_P": 0.2627157166663843
+  },
+  {
+   "feature": "homepage_ratio",
+   "cohens_d": -0.04591256451339033,
+   "mean_D": 0.19234283553918757,
+   "mean_P": 0.19587756429427272
+  },
+  {
+   "feature": "w4_clicks",
+   "cohens_d": 0.04093963521819352,
+   "mean_D": 40.44808201058201,
+   "mean_P": 36.81668149826066
+  },
+  {
+   "feature": "submitted_count",
+   "cohens_d": 0.037698933328270394,
+   "mean_D": 8.415674603174603,
+   "mean_P": 8.301674621794353
+  },
+  {
+   "feature": "quiz_ratio",
+   "cohens_d": 0.025651590941294662,
+   "mean_D": 0.1814253563052697,
+   "mean_P": 0.176882660659224
+  },
+  {
+   "feature": "w3_clicks",
+   "cohens_d": 0.023469559167074584,
+   "mean_D": 38.37169312169312,
+   "mean_P": 35.7982363886417
+  },
+  {
+   "feature": "registration_lead",
+   "cohens_d": -0.022580063990604998,
+   "mean_D": 65.64153439153439,
+   "mean_P": 66.70706253539358
+  },
+  {
+   "feature": "highest_education_No Formal quals",
+   "cohens_d": -0.022321986789736334,
+   "mean_D": 0.005291005291005291,
+   "mean_P": 0.007038265512498989
+  },
+  {
+   "feature": "has_vle_activity",
+   "cohens_d": 0.022033523948012477,
+   "mean_D": 1.0,
+   "mean_P": 0.9997573011892241
+  },
+  {
+   "feature": "first_submit_day",
+   "cohens_d": 0.0022255780186548014,
+   "mean_D": 23.60218253968254,
+   "mean_P": 23.55569937707305
+  },
+  {
+   "feature": "engagement_decay_ratio",
+   "cohens_d": 0.0008073025278023521,
+   "mean_D": 1.5090797557302962,
+   "mean_P": 1.4976357431365763
+  }
+ ],
+ "distinction_split": {
+  "n_correct": 429,
+  "n_missed_as_pass": 2578
+ },
+ "correct_vs_missed_D": [
+  {
+   "feature": "rank_clicks",
+   "d_correct_vs_missed": 1.0732362722566215,
+   "d_missed_vs_pass": 0.4726294109640081
+  },
+  {
+   "feature": "study_spread",
+   "d_correct_vs_missed": 0.8967538496497972,
+   "d_missed_vs_pass": 0.3022022490012499
+  },
+  {
+   "feature": "active_days",
+   "d_correct_vs_missed": 0.8951665422868375,
+   "d_missed_vs_pass": 0.304574498800866
+  },
+  {
+   "feature": "active_weeks",
+   "d_correct_vs_missed": 0.8658583732347034,
+   "d_missed_vs_pass": 0.3038872214039888
+  },
+  {
+   "feature": "clicks_per_assessment",
+   "d_correct_vs_missed": 0.6958164739803603,
+   "d_missed_vs_pass": 0.2503627699506837
+  },
+  {
+   "feature": "max_gap",
+   "d_correct_vs_missed": -0.6902159741091659,
+   "d_missed_vs_pass": -0.27088400949098784
+  },
+  {
+   "feature": "highest_education_Lower Than A Level",
+   "d_correct_vs_missed": -0.5961971878199703,
+   "d_missed_vs_pass": -0.1836533639660195
+  },
+  {
+   "feature": "precourse_clicks",
+   "d_correct_vs_missed": 0.5102897778713145,
+   "d_missed_vs_pass": 0.16774734099432348
+  },
+  {
+   "feature": "decay_clicks",
+   "d_correct_vs_missed": 0.46326190744855983,
+   "d_missed_vs_pass": 0.044101956133082425
+  },
+  {
+   "feature": "w2_clicks",
+   "d_correct_vs_missed": 0.4572693213610543,
+   "d_missed_vs_pass": 0.1032753199850584
+  },
+  {
+   "feature": "clicks_per_day",
+   "d_correct_vs_missed": 0.44751523542627697,
+   "d_missed_vs_pass": 0.08194240228685765
+  },
+  {
+   "feature": "assessment_focus",
+   "d_correct_vs_missed": -0.44091494056946046,
+   "d_missed_vs_pass": -0.2695916566468867
+  },
+  {
+   "feature": "oucontent_ratio",
+   "d_correct_vs_missed": -0.43652269901045393,
+   "d_missed_vs_pass": -0.024061919271466697
+  },
+  {
+   "feature": "highest_education_HE Qualification",
+   "d_correct_vs_missed": 0.39111049546812765,
+   "d_missed_vs_pass": 0.12110092778331913
+  },
+  {
+   "feature": "highest_education_Post Graduate Qualification",
+   "d_correct_vs_missed": 0.35695552491843824,
+   "d_missed_vs_pass": 0.0693696885906529
+  },
+  {
+   "feature": "quiz_ratio",
+   "d_correct_vs_missed": 0.30706069482276555,
+   "d_missed_vs_pass": -0.02757307391958574
+  },
+  {
+   "feature": "min_submit_lead",
+   "d_correct_vs_missed": 0.3047135822130236,
+   "d_missed_vs_pass": 0.2278739275942912
+  },
+  {
+   "feature": "forumng_ratio",
+   "d_correct_vs_missed": 0.29693281170142893,
+   "d_missed_vs_pass": 0.15342065556331275
+  },
+  {
+   "feature": "resource_ratio",
+   "d_correct_vs_missed": -0.2919519955956699,
+   "d_missed_vs_pass": -0.08431763675985067
+  },
+  {
+   "feature": "w3_clicks",
+   "d_correct_vs_missed": 0.28991188613013863,
+   "d_missed_vs_pass": -0.0240266078743439
+  },
+  {
+   "feature": "first_submit_day",
+   "d_correct_vs_missed": -0.27151406374015186,
+   "d_missed_vs_pass": 0.026796372438971545
+  },
+  {
+   "feature": "w4_clicks",
+   "d_correct_vs_missed": 0.24324910997526836,
+   "d_missed_vs_pass": 0.00801867912218238
+  },
+  {
+   "feature": "mean_submit_lead",
+   "d_correct_vs_missed": 0.1846229271730655,
+   "d_missed_vs_pass": 0.17015672886422345
+  },
+  {
+   "feature": "n_assess_types_submitted",
+   "d_correct_vs_missed": 0.1386147194640382,
+   "d_missed_vs_pass": 0.0847621082336411
+  },
+  {
+   "feature": "completion_ratio_avail",
+   "d_correct_vs_missed": -0.11519853831642958,
+   "d_missed_vs_pass": 0.14482329463475693
+  },
+  {
+   "feature": "engagement_decay_ratio",
+   "d_correct_vs_missed": -0.09592655432510826,
+   "d_missed_vs_pass": -0.010563554997267912
+  },
+  {
+   "feature": "burstiness",
+   "d_correct_vs_missed": -0.07175791789692565,
+   "d_missed_vs_pass": -0.08091460679184619
+  },
+  {
+   "feature": "homepage_ratio",
+   "d_correct_vs_missed": -0.06507332529703345,
+   "d_missed_vs_pass": -0.03986328296356946
+  },
+  {
+   "feature": "late_submissions",
+   "d_correct_vs_missed": 0.06471324331477141,
+   "d_missed_vs_pass": -0.11215650287391057
+  },
+  {
+   "feature": "highest_education_No Formal quals",
+   "d_correct_vs_missed": 0.056021446026791696,
+   "d_missed_vs_pass": -0.03126422509616729
+  },
+  {
+   "feature": "registration_lead",
+   "d_correct_vs_missed": -0.045114670953811206,
+   "d_missed_vs_pass": -0.015402565417191967
+  },
+  {
+   "feature": "submitted_count",
+   "d_correct_vs_missed": 0.01691075788727835,
+   "d_missed_vs_pass": 0.03783058456910038
+  },
+  {
+   "feature": "has_vle_activity",
+   "d_correct_vs_missed": 0.0,
+   "d_missed_vs_pass": 0.022033523948012477
+  }
+ ],
+ "missed_D_indistinguishable_from_P": {
+  "max_abs_d_missed_vs_pass": 0.4726294109640081,
+  "mean_abs_d": 0.1294297777858084
+ },
+ "subgroup_D_f1": {
+  "code_module": {
+   "AAA": {
+    "n_D": 44,
+    "D_share": 0.06043956043956044,
+    "D_f1": 0.0
+   },
+   "BBB": {
+    "n_D": 677,
+    "D_share": 0.09781823435919665,
+    "D_f1": 0.15364916773367476
+   },
+   "CCC": {
+    "n_D": 498,
+    "D_share": 0.12655654383735704,
+    "D_f1": 0.3994673768308921
+   },
+   "DDD": {
+    "n_D": 383,
+    "D_share": 0.06747709654686398,
+    "D_f1": 0.14058956916099774
+   },
+   "EEE": {
+    "n_D": 356,
+    "D_share": 0.13180303591262496,
+    "D_f1": 0.21476510067114093
+   },
+   "FFF": {
+    "n_D": 670,
+    "D_share": 0.09478002546329042,
+    "D_f1": 0.2523364485981308
+   },
+   "GGG": {
+    "n_D": 396,
+    "D_share": 0.16058394160583941,
+    "D_f1": 0.13733905579399142
+   }
+  },
+  "code_presentation": {
+   "2013B": {
+    "n_D": 327,
+    "D_share": 0.07435197817189632,
+    "D_f1": 0.181360201511335
+   },
+   "2013J": {
+    "n_D": 749,
+    "D_share": 0.09477413640389726,
+    "D_f1": 0.1716171617161716
+   },
+   "2014B": {
+    "n_D": 784,
+    "D_share": 0.11475409836065574,
+    "D_f1": 0.2616451932606541
+   },
+   "2014J": {
+    "n_D": 1164,
+    "D_share": 0.11232268648074882,
+    "D_f1": 0.24881033310673012
+   }
+  },
+  "gender": {
+   "F": {
+    "n_D": 1394,
+    "D_f1": 0.20164126611957797
+   },
+   "M": {
+    "n_D": 1630,
+    "D_f1": 0.24711538461538463
+   }
+  },
+  "age_band": {
+   "0-35": {
+    "n_D": 1863,
+    "D_f1": 0.174069089277703
+   },
+   "35-55": {
+    "n_D": 1120,
+    "D_f1": 0.29812834224598933
+   },
+   "55<=": {
+    "n_D": 41,
+    "D_f1": 0.39344262295081966
+   }
+  },
+  "disability": {
+   "N": {
+    "n_D": 2801,
+    "D_f1": 0.22805017103762829
+   },
+   "Y": {
+    "n_D": 223,
+    "D_f1": 0.20863309352517986
+   }
+  }
+ }
+}

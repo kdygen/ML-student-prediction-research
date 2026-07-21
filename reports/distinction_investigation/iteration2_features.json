@@ -1,0 +1,219 @@
+{
+ "new_feature_effect_sizes": [
+  {
+   "feature": "share_topq_weeks",
+   "cohens_d_D_minus_P": 0.4747577735975414
+  },
+  {
+   "feature": "mean_weekly_z",
+   "cohens_d_D_minus_P": 0.3986749633355397
+  },
+  {
+   "feature": "inactive_week_share",
+   "cohens_d_D_minus_P": -0.3771570162277337
+  },
+  {
+   "feature": "max_week_streak",
+   "cohens_d_D_minus_P": 0.375247217202446
+  },
+  {
+   "feature": "gap_std",
+   "cohens_d_D_minus_P": -0.3345020462405248
+  },
+  {
+   "feature": "mean_gap",
+   "cohens_d_D_minus_P": -0.31750429212779074
+  },
+  {
+   "feature": "revisit_ratio",
+   "cohens_d_D_minus_P": 0.31221295501905183
+  },
+  {
+   "feature": "week_entropy",
+   "cohens_d_D_minus_P": 0.3010381505547904
+  },
+  {
+   "feature": "early_work_share",
+   "cohens_d_D_minus_P": 0.2799794912086675
+  },
+  {
+   "feature": "weekly_cv",
+   "cohens_d_D_minus_P": -0.23493748740561154
+  },
+  {
+   "feature": "phase_concentration",
+   "cohens_d_D_minus_P": -0.22314416242979654
+  },
+  {
+   "feature": "unique_sites",
+   "cohens_d_D_minus_P": 0.22236142985200644
+  },
+  {
+   "feature": "weekly_slope",
+   "cohens_d_D_minus_P": -0.159750905382262
+  },
+  {
+   "feature": "num_of_prev_attempts",
+   "cohens_d_D_minus_P": -0.15755318946762767
+  },
+  {
+   "feature": "weekly_z_slope",
+   "cohens_d_D_minus_P": -0.14762872291935453
+  },
+  {
+   "feature": "first_active_day",
+   "cohens_d_D_minus_P": -0.13682140544837176
+  },
+  {
+   "feature": "n_activity_types",
+   "cohens_d_D_minus_P": 0.10307545903106567
+  },
+  {
+   "feature": "studied_credits",
+   "cohens_d_D_minus_P": -0.06956303936903634
+  },
+  {
+   "feature": "late_new_content_share",
+   "cohens_d_D_minus_P": 0.05670828582822268
+  },
+  {
+   "feature": "top3_site_share",
+   "cohens_d_D_minus_P": 0.03880288445501663
+  },
+  {
+   "feature": "enrichment_share",
+   "cohens_d_D_minus_P": 0.02435644735397838
+  },
+  {
+   "feature": "content_admin_ratio",
+   "cohens_d_D_minus_P": 0.0017798270634042273
+  }
+ ],
+ "pvd_auc_runs": [
+  {
+   "set": "base_33",
+   "n_features": 33,
+   "auc": 0.736993913394911,
+   "auc_std": 0.0112002184272402,
+   "pr_auc": 0.4161509739783117
+  },
+  {
+   "set": "+H1_regularity",
+   "n_features": 38,
+   "auc": 0.7381156523227933,
+   "auc_std": 0.008730299682712842,
+   "pr_auc": 0.4172253013171818
+  },
+  {
+   "set": "+H2_depth",
+   "n_features": 39,
+   "auc": 0.7487599999017052,
+   "auc_std": 0.009750024866807021,
+   "pr_auc": 0.4368730441689646
+  },
+  {
+   "set": "+H3_proactivity",
+   "n_features": 35,
+   "auc": 0.7383109667496667,
+   "auc_std": 0.009503629355027578,
+   "pr_auc": 0.41727373387889244
+  },
+  {
+   "set": "+H4_spacing",
+   "n_features": 37,
+   "auc": 0.7350722466387152,
+   "auc_std": 0.010810110586542361,
+   "pr_auc": 0.412122304410419
+  },
+  {
+   "set": "+H5_cohort_week",
+   "n_features": 36,
+   "auc": 0.7371285907161468,
+   "auc_std": 0.00878901101050903,
+   "pr_auc": 0.41634468780868444
+  },
+  {
+   "set": "+H6_enrolment",
+   "n_features": 35,
+   "auc": 0.7379420440539045,
+   "auc_std": 0.010339404830185838,
+   "pr_auc": 0.4168616337477943
+  },
+  {
+   "set": "+ALL_new",
+   "n_features": 55,
+   "auc": 0.7465980055009265,
+   "auc_std": 0.011204504874953976,
+   "pr_auc": 0.43315574415858366
+  }
+ ],
+ "multiclass_weighted": [
+  {
+   "set": "weighted_base_33",
+   "n_features": 33,
+   "accuracy": 0.7569098446204725,
+   "macro_f1": 0.7287679509695495,
+   "macro_f1_std": 0.0036126828591637925,
+   "D_precision": 0.3639304488475536,
+   "D_recall": 0.5952380952380952,
+   "D_f1": 0.451693851944793,
+   "P_f1": 0.7332103630418378,
+   "F_f1": 0.7892668178382464,
+   "W_f1": 0.9413115224565934
+  },
+  {
+   "set": "weighted_best_feats",
+   "n_features": 39,
+   "accuracy": 0.7615552573161916,
+   "macro_f1": 0.7314233124463844,
+   "macro_f1_std": 0.005486673283212539,
+   "D_precision": 0.3732290124762106,
+   "D_recall": 0.5836640211640212,
+   "D_f1": 0.4553076228556688,
+   "P_f1": 0.7421310522381862,
+   "F_f1": 0.7885791978246091,
+   "W_f1": 0.940077597355942
+  }
+ ],
+ "best_feature_set": [
+  "active_days",
+  "clicks_per_day",
+  "clicks_per_assessment",
+  "study_spread",
+  "burstiness",
+  "resource_ratio",
+  "oucontent_ratio",
+  "homepage_ratio",
+  "forumng_ratio",
+  "quiz_ratio",
+  "assessment_focus",
+  "has_vle_activity",
+  "registration_lead",
+  "highest_education_HE Qualification",
+  "highest_education_Lower Than A Level",
+  "highest_education_No Formal quals",
+  "highest_education_Post Graduate Qualification",
+  "w2_clicks",
+  "w3_clicks",
+  "w4_clicks",
+  "precourse_clicks",
+  "decay_clicks",
+  "mean_submit_lead",
+  "min_submit_lead",
+  "late_submissions",
+  "submitted_count",
+  "first_submit_day",
+  "n_assess_types_submitted",
+  "rank_clicks",
+  "completion_ratio_avail",
+  "engagement_decay_ratio",
+  "max_gap",
+  "active_weeks",
+  "unique_sites",
+  "revisit_ratio",
+  "top3_site_share",
+  "content_admin_ratio",
+  "enrichment_share",
+  "n_activity_types"
+ ]
+}
